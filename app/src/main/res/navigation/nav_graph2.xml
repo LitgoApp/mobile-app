@@ -26,15 +26,3 @@
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
-
-
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--app:startDestination="@id/loginActivity">-->
-    <!--<activity-->
-    <!--    android:id="@+id/loginActivity"-->
-    <!--    android:name="com.litgo.LoginActivity"-->
-    <!--    android:label="activity_login"-->
-    <!--    tools:layout="@layout/activity_login" />-->
-    <!--</>-->
