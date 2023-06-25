@@ -10,7 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.litgo.ui.theme.views.SubmitReportView
+import com.litgo.ui.theme.views.CameraView
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -39,10 +39,14 @@ class CameraActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
-            SubmitReportView()
-
-
+            CameraView(
+                outputDirectory = outputDirectory,
+                executor = cameraExecutor,
+                onImageCaptured = ::handleImageCapture,
+                onError = { Log.e("kilo", "View error:", it) }
+            )
         }
+
 
         requestCameraPermission()
 

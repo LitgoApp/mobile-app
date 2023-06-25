@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="REPORT_FORM_DESCRIPTION_HINT">Description</string>
+    <string name="REPORT_FORM_TITLE">Report Litter</string>
+    <string name="REPORT_FORM_TOGGLE_ALERT">Dangerous?</string>
+    <string name="REPORT_FORM_SEND_BUTTON">Send Report</string>
+</resources>

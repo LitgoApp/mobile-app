@@ -1,8 +1,11 @@
 package com.litgo.ui.theme.views
 
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.util.Log
+
+import android.widget.Button
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -40,8 +43,8 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-@Composable
 
+@Composable
 // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
 fun CameraView(
     outputDirectory: File,
@@ -73,6 +76,20 @@ fun CameraView(
         )
 
         preview.setSurfaceProvider(previewView.surfaceProvider)
+    }
+
+    fun createCircleButton(context: Context): Button {
+        val button = Button(context)
+
+        val shape = GradientDrawable()
+        shape.shape = GradientDrawable.OVAL
+        //shape.setColor(Color.White)
+        button.background = shape
+
+        //button.layoutParams = ViewGroup.LayoutParams(100, 100)
+        //button.setTextColor(Color.Black)
+
+        return button
     }
 
     // 3
