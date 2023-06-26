@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Litgo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">LitGo</string>
+    <!-- FOR THE LOGIN ACTIVITY SCREEN -->
+    <string name="username_textfield_prompt">Enter your username</string>
+    <string name="password_textfield_prompt">Enter your password</string>
+    <string name="login_button_text">Log in</string>
+    <string name="create_account_button_text">Create an account</string>
+    <string name="login_error_textview_text">The username and/or password entered is incorrect.</string>
 </resources>
