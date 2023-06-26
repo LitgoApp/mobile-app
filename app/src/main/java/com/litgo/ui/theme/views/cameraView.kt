@@ -1,6 +1,7 @@
 package com.litgo.ui.theme.views
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.util.Log
@@ -13,12 +14,16 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.AddCircle
 import androidx.compose.material.icons.sharp.Send
 
 import androidx.compose.material3.Icon
@@ -30,11 +35,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.material.icons.sharp.KeyboardArrowLeft
 import androidx.core.content.ContextCompat
+import com.litgo.FormActivity
+import com.litgo.MapActivity
 
 import java.io.File
 import java.text.SimpleDateFormat
@@ -78,28 +89,12 @@ fun CameraView(
         preview.setSurfaceProvider(previewView.surfaceProvider)
     }
 
-    fun createCircleButton(context: Context): Button {
-        val button = Button(context)
-
-        val shape = GradientDrawable()
-        shape.shape = GradientDrawable.OVAL
-        //shape.setColor(Color.White)
-        button.background = shape
-
-        //button.layoutParams = ViewGroup.LayoutParams(100, 100)
-        //button.setTextColor(Color.Black)
-
-        return button
-    }
-
-    // 3
-    Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()) {
-        AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
-
+    @Composable
+    fun createCircleButton() {
         IconButton(
             modifier = Modifier.padding(bottom = 20.dp),
             onClick = {
-                Log.i("Litgo", "ON CLICK")
+                Log.i("Litgo", "Photo Taken")
                 takePhoto(
                     filenameFormat = "yyyy-MM-dd-HH-mm-ss-SSS",
                     imageCapture = imageCapture,
@@ -111,17 +106,79 @@ fun CameraView(
             },
             content = {
                 Icon(
-                    imageVector = Icons.Sharp.Send,
+                    imageVector = Icons.Sharp.AddCircle,
                     contentDescription = "Take picture",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(100.dp)
-                        .padding(1.dp)
-                        .border(1.dp, Color.White, CircleShape)
+                        .size(500.dp)
                 )
             }
         )
     }
+
+    @Composable
+    fun openMyReportsButton() {
+        IconButton(
+            modifier = Modifier.padding(bottom = 20.dp),
+            onClick = {
+                Log.i("Litgo", "Submission form appears")
+                val intent = Intent(context, FormActivity::class.java)
+                context.startActivity(intent)
+            },
+            content = {
+                Icon(
+                    imageVector = Icons.Sharp.Send,
+                    contentDescription = "Take picture",
+                    tint = Color.White,
+                )
+            }
+        )
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            createCircleButton()
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .padding(end = 16.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.End
+        ) {
+            openMyReportsButton()
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .padding(end = 16.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.Start
+        ) {
+            IconButton(
+                modifier = Modifier.padding(bottom = 20.dp),
+                onClick = {
+                    Log.i("Litgo", "Submission form appears")
+                    val intent = Intent(context, MapActivity::class.java)
+                    context.startActivity(intent)
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Sharp.KeyboardArrowLeft,
+                        contentDescription = "Take picture",
+                        tint = Color.White,
+                    )
+                }
+            )
+        }
+    }
+
 }
 
 // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose

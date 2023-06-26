@@ -5,13 +5,20 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.litgo.ui.theme.views.CameraView
 import java.io.File
+import java.lang.Math.abs
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -38,6 +45,8 @@ class CameraActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+
             // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
             CameraView(
                 outputDirectory = outputDirectory,
@@ -90,6 +99,14 @@ class CameraActivity : ComponentActivity() {
 
         return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
     }
+
+    private lateinit var gestureDetector: GestureDetector
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        gestureDetector.onTouchEvent(event)
+        return super.onTouchEvent(event)
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
