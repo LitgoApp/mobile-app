@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/report_list"
-    android:name="com.litgo.ItemFragment"
+    android:name="com.litgo.ReportFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
