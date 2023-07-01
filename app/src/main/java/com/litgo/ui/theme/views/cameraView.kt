@@ -139,42 +139,42 @@ fun CameraView(
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
         ) {
             createCircleButton()
         }
 
         Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(end = 16.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
+                modifier = Modifier.fillMaxSize()
+                        .padding(end = 16.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
         ) {
             openMyReportsButton()
         }
 
         Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(end = 16.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.Start
+                modifier = Modifier.fillMaxSize()
+                        .padding(end = 16.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.Start
         ) {
             IconButton(
-                modifier = Modifier.padding(bottom = 20.dp),
-                onClick = {
-                    Log.i("Litgo", "Submission form appears")
-                    val intent = Intent(context, MapActivity::class.java)
-                    context.startActivity(intent)
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Sharp.KeyboardArrowLeft,
-                        contentDescription = "Take picture",
-                        tint = Color.White,
-                    )
-                }
+                    modifier = Modifier.padding(bottom = 20.dp),
+                    onClick = {
+                        Log.i("Litgo", "Submission form appears")
+                        val intent = Intent(context, MapActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    content = {
+                        Icon(
+                                imageVector = Icons.Sharp.KeyboardArrowLeft,
+                                contentDescription = "Take picture",
+                                tint = Color.White,
+                        )
+                    }
             )
         }
     }
