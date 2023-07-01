@@ -22,12 +22,13 @@ import java.lang.Math.abs
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 class CameraActivity : ComponentActivity() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
-    private lateinit var photoUri: Uri
+    lateinit var photoUri: Uri
 
 
     // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose

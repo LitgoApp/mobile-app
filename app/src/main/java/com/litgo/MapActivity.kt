@@ -1,7 +1,25 @@
 package com.litgo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.KeyboardArrowLeft
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,5 +53,6 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             .position(sydney)
             .title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
     }
 }
