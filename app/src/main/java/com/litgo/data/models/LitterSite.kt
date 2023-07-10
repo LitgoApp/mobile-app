@@ -13,8 +13,6 @@ data class LitterSite(
     val description: String,
     val latitude: Double,
     val longitude: Double,
-    val createdAt: String,
-    val updatedAt: String,
 )
 
 data class LitterSiteCreation(

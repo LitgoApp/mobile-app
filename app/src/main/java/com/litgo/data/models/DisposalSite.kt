@@ -5,6 +5,4 @@ data class DisposalSite(
     val municipalityId: String,
     val latitude: Double,
     val longitude: Double,
-    val createdAt: String,
-    val updatedAt: String,
 )
