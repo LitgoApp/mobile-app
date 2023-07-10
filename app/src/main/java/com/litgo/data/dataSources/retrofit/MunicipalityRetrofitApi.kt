@@ -82,8 +82,8 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
                 body.email,
                 body.name,
                 body.phoneNumber,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error

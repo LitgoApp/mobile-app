@@ -59,8 +59,8 @@ class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi 
                     disposalSite.municipalityId,
                     disposalSite.latitude,
                     disposalSite.longitude,
-                    disposalSite.createdAt,
-                    disposalSite.updatedAt
+//                    disposalSite.createdAt,
+//                    disposalSite.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -83,8 +83,8 @@ class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi 
                 body.municipalityId,
                 body.latitude,
                 body.longitude,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error
