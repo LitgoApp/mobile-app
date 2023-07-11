@@ -65,8 +65,8 @@ class RegionRetrofitApi(private val retrofit: Retrofit) : RegionApi {
                 Region(
                     region.id,
                     region.municipalityId,
-                    region.createdAt,
-                    region.updatedAt
+//                    region.createdAt,
+//                    region.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -87,8 +87,8 @@ class RegionRetrofitApi(private val retrofit: Retrofit) : RegionApi {
             return Region(
                 body.id,
                 body.municipalityId,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error
