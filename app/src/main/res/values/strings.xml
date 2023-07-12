@@ -5,12 +5,17 @@
     <string name="password_edittext_prompt">Enter your password</string>
     <string name="sign_in_button_text">Sign in</string>
     <string name="create_account_button_text">Create an account</string>
-    <string name="login_error_textview_text">The username and/or password entered is incorrect.</string>
+    <string name="login_error">The username and/or password entered is incorrect.</string>
 
     <string name="report_status_textview_text">Status:</string>
 
-    <string name="profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
-    <string name="profile_joined_textview_text">Lifetime Achievements</string>
+    <!-- For the user's profile screen -->
+    <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
+    <string name="user_profile_joined_textview_text">Lifetime Achievements</string>
+    <string name="user_profile_textview_text">My Profile</string>
+    <string name="user_reports_textview_text">My Reports</string>
+    <string name="user_cleanups_textview_text">My Cleanups</string>
+    <string name="see_more_textview_text">See more</string>
 
 
     <string name="welcome">"Welcome! "</string>

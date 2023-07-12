@@ -2,6 +2,6 @@ package com.litgo.ui.profile
 
 import androidx.lifecycle.ViewModel
 
-class ProfileViewModel : ViewModel() {
+class UserProfileViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }
