@@ -14,10 +14,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Action bar element doesn't actually show on any of the screens but is required to be
+        set on the main activity-->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:visibility="gone">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -33,45 +36,83 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph"/>
+            app:navGraph="@navigation/nav_graph" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!--  Make the bottom navigation bar invisible on the login screen  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bottom"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/green">
+        app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageButton
-                    android:id="@+id/userProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageButton
-                    android:id="@+id/garbageReportingMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageButton
-                    android:id="@+id/reportingCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageButton
-                    android:id="@+id/userReports"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </androidx.appcompat.widget.Toolbar>
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/rewards_nav_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/shopping_cart_90_white" />
+
+            <ImageButton
+                android:id="@+id/map_nav_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/location_96_white" />
+
+            <ImageButton
+                android:id="@+id/camera_nav_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/camera_90_white" />
+
+            <ImageButton
+                android:id="@+id/user_reports_nav_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/report_90_white" />
+
+            <ImageButton
+                android:id="@+id/user_profile_nav_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/user_90_white" />
+
+        </LinearLayout>
+
+<!--        </androidx.appcompat.widget.Toolbar>-->
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
