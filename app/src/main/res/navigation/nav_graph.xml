@@ -3,16 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/UserProfileFragment">
 
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.litgo.ui.login.LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_LoginFragment_to_ProfileFragment"
-            app:destination="@id/ProfileFragment" />
+            android:id="@+id/action_LoginFragment_to_UserProfileFragment"
+            app:destination="@id/UserProfileFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/UserProfileFragment"
+        android:name="com.litgo.ui.profile.UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_UserProfileFragment_to_UserReportsFragment"
+            app:destination="@+id/FirstFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.litgo.FirstFragment"
@@ -33,11 +43,7 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/ProfileFragment"
-        android:name="com.litgo.ui.profile.ProfileFragment"
-        android:label=""
-        tools:layout="@layout/fragment_profile" />
+
 </navigation>
 
 

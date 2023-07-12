@@ -118,7 +118,7 @@ class LoginFragment : Fragment() {
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.action_LoginFragment_to_ProfileFragment)
+        findNavController().navigate(R.id.action_LoginFragment_to_UserProfileFragment)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

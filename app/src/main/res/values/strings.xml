@@ -8,9 +8,9 @@
     <string name="login_error_textview_text">The username and/or password entered is incorrect.</string>
 
     <string name="report_status_textview_text">Status:</string>
-
-    <string name="profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
-    <string name="profile_joined_textview_text">Lifetime Achievements</string>
+    <!-- For the user's profile screen -->
+    <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
+    <string name="user_profile_joined_textview_text">Lifetime Achievements</string>
 
 
     <string name="welcome">"Welcome! "</string>
