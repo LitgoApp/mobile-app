@@ -7,8 +7,6 @@ data class Reward(
     val name: String,
     val cost: Int,
     val description: String,
-    val createdAt: String,
-    val updatedAt: String,
 )
 
 data class RewardCreation(

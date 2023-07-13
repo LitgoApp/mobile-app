@@ -87,8 +87,8 @@ class LitterSiteRetrofitApi(private val retrofit: Retrofit) : LitterSiteApi {
                     litterSite.description,
                     litterSite.latitude,
                     litterSite.longitude,
-                    litterSite.createdAt,
-                    litterSite.updatedAt
+//                    litterSite.createdAt,
+//                    litterSite.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -118,8 +118,8 @@ class LitterSiteRetrofitApi(private val retrofit: Retrofit) : LitterSiteApi {
                     litterSite.description,
                     litterSite.latitude,
                     litterSite.longitude,
-                    litterSite.createdAt,
-                    litterSite.updatedAt
+//                    litterSite.createdAt,
+//                    litterSite.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -154,8 +154,8 @@ class LitterSiteRetrofitApi(private val retrofit: Retrofit) : LitterSiteApi {
                 body.description,
                 body.latitude,
                 body.longitude,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error

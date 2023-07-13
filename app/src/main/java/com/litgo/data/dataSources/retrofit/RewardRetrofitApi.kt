@@ -74,8 +74,8 @@ class RewardRetrofitApi(private val retrofit: Retrofit) : RewardApi {
                     reward.name,
                     reward.cost,
                     reward.description,
-                    reward.createdAt,
-                    reward.updatedAt
+//                    reward.createdAt,
+//                    reward.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -98,8 +98,8 @@ class RewardRetrofitApi(private val retrofit: Retrofit) : RewardApi {
                 body.name,
                 body.cost,
                 body.description,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error

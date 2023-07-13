@@ -83,8 +83,8 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
                 body.name,
                 body.points,
                 body.address,
-                body.createdAt,
-                body.updatedAt
+//                body.createdAt,
+//                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error

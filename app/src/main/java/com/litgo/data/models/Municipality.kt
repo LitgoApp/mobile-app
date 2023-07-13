@@ -7,8 +7,6 @@ data class Municipality(
     val email: String,
     val name: String,
     val phoneNumber: String,
-    val createdAt: String,
-    val updatedAt: String,
 )
 
 data class MunicipalityRegistration(
