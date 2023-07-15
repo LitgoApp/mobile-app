@@ -43,15 +43,16 @@ class ReportRecyclerViewAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentReportBinding) : RecyclerView.ViewHolder(binding.root) {
-        val statusView: ImageView = binding.reportStatusImageviewIcon
-        val dateCreatedView: TextView = binding.reportDateCreatedTextview
-        val descriptionView: TextView = binding.reportDescriptionTextview
-        val pointsView: ImageView = binding.reportPointsImageview
-        val locationView: TextView = binding.reportLocationTextview
-        val imagesView: ImageView = binding.reportImageview
+//        val statusView: ImageView = binding.reportStatusImageviewIcon
+//        val dateCreatedView: TextView = binding.reportDateCreatedTextview
+//        val descriptionView: TextView = binding.reportDescriptionTextview
+//        val pointsView: ImageView = binding.reportPointsImageview
+//        val locationView: TextView = binding.reportLocationTextview
+//        val imagesView: ImageView = binding.reportImageview
 
         override fun toString(): String {
-            return super.toString() + " '" + descriptionView.text + "'"
+            return ""
+//            return super.toString() + " '" + descriptionView.text + "'"
         }
     }
 

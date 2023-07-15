@@ -12,6 +12,10 @@
     <dimen name="screen_margin">16dp</dimen>
     <dimen name="vertical_spacing">10dp</dimen>
 
+    <dimen name="report_max_height">100dp</dimen>
+    <dimen name="report_status_icon_size">20dp</dimen>
+    <dimen name="report_location_icon_size">7dp</dimen>
+
     <!-- Dimensions for 3-way switch bar -->
     <dimen name="switch_radius">20dp</dimen>
     <dimen name="switch_height">30dp</dimen>
