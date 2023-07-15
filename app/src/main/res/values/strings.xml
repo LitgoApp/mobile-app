@@ -13,9 +13,17 @@
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
     <string name="user_profile_joined_textview_text">Lifetime Achievements</string>
     <string name="user_profile_textview_text">My Profile</string>
+
+    <string name="user_recent_activity_textview_text">Recent Activity</string>
+    <string name="see_more_textview_text">See more</string>
+
+
     <string name="user_reports_textview_text">My Reports</string>
     <string name="user_cleanups_textview_text">My Cleanups</string>
-    <string name="see_more_textview_text">See more</string>
+    <string name="user_all_textview_text">All</string>
+    <string name="user_all_reports_and_cleanups_textview_text">All My Reports and Cleanups</string>
+
+    <string name="sort_text">Sort</string>
 
 
     <string name="welcome">"Welcome! "</string>

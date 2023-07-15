@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Rounded rectable / ovaluar switch slider for switching between all reports, garbage cleanup
+reports, and garbage reportings -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/switch_slider">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/green"/>
+            <corners android:radius="@dimen/switch_radius"/>
+        </shape>
+    </item>
+</layer-list>

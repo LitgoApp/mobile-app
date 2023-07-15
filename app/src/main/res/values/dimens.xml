@@ -8,4 +8,12 @@
     <!-- For navigation bar -->
     <dimen name="navbar_icon_size">30dp</dimen>
     <dimen name="navbar_height">60dp</dimen>
+
+    <dimen name="screen_margin">16dp</dimen>
+    <dimen name="vertical_spacing">10dp</dimen>
+
+    <!-- Dimensions for 3-way switch bar -->
+    <dimen name="switch_radius">20dp</dimen>
+    <dimen name="switch_height">30dp</dimen>
+
 </resources>

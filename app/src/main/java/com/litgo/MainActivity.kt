@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.litgo.databinding.ActivityMainBinding
+import com.litgo.ui.profile.UserProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         // Add actions to navbar icons
         binding.cameraNavBtn.setOnClickListener {
+        }
+        binding.userProfileNavBtn.setOnClickListener {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment_content_main, UserProfileFragment.newInstance())
+            transaction.commit()
         }
         binding.userReportsNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
