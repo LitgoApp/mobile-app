@@ -11,14 +11,12 @@ import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.litgo.ui.theme.views.CameraView
 import java.io.File
-import java.lang.Math.abs
+
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
