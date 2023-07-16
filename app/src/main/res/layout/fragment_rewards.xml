@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/lightest_gray"
+    android:layout_margin="@dimen/screen_margin"
+    tools:context=".ui.RewardsFragment">
+
+    <LinearLayout
+        android:id="@+id/user_points_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|right">
+            <TextView
+                android:id="@+id/user_points_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="476"
+                android:textSize="32dp"
+                android:textStyle="bold"/>
+            <ImageView
+                android:layout_width="@dimen/navbar_icon_size"
+                android:layout_height="@dimen/navbar_icon_size"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/leaf_96_green"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/user_points_layout"
+        tools:listitem="@layout/fragment_report_item"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

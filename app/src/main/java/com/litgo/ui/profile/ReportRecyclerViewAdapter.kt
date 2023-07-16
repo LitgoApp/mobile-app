@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.litgo.placeholder.PlaceholderContent.PlaceholderItem
-import com.litgo.databinding.FragmentReportBinding
+import com.litgo.databinding.FragmentReportItemBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -20,7 +20,7 @@ class ReportRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentReportBinding.inflate(
+            FragmentReportItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -42,7 +42,7 @@ class ReportRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentReportBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: FragmentReportItemBinding) : RecyclerView.ViewHolder(binding.root) {
 //        val statusView: ImageView = binding.reportStatusImageviewIcon
 //        val dateCreatedView: TextView = binding.reportDateCreatedTextview
 //        val descriptionView: TextView = binding.reportDescriptionTextview

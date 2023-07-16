@@ -1,9 +1,15 @@
 package com.litgo
 
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.commit
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.litgo.databinding.ActivityMainBinding
+import com.litgo.ui.RewardsFragment
 import com.litgo.ui.profile.UserProfileFragment
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        val appBarTitleTextView = findViewById<TextView>(R.id.app_bar_title_textview)
+
         // Add actions to navbar icons
         binding.cameraNavBtn.setOnClickListener {
         }
@@ -38,12 +47,21 @@ class MainActivity : AppCompatActivity() {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment_content_main, UserProfileFragment.newInstance())
             transaction.commit()
+            appBarTitleTextView.text = "My Profile"
         }
         binding.userReportsNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment_content_main, ReportsFragment.newInstance("Hello", "World!"))
             transaction.commit()
+            appBarTitleTextView.text = "My Reports and Cleanups"
         }
+        binding.rewardsNavBtn.setOnClickListener {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment_content_main, RewardsFragment.newInstance())
+            transaction.commit()
+            appBarTitleTextView.text = "My Rewards"
+        }
+
 
 
 //        binding.fab.setOnClickListener { view ->

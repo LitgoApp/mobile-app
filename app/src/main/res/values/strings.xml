@@ -8,6 +8,9 @@
     <string name="login_error">The username and/or password entered is incorrect.</string>
 
     <string name="report_status_textview_text">Status:</string>
+    <string name="report_details_textview_text">Report Details</string>
+    <string name="report_details_title_textview_text">Details</string>
+    <string name="report_details_points_available_textview_text">Points Available:</string>
 
     <!-- For the user's profile screen -->
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
@@ -73,4 +76,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
