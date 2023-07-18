@@ -9,8 +9,6 @@
     <string name="login_error_textview_text">The username and/or password entered is incorrect.</string>
 
     <string name="take_photo">Take Photo</string>
-    <string name="start_capture">Start Capture</string>
-    <string name="stop_capture">Stop Capture</string>
 
     <string name="login_error">The username and/or password entered is incorrect.</string>
 

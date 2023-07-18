@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.data.repositories.LitterSiteRepository
 import kotlinx.coroutines.launch
-
+/*
 class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewModel() {
     //decide on littercount, latitude, longitude
 
@@ -49,3 +49,5 @@ class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewMo
         }
     }
 }
+
+ */

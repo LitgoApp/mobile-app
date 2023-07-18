@@ -3,6 +3,7 @@ package com.litgo
 import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -30,19 +31,27 @@ import androidx.camera.core.ImageProxy
 
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.databinding.FragmentCameraBinding
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-typealias LumaListener = (luma: Double) -> Unit
-
 class CameraFragment : Fragment() {
     private lateinit var viewBinding: FragmentCameraBinding
     private lateinit var cameraExecutor: ExecutorService
 
     private var imageCapture: ImageCapture? = null
+
+    private lateinit var imageUriList: MutableList<Uri>
+
+    private fun addImageView(uri: Uri) {
+        // add logic to add image list to URI
+        // ie. model.imageListAdd(uri)
+        imageUriList.add(uri)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +71,10 @@ class CameraFragment : Fragment() {
         }
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
+        viewBinding.submitButton.setOnClickListener {
+            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
+        }
+
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
@@ -75,9 +88,7 @@ class CameraFragment : Fragment() {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
-            }
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
         }
 
         // Create output options object which contains file + metadata
@@ -100,6 +111,7 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
+                    output.savedUri?.let { addImageView(it) }
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                 }
@@ -182,9 +194,6 @@ class CameraFragment : Fragment() {
             mutableListOf(
                 Manifest.permission.CAMERA,
             ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
             }.toTypedArray()
     }
 }
