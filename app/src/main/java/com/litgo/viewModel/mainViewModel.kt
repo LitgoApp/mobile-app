@@ -10,6 +10,15 @@ import kotlinx.coroutines.launch
 class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewModel() {
     //decide on littercount, latitude, longitude
 
+    val imageUris = MutableLiveData<List<Uri>>(emptyList())
+
+    // Method to add a URI to the list
+    fun addImageUri(uri: Uri) {
+        val currentList = imageUris.value.orEmpty().toMutableList()
+        currentList.add(uri)
+        imageUris.value = currentList
+    }
+
     fun createLitterSite(imageUri: Uri, harm: String, description: String, latitude: Double, longitude: Double) {
         val imageUriString = imageUri.toString()
 
