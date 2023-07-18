@@ -44,13 +44,9 @@ class CameraFragment : Fragment() {
 
     private var imageCapture: ImageCapture? = null
 
-    private lateinit var imageUriList: MutableList<Uri>
-
     private fun addImageView(uri: Uri) {
         // add logic to add image list to URI
         // ie. model.imageListAdd(uri)
-        imageUriList.add(uri)
-
     }
 
     override fun onCreateView(
