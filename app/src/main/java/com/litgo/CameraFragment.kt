@@ -64,6 +64,8 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // subscribe to the viewModel
+
         if (allPermissionsGranted()) {
             startCamera()
         } else {

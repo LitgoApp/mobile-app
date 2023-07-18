@@ -1,12 +1,16 @@
-package com.litgo.viewmodels
+package com.litgo.viewModel
 
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.litgo.data.models.Coordinates
+import com.litgo.data.models.LitterSite
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.data.repositories.LitterSiteRepository
 import kotlinx.coroutines.launch
-/*
+
 class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewModel() {
     //decide on littercount, latitude, longitude
 
@@ -19,6 +23,7 @@ class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewMo
         imageUris.value = currentList
     }
 
+    /*
     fun createLitterSite(imageUri: Uri, harm: String, description: String, latitude: Double, longitude: Double) {
         val imageUriString = imageUri.toString()
 
@@ -44,6 +49,7 @@ class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewMo
             }
         }
     }
+     */
 
     val nearbyLitterSites = MutableLiveData<List<LitterSite>>()
 
@@ -59,4 +65,3 @@ class LitterSiteViewModel(private val repository: LitterSiteRepository) : ViewMo
     }
 }
 
- */
