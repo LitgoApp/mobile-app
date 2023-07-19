@@ -2,28 +2,28 @@ package com.litgo
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
+import com.litgo.ui.UserViewModel
 import com.litgo.ui.profile.UserProfileFragment
+import com.litgo.ui.reports.ReportsFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+//    private val userViewModel: UserViewModel by viewModels()
+//    private val userViewModel = ViewModelProvider(this,
+//        ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+//    )[UserViewModel::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -39,6 +39,21 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val appBarTitleTextView = findViewById<TextView>(R.id.app_bar_title_textview)
+
+        // toggle visibility of navigation bar according to whether user is logged in
+        val bottomNavView = binding.navBottom
+        val appBarLayout = binding.appBarLayout
+//        userViewModel.userState.observe(this,
+//            Observer {
+//                if (it.loggedIn == true) {
+//                    appBarLayout.visibility = View.VISIBLE
+//                    bottomNavView.visibility = View.VISIBLE
+//                } else {
+//                    appBarLayout.visibility = View.INVISIBLE
+//                    bottomNavView.visibility = View.INVISIBLE
+//                }
+//            }
+//        )
 
         // Add actions to navbar icons
         binding.cameraNavBtn.setOnClickListener {
@@ -61,14 +76,6 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
             appBarTitleTextView.text = "My Rewards"
         }
-
-
-
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAnchorView(R.id.fab)
-//                .setAction("Action", null).show()
-//        }
     }
 
     /**
@@ -90,13 +97,13 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-    /**
-     * Handle scrolling up and down navigation
-     */
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+//    /**
+//     * Handle scrolling up and down navigation
+//     */
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        return navController.navigateUp(appBarConfiguration)
+//                || super.onSupportNavigateUp()
+//    }
 
 }

@@ -8,7 +8,7 @@
     android:background="@color/lightest_gray"
     android:clipToPadding="false"
     android:clipChildren="false"
-    tools:context=".ReportsFragment">
+    tools:context=".ui.reports.ReportsFragment">
 
     <!-- Switch bar for toggling between the different kind of
     reports a user can see -->

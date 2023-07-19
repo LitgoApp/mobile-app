@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ReportsFragment">
+    app:startDestination="@id/LoginFragment">
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/ReportsFragment"
-        android:name="com.litgo.ReportsFragment"
+        android:name="com.litgo.ui.reports.ReportsFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 

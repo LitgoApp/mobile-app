@@ -2,6 +2,7 @@
     <string name="app_name">LitGo</string>
     <!-- FOR THE LOGIN ACTIVITY SCREEN -->
     <string name="username_edittext_prompt">Enter your username</string>
+    <string name="email_edittext_prompt">Enter your email</string>
     <string name="password_edittext_prompt">Enter your password</string>
     <string name="sign_in_button_text">Sign in</string>
     <string name="create_account_button_text">Create an account</string>

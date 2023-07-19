@@ -3,10 +3,8 @@ package com.litgo.ui.profile
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 
-import com.litgo.placeholder.PlaceholderContent.PlaceholderItem
+import com.litgo.ui.reports.PlaceholderContent.PlaceholderItem
 import com.litgo.databinding.FragmentReportItemBinding
 
 /**

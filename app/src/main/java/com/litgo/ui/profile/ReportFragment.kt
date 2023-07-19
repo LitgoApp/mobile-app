@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.litgo.R
-import com.litgo.placeholder.PlaceholderContent
+import com.litgo.ui.reports.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.
