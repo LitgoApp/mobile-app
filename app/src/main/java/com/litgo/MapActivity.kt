@@ -1,5 +1,5 @@
 package com.litgo
-
+/*
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.ViewModelProvider
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -95,3 +96,5 @@ internal class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         getLastLocation()
     }
 }
+
+ */
