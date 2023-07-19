@@ -11,25 +11,21 @@ import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.viewinterop.AndroidView
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.litgo.ui.theme.views.CameraView
 import java.io.File
-import java.lang.Math.abs
+
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
 
 class CameraActivity : ComponentActivity() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
-    lateinit var photoUri: Uri
-
+    private val viewModel: LitterSiteViewModel by viewModels()
 
     // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
     // Launches the given permission request
@@ -45,21 +41,17 @@ class CameraActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.uiState.collectAsState()
+
         setContent {
-
-
-            // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
             CameraView(
                 outputDirectory = outputDirectory,
                 executor = cameraExecutor,
-                onImageCaptured = ::handleImageCapture,
+                onImageCaptured = viewModel::addImageUri,
                 onError = { Log.e("kilo", "View error:", it) }
             )
         }
-
-
         requestCameraPermission()
-
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -84,15 +76,6 @@ class CameraActivity : ComponentActivity() {
         }
     }
 
-    // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
-    // Handles image capture.
-    private fun handleImageCapture(uri: Uri) {
-        Log.i("Litgo", "Image captured: $uri")
-        photoUri = uri
-    }
-
-    // RETRIEVED & ADAPTED FROM: https://github.com/Kilo-Loco/content/tree/main/android/camera-jetpack-compose
-    // returns the directory which photos are stored
     private fun getOutputDirectory(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
@@ -107,7 +90,6 @@ class CameraActivity : ComponentActivity() {
         gestureDetector.onTouchEvent(event)
         return super.onTouchEvent(event)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
