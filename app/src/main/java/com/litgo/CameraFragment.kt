@@ -31,9 +31,11 @@ import androidx.camera.core.ImageProxy
 
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.databinding.FragmentCameraBinding
+import com.litgo.viewModel.LitterSiteViewModel
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -44,9 +46,16 @@ class CameraFragment : Fragment() {
 
     private var imageCapture: ImageCapture? = null
 
+    private val viewModel: LitterSiteViewModel by viewModels()
+
     private fun addImageView(uri: Uri) {
         // add logic to add image list to URI
         // ie. model.imageListAdd(uri)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.uiState.collectAsState()
     }
 
     override fun onCreateView(
@@ -109,7 +118,10 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
+
                     output.savedUri?.let { addImageView(it) }
+                    output.savedUri?.let { viewModel.addImageUri(it) }
+
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                 }
