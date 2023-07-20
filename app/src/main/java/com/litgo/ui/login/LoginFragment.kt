@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -35,10 +36,18 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
+        mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.white))
+        // Ensure the bottom navigation bar and top app bar are not visible
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
+        appBarLayout?.visibility = View.GONE
+        navBar?.visibility = View.GONE
 
         val emailEditText = binding.emailEdittext
         val passwordEditText = binding.passwordEdittext
         val loginButton = binding.signInButton
+        val createAccountButton = binding.createAccountButton
 
         // Observe the user state
         // Upon successful login, update UI
@@ -64,21 +73,33 @@ class LoginFragment : Fragment() {
             // Upon successful login, the user state changes to indicate successful login
             // UI will be updated
         }
+
+        createAccountButton.setOnClickListener {
+            showCreateAccount()
+        }
+
+
     }
 
     private fun showLoginFailed() {
-        print("Login failed")
+        val loginErrorTextView = binding.loginErrorTextview
+        loginErrorTextView.visibility = View.VISIBLE
     }
 
     private fun showLoginSuccess() {
         val welcome = getString(R.string.welcome)
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_LoginFragment_to_UserProfileFragment)
+        // Show the app bar and navbar on successful login
         val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-        findNavController().navigate(R.id.action_LoginFragment_to_UserProfileFragment)
         appBarLayout?.visibility = View.VISIBLE
         navBar?.visibility = View.VISIBLE
+    }
+
+    private fun showCreateAccount() {
+        findNavController().navigate(R.id.action_LoginFragment_to_CreateAccountFragment)
     }
 
     override fun onDestroyView() {

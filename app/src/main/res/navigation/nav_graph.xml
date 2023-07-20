@@ -12,6 +12,18 @@
         <action
             android:id="@+id/action_LoginFragment_to_UserProfileFragment"
             app:destination="@id/UserProfileFragment" />
+        <action
+            android:id="@+id/action_LoginFragment_to_CreateAccountFragment"
+            app:destination="@id/CreateAccountFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateAccountFragment"
+        android:name="com.litgo.ui.CreateAccountFragment"
+        tools:layout="@layout/fragment_create_account">
+        <action
+            android:id="@+id/action_CreateAccountFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"/>
     </fragment>
 
     <fragment

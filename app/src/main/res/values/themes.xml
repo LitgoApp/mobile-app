@@ -8,4 +8,58 @@
     <style name="LitGo" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/green</item>
     </style>
+
+    <!-- Button styling -->
+    <style name="LitGo.Button" parent="android:style/Widget.Button">
+        <item name="android:elevation">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingVertical">15dp</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:buttonCornerRadius">10dp</item>
+    </style>
+    <style name="LitGo.Button.Green" parent="LitGo.Button">
+        <item name="android:background">@color/green</item>
+        <item name="backgroundTint">@color/green</item>
+        <item name="textFillColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="LitGo.Button.Gray" parent="LitGo.Button">
+        <item name="android:background">@color/gray</item>
+        <item name="backgroundTint">@color/lighter_gray</item>
+        <item name="textFillColor">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="LitGo.Button.White" parent="LitGo.Button">
+        <item name="android:background">@color/white</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="textFillColor">@color/green</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <!-- TextView styling -->
+    <style name="LitGo.TextView" parent="LitGo"/>
+    <style name="LitGo.TextView.LoginErrorTextView" parent="LitGo.TextView">
+        <item name="backgroundColor">@color/lighter_red</item>
+        <item name="backgroundTint">@color/lighter_red</item>
+        <item name="android:background">@color/lighter_red</item>
+        <item name="textFillColor">@color/dark_red</item>
+        <item name="android:textColor">@color/dark_red</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:minWidth">@dimen/login_input_width</item>
+    </style>
+    <style name="LitGo.TextView.Title" parent="LitGo.TextView">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
+    <style name="LitGo.TextView.Title.Green" parent="LitGo.TextView.Title">
+        <item name="android:textColor">@color/green</item>
+    </style>
+    <style name="LitGo.TextView.Title.White" parent="LitGo.TextView.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
