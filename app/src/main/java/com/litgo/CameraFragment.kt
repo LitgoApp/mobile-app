@@ -27,6 +27,7 @@ import android.view.ViewGroup
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
+import androidx.compose.runtime.collectAsState
 
 
 import androidx.core.content.PermissionChecker
@@ -70,7 +71,6 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // subscribe to the viewModel
-
         if (allPermissionsGranted()) {
             startCamera()
         } else {
