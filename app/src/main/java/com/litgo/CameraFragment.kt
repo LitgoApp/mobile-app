@@ -4,13 +4,10 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
 
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import java.util.concurrent.ExecutorService
@@ -24,19 +21,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
+import androidx.compose.runtime.collectAsState
 
-
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.litgo.databinding.ActivityMainBinding
 import com.litgo.databinding.FragmentCameraBinding
 import com.litgo.viewModel.LitterSiteViewModel
-import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -70,7 +62,6 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // subscribe to the viewModel
-
         if (allPermissionsGranted()) {
             startCamera()
         } else {
