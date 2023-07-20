@@ -1,6 +1,5 @@
 package com.litgo
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -13,13 +12,11 @@ import android.widget.LinearLayout
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.litgo.databinding.FragmentCameraBinding
 import com.litgo.databinding.FragmentFormBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.launch
