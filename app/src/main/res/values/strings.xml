@@ -10,7 +10,7 @@
     <string name="login_error_textview_text">The email and/or password\nentered is incorrect.</string>
     <string name="create_account_prompt_textview_text">New here? Create an account</string>
 
-    <!-- FOR THE CREATE AN ACCOUNT PAGE -->
+    <!-- FOR THE CREATE AN ACCOUNT SCREEN -->
     <string name="create_button_text">Create</string>
     <string name="sign_in_prompt_textview_text">Have an account already?</string>
     <string name="create_account_full_name_edittext_prompt">Full Name</string>
@@ -24,7 +24,7 @@
     <string name="report_details_title_textview_text">Details</string>
     <string name="report_details_points_available_textview_text">Points Available:</string>
 
-    <!-- For the user's profile screen -->
+    <!-- FOR USER PROFILE SCREEN -->
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
     <string name="user_profile_joined_textview_text">Lifetime Achievements</string>
     <string name="user_profile_textview_text">My Profile</string>
