@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.litgo.R
+import com.litgo.databinding.FragmentLitterSiteInfoBinding
+import com.litgo.viewModel.LitterSiteViewModel
 
 class LitterSiteInfoFragment : Fragment() {
     private lateinit var litterSiteViewModel: LitterSiteViewModel
@@ -30,15 +31,14 @@ class LitterSiteInfoFragment : Fragment() {
             // TO BE CHANGED
             binding.harmTextView.text = litterSite.harm
             binding.descriptionTextView.text = litterSite.description
-            binding.litterCountTextView.text = litterSite.litterCount.toString()
+            // binding.litterCountTextView.text = litterSite.litterCount.toString() not sure what this is
+            binding.locationTextView.text = TODO("Format location")
+            binding.dateTimeTextView.text = TODO("Format date")
 
-            binding.claimButton.setOnClickListener {
-                // Handle claim
+            binding.litterSiteCard.setOnClickListener {
+                TODO("Switch to report details page")
             }
 
-            binding.rejectButton.setOnClickListener {
-                // Handle reject
-            }
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.litgo.R
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
@@ -16,13 +17,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private lateinit var mMap: GoogleMap
     private lateinit var litterSiteViewModel: LitterSiteViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var litterInfoFragment: LitterSiteInfoFragment
 
     override fun onLocationChanged(location: Location) {
         // Update the map with the new location
         val latLng = LatLng(location.latitude, location.longitude)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
-        userCoords = Coordinates(location.latitude, location.longitude)
+        // This will restrict users from navigating the map entirely.
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+
+        val userCoords = Coordinates(location.latitude, location.longitude)
         litterSiteViewModel.fetchNearbyLitterSites(userCoords)
     }
 
@@ -64,6 +68,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         litterSiteViewModel = ViewModelProvider(this).get(LitterSiteViewModel::class.java)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+
+        _binding!!.centerCurrentLocationButton.setOnClickListener {
+            TODO("Center the user's current location")
+        }
+
         mapFragment.getMapAsync(this)
     }
 
@@ -98,6 +107,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 marker.tag?.let {
                     if (it is LitterSite) {
                         litterSiteViewModel.selectLitterSite(it)
+
+                        // show info fragment
+                        TODO("Add the close button here, so we can manage it in the map fragment")
+                        litterInfoFragment = LitterSiteInfoFragment()
+                        val fragmentManager = requireActivity().supportFragmentManager
+                        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(R.id.cardHolder, litterInfoFragment)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
                     }
                 }
                 true
