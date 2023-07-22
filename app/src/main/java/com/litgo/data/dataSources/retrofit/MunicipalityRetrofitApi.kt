@@ -82,22 +82,31 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
                 body.email,
                 body.name,
                 body.phoneNumber,
-//                body.createdAt,
-//                body.updatedAt
+                body.createdAt,
             )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun updateMunicipality(data: MunicipalityUpdate) {
+    override fun updateMunicipality(data: MunicipalityUpdate): Municipality {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.updateMunicipality(token, data).execute()
 
-            if (!response.isSuccessful) {
+            val body = response.body()
+
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Municipality(
+                body.id,
+                body.email,
+                body.name,
+                body.phoneNumber,
+                body.createdAt,
+            )
         } catch (error: Throwable) {
             throw error
         }

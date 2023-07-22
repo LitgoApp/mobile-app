@@ -23,7 +23,7 @@ interface UserApi {
     fun registerUser(data: UserRegistration)
     fun loginUser(data: Login)
     fun getUser(): User
-    fun updateUser(data: UserUpdate)
+    fun updateUser(data: UserUpdate): User
     fun deleteUser()
 }
 
@@ -62,7 +62,7 @@ class UserRemoteDataSource(
      * Updates the currently logged in user's data in the database and returns the user's data
      * This executes on an IO-optimized thread pool, the function is main-safe.
      */
-    suspend fun updateUser(data: UserUpdate) =
+    suspend fun updateUser(data: UserUpdate): User =
         withContext(ioDispatcher) {
             userApi.updateUser(data)
         }

@@ -83,22 +83,31 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
                 body.name,
                 body.points,
                 body.address,
-//                body.createdAt,
-//                body.updatedAt
+                body.createdAt,
             )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun updateUser(data: UserUpdate) {
+    override fun updateUser(data: UserUpdate): User {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.updateUser(token, data).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return User(
+                body.id,
+                body.email,
+                body.name,
+                body.points,
+                body.address,
+                body.createdAt,
+            )
         } catch (error: Throwable) {
             throw error
         }
