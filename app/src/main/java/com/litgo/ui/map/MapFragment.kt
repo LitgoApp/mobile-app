@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.litgo.R
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
@@ -16,6 +17,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private lateinit var mMap: GoogleMap
     private lateinit var litterSiteViewModel: LitterSiteViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var litterInfoFragment: LitterSiteInfoFragment
 
     override fun onLocationChanged(location: Location) {
         // Update the map with the new location
@@ -105,6 +107,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 marker.tag?.let {
                     if (it is LitterSite) {
                         litterSiteViewModel.selectLitterSite(it)
+
+                        // show info fragment
+                        TODO("Add the close button here, so we can manage it in the map fragment")
+                        litterInfoFragment = LitterSiteInfoFragment()
+                        val fragmentManager = requireActivity().supportFragmentManager
+                        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(R.id.cardHolder, litterInfoFragment)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
                     }
                 }
                 true

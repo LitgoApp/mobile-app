@@ -33,6 +33,7 @@ class LitterSiteInfoFragment : Fragment() {
             binding.descriptionTextView.text = litterSite.description
             // binding.litterCountTextView.text = litterSite.litterCount.toString() not sure what this is
             binding.locationTextView.text = TODO("Format location")
+            binding.dateTimeTextView.text = TODO("Format date")
 
             binding.litterSiteCard.setOnClickListener {
                 TODO("Switch to report details page")
