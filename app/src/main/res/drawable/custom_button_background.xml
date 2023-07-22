@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Other styles here -->
-
-    <!-- Custom style for the ImageButton -->
-    <style name="CustomImageButtonStyle" parent="Widget.AppCompat.ImageButton">
-        <!-- Background with rounded corners -->
-        <item name="android:background">@drawable/custom_button_background</item>
-
-        <!-- Elevation (drop shadow) -->
-        <item name="android:elevation">4dp</item>
-
-        <!-- Optional: Padding if needed -->
-        <!-- <item name="android:padding">8dp</item> -->
-    </style>
-
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- White color for the button background -->
+    <corners android:radius="16dp" /> <!-- Adjust the radius as needed for more/less rounded corners -->
+</shape>

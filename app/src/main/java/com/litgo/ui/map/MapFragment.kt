@@ -20,9 +20,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     override fun onLocationChanged(location: Location) {
         // Update the map with the new location
         val latLng = LatLng(location.latitude, location.longitude)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
-        userCoords = Coordinates(location.latitude, location.longitude)
+        // This will restrict users from navigating the map entirely.
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+
+        val userCoords = Coordinates(location.latitude, location.longitude)
         litterSiteViewModel.fetchNearbyLitterSites(userCoords)
     }
 
@@ -64,6 +66,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         litterSiteViewModel = ViewModelProvider(this).get(LitterSiteViewModel::class.java)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+
+        _binding!!.centerCurrentLocationButton.setOnClickListener {
+            TODO("Center the user's current location")
+        }
+
         mapFragment.getMapAsync(this)
     }
 
