@@ -7,6 +7,7 @@ data class Municipality(
     val email: String,
     val name: String,
     val phoneNumber: String,
+    val createdAt: String,
 )
 
 data class MunicipalityRegistration(

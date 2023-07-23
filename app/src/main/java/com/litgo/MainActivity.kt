@@ -1,11 +1,14 @@
 package com.litgo
 
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
+import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,6 +17,8 @@ import com.litgo.ui.RewardsFragment
 import com.litgo.ui.UserViewModel
 import com.litgo.ui.profile.UserProfileFragment
 import com.litgo.ui.reports.ReportsFragment
+import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,8 +31,19 @@ class MainActivity : AppCompatActivity() {
 //    )[UserViewModel::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val viewModel: LitterSiteViewModel by viewModels()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //viewModel.uiState.collect {
+                    // Update UI elements
+                }
+            }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

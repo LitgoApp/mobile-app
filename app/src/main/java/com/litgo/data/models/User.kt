@@ -8,6 +8,7 @@ data class User(
     val name: String,
     val points: Int,
     val address: String,
+    val createdAt: String,
 )
 
 data class UserRegistration(

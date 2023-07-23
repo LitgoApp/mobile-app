@@ -22,7 +22,7 @@ interface MunicipalityApi {
     fun registerMunicipality(data: MunicipalityRegistration)
     fun loginMunicipality(data: Login)
     fun getMunicipality(): Municipality
-    fun updateMunicipality(data: MunicipalityUpdate)
+    fun updateMunicipality(data: MunicipalityUpdate): Municipality
     fun deleteMunicipality()
 }
 
