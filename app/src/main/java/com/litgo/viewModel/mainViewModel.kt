@@ -5,7 +5,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.litgotesting.data.models.backendDateFormat
+import com.example.litgotesting.data.models.frontendDateFormat
 import com.example.litgotesting.viewModel.LitgoUiState
+import com.example.litgotesting.viewModel.LitterSiteUiState
+import com.example.litgotesting.viewModel.RewardUiState
 import com.example.litgotesting.viewModel.UserUiState
 import com.litgo.data.models.Coordinates
 import com.litgo.data.models.DisposalSite
@@ -55,6 +59,11 @@ class LitterSiteViewModel(
     private var updateMunicipalityJob: Job? = null
     private var deleteMunicipalityJob: Job? = null
 
+    private var getLitterSitesCreatedByUserJob: Job? = null
+    private var getLitterSitesCleanedByUserJob: Job? = null
+
+    private var getEligibleRewardsJob: Job? = null
+
     fun registerUser(data: UserRegistration) {
         registerUserJob?.cancel()
         registerUserJob = viewModelScope.launch {
@@ -74,7 +83,7 @@ class LitterSiteViewModel(
                 val userData = userRepo.getUser()
                 val updatedState = _uiState.value.userUiState.copy(
                     name = userData.name,
-                    joinDate = userData.createdAt,
+                    joinDate = frontendDateFormat.format(backendDateFormat.parse(userData.createdAt)),
                     points = userData.points,
                 )
 
@@ -138,7 +147,7 @@ class LitterSiteViewModel(
                 val municipalityData = municipalityRepo.getMunicipality()
                 val updatedState = _uiState.value.userUiState.copy(
                     name = municipalityData.name,
-                    joinDate = municipalityData.createdAt,
+                    joinDate = frontendDateFormat.format(backendDateFormat.parse(municipalityData.createdAt)),
                 )
 
                 _uiState.update {
@@ -175,6 +184,97 @@ class LitterSiteViewModel(
                 municipalityRepo.deleteMunicipality()
                 _uiState.update {
                     it.copy(userUiState = UserUiState())
+                }
+            } catch (error: Throwable) {
+                throw error
+            }
+        }
+    }
+
+    fun getLitterSitesCreatedByUser() {
+        getLitterSitesCreatedByUserJob?.cancel()
+        getLitterSitesCreatedByUserJob = viewModelScope.launch {
+            try {
+                val litterSites = litterSiteRepo.getLitterSitesCreatedByUser()
+                val updatedState = _uiState.value.userUiState.copy(
+                    reports = litterSites.map { litterSite ->
+                        LitterSiteUiState(
+                            id = litterSite.id,
+                            reportingUserId = litterSite.reportingUserId,
+                            collectingUserId = litterSite.collectingUserId,
+                            isCollected = litterSite.isCollected,
+                            litterCount = litterSite.litterCount,
+                            image = litterSite.image ?: "",
+                            harm = litterSite.harm,
+                            description = litterSite.description,
+                            latitude = litterSite.latitude,
+                            longitude = litterSite.longitude
+                        )
+                    }
+                )
+
+                _uiState.update {
+                    it.copy(userUiState = updatedState)
+                }
+            } catch (error: Throwable) {
+                throw error
+            }
+        }
+    }
+
+//    fun getLitterSitesCleanedByUser() {
+//        getLitterSitesCreatedByUserJob?.cancel()
+//        getLitterSitesCreatedByUserJob = viewModelScope.launch {
+//            try {
+//                val litterSites = litterSiteRepo.get
+//                val updatedState = _uiState.value.userUiState.copy(
+//                    reports = litterSites.filter { litterSite ->
+//                        litterSite.collectingUserId == _uiState.value.userUiState.id
+//                    }.map { litterSite ->
+//                        LitterSiteUiState(
+//                            id = litterSite.id,
+//                            reportingUserId = litterSite.reportingUserId,
+//                            collectingUserId = litterSite.collectingUserId,
+//                            isCollected = litterSite.isCollected,
+//                            litterCount = litterSite.litterCount,
+//                            image = litterSite.image ?: "",
+//                            harm = litterSite.harm,
+//                            description = litterSite.description,
+//                            latitude = litterSite.latitude,
+//                            longitude = litterSite.longitude
+//                        )
+//                    }
+//                )
+//
+//                _uiState.update {
+//                    it.copy(userUiState = updatedState)
+//                }
+//            } catch (error: Throwable) {
+//                throw error
+//            }
+//        }
+//    }
+
+    fun getEligibleRewards() {
+        getEligibleRewardsJob?.cancel()
+        getEligibleRewardsJob = viewModelScope.launch {
+            try {
+                val rewards = rewardRepo.getRewards()
+                val updatedState = _uiState.value.userUiState.copy(
+                    eligibleRewards = rewards.filter { reward ->
+                        reward.cost <= _uiState.value.userUiState.points
+                    }.map { reward ->
+                        RewardUiState(
+                            id = reward.id,
+                            name = reward.name,
+                            cost = reward.cost,
+                            description = reward.description,
+                        )
+                    }
+                )
+
+                _uiState.update {
+                    it.copy(userUiState = updatedState)
                 }
             } catch (error: Throwable) {
                 throw error
