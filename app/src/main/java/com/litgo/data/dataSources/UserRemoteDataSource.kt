@@ -9,13 +9,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class UserApiModel(
-    @SerializedName("userId")    val id: String,
-    @SerializedName("email")     val email: String,
-    @SerializedName("name")      val name: String,
-    @SerializedName("points")    val points: Int,
-    @SerializedName("address")   val address: String,
-    @SerializedName("createdAt") val createdAt: String, // Update to Instant if needed
-    @SerializedName("updatedAt") val updatedAt: String, // Update to instant if needed
+    @SerializedName("email")        val email: String,
+    @SerializedName("name")         val name: String,
+    @SerializedName("points")       val points: Int,
+    @SerializedName("address")      val address: String,
+    @SerializedName("registeredAt") val registeredAt: String,
+    @SerializedName("lastLoginAt")  val lastLoginAt: String,
 )
 
 // Makes user-related synchronous requests to the database

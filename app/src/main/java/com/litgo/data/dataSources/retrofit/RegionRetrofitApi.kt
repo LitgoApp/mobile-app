@@ -19,31 +19,31 @@ import retrofit2.http.Path
 interface RegionRetrofitApiService {
     @GET("api/region")
     fun getRegionsCreatedByMunicipality(
-        @Header("auth-token") token: String
+        @Header("Authorization") token: String
     ): Call<List<RegionApiModel>>
 
     @GET("api/region/{id}")
     fun getRegion(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<RegionApiModel>
 
     @POST("api/region")
     fun createRegion(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Body coords: List<Coordinates>
     ): Call<RegionApiModel>
 
     @PUT("api/region/{id}")
     fun updateRegion(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body coords: List<Coordinates>
     ): Call<RegionApiModel>
 
     @DELETE("api/region/{id}")
     fun deleteRegion(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<RegionApiModel>
 }
@@ -65,8 +65,8 @@ class RegionRetrofitApi(private val retrofit: Retrofit) : RegionApi {
                 Region(
                     region.id,
                     region.municipalityId,
-//                    region.createdAt,
-//                    region.updatedAt
+                    region.createdAt,
+                    region.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -87,35 +87,51 @@ class RegionRetrofitApi(private val retrofit: Retrofit) : RegionApi {
             return Region(
                 body.id,
                 body.municipalityId,
-//                body.createdAt,
-//                body.updatedAt
+                body.createdAt,
+                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun createRegion(coords: List<Coordinates>) {
+    override fun createRegion(coords: List<Coordinates>): Region {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.createRegion(token, coords).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Region(
+                body.id,
+                body.municipalityId,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun updateRegion(id: String, coords: List<Coordinates>) {
+    override fun updateRegion(id: String, coords: List<Coordinates>): Region {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.updateRegion(token, id, coords).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Region(
+                body.id,
+                body.municipalityId,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }

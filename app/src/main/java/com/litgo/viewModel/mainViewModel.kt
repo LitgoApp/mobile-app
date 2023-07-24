@@ -83,7 +83,9 @@ class LitterSiteViewModel(
                 val userData = userRepo.getUser()
                 val updatedState = _uiState.value.userUiState.copy(
                     name = userData.name,
-                    joinDate = frontendDateFormat.format(backendDateFormat.parse(userData.createdAt)),
+                    joinDate = frontendDateFormat.format(
+                        backendDateFormat.parse(userData.registeredAt)
+                    ),
                     points = userData.points,
                 )
 
@@ -147,7 +149,9 @@ class LitterSiteViewModel(
                 val municipalityData = municipalityRepo.getMunicipality()
                 val updatedState = _uiState.value.userUiState.copy(
                     name = municipalityData.name,
-                    joinDate = frontendDateFormat.format(backendDateFormat.parse(municipalityData.createdAt)),
+                    joinDate = frontendDateFormat.format(
+                        backendDateFormat.parse(municipalityData.registeredAt)
+                    ),
                 )
 
                 _uiState.update {
@@ -204,7 +208,7 @@ class LitterSiteViewModel(
                             collectingUserId = litterSite.collectingUserId,
                             isCollected = litterSite.isCollected,
                             litterCount = litterSite.litterCount,
-                            image = litterSite.image ?: "",
+                            image = "",
                             harm = litterSite.harm,
                             description = litterSite.description,
                             latitude = litterSite.latitude,
@@ -222,38 +226,36 @@ class LitterSiteViewModel(
         }
     }
 
-//    fun getLitterSitesCleanedByUser() {
-//        getLitterSitesCreatedByUserJob?.cancel()
-//        getLitterSitesCreatedByUserJob = viewModelScope.launch {
-//            try {
-//                val litterSites = litterSiteRepo.get
-//                val updatedState = _uiState.value.userUiState.copy(
-//                    reports = litterSites.filter { litterSite ->
-//                        litterSite.collectingUserId == _uiState.value.userUiState.id
-//                    }.map { litterSite ->
-//                        LitterSiteUiState(
-//                            id = litterSite.id,
-//                            reportingUserId = litterSite.reportingUserId,
-//                            collectingUserId = litterSite.collectingUserId,
-//                            isCollected = litterSite.isCollected,
-//                            litterCount = litterSite.litterCount,
-//                            image = litterSite.image ?: "",
-//                            harm = litterSite.harm,
-//                            description = litterSite.description,
-//                            latitude = litterSite.latitude,
-//                            longitude = litterSite.longitude
-//                        )
-//                    }
-//                )
-//
-//                _uiState.update {
-//                    it.copy(userUiState = updatedState)
-//                }
-//            } catch (error: Throwable) {
-//                throw error
-//            }
-//        }
-//    }
+    fun getLitterSitesCleanedByUser() {
+        getLitterSitesCleanedByUserJob?.cancel()
+        getLitterSitesCleanedByUserJob = viewModelScope.launch {
+            try {
+                val litterSites = litterSiteRepo.getLitterSitesCleanedByUser()
+                val updatedState = _uiState.value.userUiState.copy(
+                    cleanups = litterSites.map { litterSite ->
+                        LitterSiteUiState(
+                            id = litterSite.id,
+                            reportingUserId = litterSite.reportingUserId,
+                            collectingUserId = litterSite.collectingUserId,
+                            isCollected = litterSite.isCollected,
+                            litterCount = litterSite.litterCount,
+                            image = "",
+                            harm = litterSite.harm,
+                            description = litterSite.description,
+                            latitude = litterSite.latitude,
+                            longitude = litterSite.longitude
+                        )
+                    }
+                )
+
+                _uiState.update {
+                    it.copy(userUiState = updatedState)
+                }
+            } catch (error: Throwable) {
+                throw error
+            }
+        }
+    }
 
     fun getEligibleRewards() {
         getEligibleRewardsJob?.cancel()
@@ -268,7 +270,7 @@ class LitterSiteViewModel(
                             id = reward.id,
                             name = reward.name,
                             cost = reward.cost,
-                            description = reward.description,
+                            description = "",
                         )
                     }
                 )

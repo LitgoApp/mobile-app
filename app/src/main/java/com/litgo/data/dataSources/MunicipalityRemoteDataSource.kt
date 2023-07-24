@@ -9,12 +9,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class MunicipalityApiModel(
-    @SerializedName("municipalityId") val id: String,
-    @SerializedName("email")          val email: String,
-    @SerializedName("name")           val name: String,
-    @SerializedName("phoneNumber")    val phoneNumber: String,
-    @SerializedName("createdAt")      val createdAt: String,
-    @SerializedName("updatedAt")      val updatedAt: String,
+    @SerializedName("email")        val email: String,
+    @SerializedName("name")         val name: String,
+    @SerializedName("phoneNumber")  val phoneNumber: String,
+    @SerializedName("registeredAt") val registeredAt: String,
+    @SerializedName("lastLoginAt")  val lastLoginAt: String,
 )
 
 // Makes municipality-related synchronous requests to the database
@@ -62,7 +61,7 @@ class MunicipalityRemoteDataSource(
      * municipality's data.
      * This executes on an IO-optimized thread pool, the function is main-safe.
      */
-    suspend fun updateMunicipality(data: MunicipalityUpdate) =
+    suspend fun updateMunicipality(data: MunicipalityUpdate): Municipality =
         withContext(ioDispatcher) {
             municipalityApi.updateMunicipality(data)
         }

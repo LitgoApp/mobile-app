@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class DisposalSiteApiModel(
-    @SerializedName("disposalSiteId") val id: String,
+    @SerializedName("id")             val id: String,
     @SerializedName("municipalityId") val municipalityId: String,
     @SerializedName("latitude")       val latitude: Double,
     @SerializedName("longitude")      val longitude: Double,
@@ -19,7 +19,7 @@ data class DisposalSiteApiModel(
 interface DisposalSiteApi {
     fun getDisposalSites(): List<DisposalSite>
     fun getDisposalSite(id: String): DisposalSite
-    fun createDisposalSite(coords: Coordinates)
+    fun createDisposalSite(coords: Coordinates): DisposalSite
     fun deleteDisposalSite(id: String)
 }
 
@@ -37,7 +37,7 @@ class DisposalSiteRemoteDataSource(
             disposalSiteApi.getDisposalSite(id)
         }
 
-    suspend fun createDisposalSite(coords: Coordinates) =
+    suspend fun createDisposalSite(coords: Coordinates): DisposalSite =
         withContext(ioDispatcher) {
             disposalSiteApi.createDisposalSite(coords)
         }
