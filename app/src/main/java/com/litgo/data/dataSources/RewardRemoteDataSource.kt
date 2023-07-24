@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class RewardApiModel(
-    @SerializedName("rewardId")    val id: String,
+    @SerializedName("id")          val id: String,
     @SerializedName("name")        val name: String,
     @SerializedName("cost")        val cost: Int,
     @SerializedName("description") val description: String,
@@ -20,9 +20,9 @@ data class RewardApiModel(
 interface RewardApi {
     fun getRewards(): List<Reward>
     fun getReward(id: String): Reward
-    fun createReward(data: RewardCreation)
-    fun redeemReward(id: String)
-    fun updateReward(id: String, data: RewardUpdate)
+    fun createReward(data: RewardCreation): Reward
+    fun redeemReward(id: String): Reward
+    fun updateReward(id: String, data: RewardUpdate): Reward
     fun deleteReward(id: String)
 }
 
@@ -40,17 +40,17 @@ class RewardRemoteDataSource(
             rewardApi.getReward(id)
         }
 
-    suspend fun createReward(data: RewardCreation) =
+    suspend fun createReward(data: RewardCreation): Reward =
         withContext(ioDispatcher) {
             rewardApi.createReward(data)
         }
 
-    suspend fun redeemReward(id: String) =
+    suspend fun redeemReward(id: String): Reward =
         withContext(ioDispatcher) {
             rewardApi.redeemReward(id)
         }
 
-    suspend fun updateReward(id: String, data: RewardUpdate) =
+    suspend fun updateReward(id: String, data: RewardUpdate): Reward =
         withContext(ioDispatcher) {
             rewardApi.updateReward(id, data)
         }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class RegionApiModel(
-    @SerializedName("regionId")       val id: String,
+    @SerializedName("id")             val id: String,
     @SerializedName("municipalityId") val municipalityId: String,
     @SerializedName("createdAt")      val createdAt: String,
     @SerializedName("updatedAt")      val updatedAt: String,
@@ -17,8 +17,8 @@ data class RegionApiModel(
 interface RegionApi {
     fun getRegionsCreatedByMunicipality(): List<Region>
     fun getRegion(id: String): Region
-    fun createRegion(coords: List<Coordinates>)
-    fun updateRegion(id: String, coords: List<Coordinates>)
+    fun createRegion(coords: List<Coordinates>): Region
+    fun updateRegion(id: String, coords: List<Coordinates>): Region
     fun deleteRegion(id: String)
 }
 
@@ -36,12 +36,12 @@ class RegionRemoteDataSource(
             regionApi.getRegion(id)
         }
 
-    suspend fun createRegion(coords: List<Coordinates>) =
+    suspend fun createRegion(coords: List<Coordinates>): Region =
         withContext(ioDispatcher) {
             regionApi.createRegion(coords)
         }
 
-    suspend fun updateRegion(id: String, coords: List<Coordinates>) =
+    suspend fun updateRegion(id: String, coords: List<Coordinates>): Region =
         withContext(ioDispatcher) {
             regionApi.updateRegion(id, coords)
         }

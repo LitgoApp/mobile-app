@@ -9,13 +9,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class UserApiModel(
-    @SerializedName("userId")    val id: String,
-    @SerializedName("email")     val email: String,
-    @SerializedName("name")      val name: String,
-    @SerializedName("points")    val points: Int,
-    @SerializedName("address")   val address: String,
-    @SerializedName("createdAt") val createdAt: String, // Update to Instant if needed
-    @SerializedName("updatedAt") val updatedAt: String, // Update to instant if needed
+    @SerializedName("email")        val email: String,
+    @SerializedName("name")         val name: String,
+    @SerializedName("points")       val points: Int,
+    @SerializedName("address")      val address: String,
+    @SerializedName("registeredAt") val registeredAt: String,
+    @SerializedName("lastLoginAt")  val lastLoginAt: String,
 )
 
 // Makes user-related synchronous requests to the database
@@ -23,7 +22,7 @@ interface UserApi {
     fun registerUser(data: UserRegistration)
     fun loginUser(data: Login)
     fun getUser(): User
-    fun updateUser(data: UserUpdate)
+    fun updateUser(data: UserUpdate): User
     fun deleteUser()
 }
 
@@ -62,7 +61,7 @@ class UserRemoteDataSource(
      * Updates the currently logged in user's data in the database and returns the user's data
      * This executes on an IO-optimized thread pool, the function is main-safe.
      */
-    suspend fun updateUser(data: UserUpdate) =
+    suspend fun updateUser(data: UserUpdate): User =
         withContext(ioDispatcher) {
             userApi.updateUser(data)
         }

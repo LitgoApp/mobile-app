@@ -13,7 +13,7 @@ class DisposalSiteRepository(
     suspend fun getDisposalSite(id: String): DisposalSite =
         disposalSiteRemoteDataSource.getDisposalSite(id)
 
-    suspend fun createDisposalSite(coords: Coordinates) =
+    suspend fun createDisposalSite(coords: Coordinates): DisposalSite =
         disposalSiteRemoteDataSource.createDisposalSite(coords)
 
     suspend fun deleteDisposalSite(id: String) =

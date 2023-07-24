@@ -20,37 +20,37 @@ import retrofit2.http.Path
 interface RewardRetrofitApiService {
     @GET("api/reward")
     fun getRewards(
-        @Header("auth-token") token: String
+        @Header("Authorization") token: String
     ): Call<List<RewardApiModel>>
 
     @GET("api/reward/{id}")
     fun getReward(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<RewardApiModel>
 
     @POST("api/reward")
     fun createReward(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Body data: RewardCreation
     ): Call<RewardApiModel>
 
     @POST("api/reward/{id}")
     fun redeemReward(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<RewardApiModel>
 
     @PUT("api/reward/{id}")
     fun updateReward(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body data: RewardUpdate
     ): Call<RewardApiModel>
 
     @DELETE("api/reward/{id}")
     fun deleteReward(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<RewardApiModel>
 }
@@ -73,9 +73,9 @@ class RewardRetrofitApi(private val retrofit: Retrofit) : RewardApi {
                     reward.id,
                     reward.name,
                     reward.cost,
-                    reward.description,
-//                    reward.createdAt,
-//                    reward.updatedAt
+                    null,
+                    null,
+                    null
                 )
             }
         } catch (error: Throwable) {
@@ -97,49 +97,79 @@ class RewardRetrofitApi(private val retrofit: Retrofit) : RewardApi {
                 body.id,
                 body.name,
                 body.cost,
-                body.description,
-//                body.createdAt,
-//                body.updatedAt
+                null,
+                null,
+                null
             )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun createReward(data: RewardCreation) {
+    override fun createReward(data: RewardCreation): Reward {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.createReward(token, data).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Reward(
+                body.id,
+                body.name,
+                body.cost,
+                body.description,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun redeemReward(id: String) {
+    override fun redeemReward(id: String): Reward {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.redeemReward(token, id).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Reward(
+                body.id,
+                body.name,
+                body.cost,
+                body.description,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun updateReward(id: String, data: RewardUpdate) {
+    override fun updateReward(id: String, data: RewardUpdate): Reward {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.updateReward(token, id, data).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return Reward(
+                body.id,
+                body.name,
+                body.cost,
+                body.description,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }
