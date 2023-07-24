@@ -70,17 +70,26 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         _binding!!.centerCurrentLocationButton.setOnClickListener {
-            TODO("Center the user's current location")
+            // Center the user's current location
+            litterSiteViewModel.userLocation.observe(viewLifecycleOwner, { location ->
+                val userLatLng = LatLng(location.latitude, location.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
+            })
         }
 
         mapFragment.getMapAsync(this)
     }
 
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.setLocationSource(this)
 
+        // Fetch nearby litter sites and disposal sites
         litterSiteViewModel.fetchNearbyLitterSites(userCoords)
+        litterSiteViewModel.fetchNearbyDisposalSites(userCoords)
+
+        // Observe litter sites and add markers to map
         litterSiteViewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
             // Clear old markers
             mMap.clear()
@@ -95,33 +104,46 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
                 marker.tag = litterSite
             }
+        }
 
-            // Add a marker for the user's current location
-            val userPosition = LatLng(userCoords.latitude, userCoords.longitude)
-            mMap.addMarker(MarkerOptions()
-                .position(userPosition)
-                .title("Your Location")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
-
-            mMap.setOnMarkerClickListener { marker ->
-                marker.tag?.let {
-                    if (it is LitterSite) {
-                        litterSiteViewModel.selectLitterSite(it)
-
-                        // show info fragment
-                        TODO("Add the close button here, so we can manage it in the map fragment")
-                        litterInfoFragment = LitterSiteInfoFragment()
-                        val fragmentManager = requireActivity().supportFragmentManager
-                        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.cardHolder, litterInfoFragment)
-                        fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.commit()
-                    }
-                }
-                true
+        // Observe disposal sites and add markers to map
+        litterSiteViewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->
+            // Add a new marker for each disposal site
+            disposalSites.forEach { disposalSite ->
+                val position = LatLng(disposalSite.latitude, disposalSite.longitude)
+                mMap.addMarker(MarkerOptions()
+                    .position(position)
+                    .title("Disposal Site")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
             }
         }
+
+        // Add a marker for the user's current location
+        val userPosition = LatLng(userCoords.latitude, userCoords.longitude)
+        mMap.addMarker(MarkerOptions()
+            .position(userPosition)
+            .title("Your Location")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+
+        mMap.setOnMarkerClickListener { marker ->
+            marker.tag?.let {
+                if (it is LitterSite) {
+                    litterSiteViewModel.selectLitterSite(it)
+
+                    // show info fragment
+                    TODO("Add the close button here, so we can manage it in the map fragment")
+                    litterInfoFragment = LitterSiteInfoFragment()
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.cardHolder, litterInfoFragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }
+            }
+            true
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
