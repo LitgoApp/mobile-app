@@ -18,24 +18,24 @@ import retrofit2.http.Path
 interface DisposalSiteRetrofitApiService {
     @GET("api/disposal-site")
     fun getDisposalSites(
-        @Header("auth-token") token: String
+        @Header("Authorization") token: String
     ): Call<List<DisposalSiteApiModel>>
 
     @GET("api/disposal-site/{id}")
     fun getDisposalSite(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<DisposalSiteApiModel>
 
     @POST("api/disposal-site")
     fun createDisposalSite(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Body coords: Coordinates
     ): Call<DisposalSiteApiModel>
 
     @DELETE("api/disposal-site/{id}")
     fun deleteDisposalSite(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<DisposalSiteApiModel>
 }
@@ -59,8 +59,8 @@ class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi 
                     disposalSite.municipalityId,
                     disposalSite.latitude,
                     disposalSite.longitude,
-//                    disposalSite.createdAt,
-//                    disposalSite.updatedAt
+                    disposalSite.createdAt,
+                    disposalSite.updatedAt
                 )
             }
         } catch (error: Throwable) {
@@ -83,22 +83,32 @@ class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi 
                 body.municipalityId,
                 body.latitude,
                 body.longitude,
-//                body.createdAt,
-//                body.updatedAt
+                body.createdAt,
+                body.updatedAt
             )
         } catch (error: Throwable) {
             throw error
         }
     }
 
-    override fun createDisposalSite(coords: Coordinates) {
+    override fun createDisposalSite(coords: Coordinates): DisposalSite {
         try {
             val token = authToken ?: throw Exception("No auth token")
             val response = service.createDisposalSite(token, coords).execute()
+            val body = response.body()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 throw HttpException(response)
             }
+
+            return DisposalSite(
+                body.id,
+                body.municipalityId,
+                body.latitude,
+                body.longitude,
+                body.createdAt,
+                body.updatedAt
+            )
         } catch (error: Throwable) {
             throw error
         }

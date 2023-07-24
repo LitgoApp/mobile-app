@@ -2,13 +2,14 @@ package com.litgo.data.dataSources
 
 import com.google.gson.annotations.SerializedName
 import com.litgo.data.models.Coordinates
+import com.litgo.data.models.DisposalSite
 import com.litgo.data.models.LitterSite
 import com.litgo.data.models.LitterSiteCreation
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 data class LitterSiteApiModel(
-    @SerializedName("litterSiteId")     val id: String,
+    @SerializedName("id")               val id: String,
     @SerializedName("reportingUserId")  val reportingUserId: String,
     @SerializedName("collectingUserId") val collectingUserId: String?,
     @SerializedName("isCollected")      val isCollected: Boolean,
@@ -18,6 +19,7 @@ data class LitterSiteApiModel(
     @SerializedName("description")      val description: String,
     @SerializedName("latitude")         val latitude: Double,
     @SerializedName("longitude")        val longitude: Double,
+    @SerializedName("disposalSite")     val closestDisposalSite: DisposalSiteApiModel?,
     @SerializedName("createdAt")        val createdAt: String,
     @SerializedName("updatedAt")        val updatedAt: String,
 )
@@ -26,9 +28,10 @@ data class LitterSiteApiModel(
 interface LitterSiteApi {
     fun getNearbyLitterSites(userCoords: Coordinates): List<LitterSite>
     fun getLitterSitesCreatedByUser(): List<LitterSite>
+    fun getLitterSitesCleanedByUser(): List<LitterSite>
     fun getLitterSite(id: String, userCoords: Coordinates): LitterSite
-    fun createLitterSite(data: LitterSiteCreation)
-    fun cleanLitterSite(id: String)
+    fun createLitterSite(data: LitterSiteCreation): LitterSite
+    fun cleanLitterSite(id: String, userCoords: Coordinates): LitterSite
     fun deleteLitterSite(id: String)
 }
 
@@ -46,19 +49,24 @@ class LitterSiteRemoteDataSource(
             litterSiteApi.getLitterSitesCreatedByUser()
         }
 
+    suspend fun getLitterSitesCleanedByUser(): List<LitterSite> =
+        withContext(ioDispatcher) {
+            litterSiteApi.getLitterSitesCreatedByUser()
+        }
+
     suspend fun getLitterSite(id: String, userCoords: Coordinates): LitterSite =
         withContext(ioDispatcher) {
             litterSiteApi.getLitterSite(id, userCoords)
         }
 
-    suspend fun createLitterSite(data: LitterSiteCreation) =
+    suspend fun createLitterSite(data: LitterSiteCreation): LitterSite =
         withContext(ioDispatcher) {
             litterSiteApi.createLitterSite(data)
         }
 
-    suspend fun cleanLitterSite(id: String) =
+    suspend fun cleanLitterSite(id: String, userCoords: Coordinates): LitterSite =
         withContext(ioDispatcher) {
-            litterSiteApi.cleanLitterSite(id)
+            litterSiteApi.cleanLitterSite(id, userCoords)
         }
 
     suspend fun deleteLitterSite(id: String) =

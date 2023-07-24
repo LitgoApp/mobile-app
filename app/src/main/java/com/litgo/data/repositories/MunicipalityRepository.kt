@@ -18,7 +18,7 @@ class MunicipalityRepository(
     suspend fun getMunicipality(): Municipality =
         municipalityRemoteDataSource.getMunicipality()
 
-    suspend fun updateMunicipality(data: MunicipalityUpdate) =
+    suspend fun updateMunicipality(data: MunicipalityUpdate): Municipality =
         municipalityRemoteDataSource.updateMunicipality(data)
 
     suspend fun deleteMunicipality() =
