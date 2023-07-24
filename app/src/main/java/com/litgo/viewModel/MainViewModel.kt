@@ -325,7 +325,6 @@ class LitterSiteViewModel(
      */
 
     val nearbyLitterSites = MutableLiveData<List<LitterSite>>()
-
     fun fetchNearbyLitterSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
@@ -336,5 +335,18 @@ class LitterSiteViewModel(
             }
         }
     }
+
+    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
+    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
+        viewModelScope.launch {
+            try {
+                val disposalSites = repository.getNearbyDisposalSites(userCoords)
+                nearbyDisposalSites.value = disposalSites
+            } catch (e: Exception) {
+                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
+            }
+        }
+    }
+
 }
 
