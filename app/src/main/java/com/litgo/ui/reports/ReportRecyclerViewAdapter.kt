@@ -1,4 +1,4 @@
-package com.litgo.ui.profile
+package com.litgo.ui.reports
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater

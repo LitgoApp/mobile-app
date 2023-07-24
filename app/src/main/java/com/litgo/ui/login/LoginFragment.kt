@@ -17,10 +17,10 @@ import com.litgo.databinding.FragmentLoginBinding
 
 import com.litgo.R
 import com.litgo.data.models.Login
-import com.litgo.ui.UserViewModel
+import com.litgo.viewModel.LitterSiteViewModel
 
 class LoginFragment : Fragment() {
-    private val userViewModel: UserViewModel by viewModels()
+    private val viewModel: LitterSiteViewModel by activityViewModels()
     private var _binding: FragmentLoginBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -61,15 +61,10 @@ class LoginFragment : Fragment() {
 //        )
 
         loginButton.setOnClickListener {
-            var login = Login(emailEditText.text.toString(), passwordEditText.toString())
+            var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
             // TODO: temporary login credentials for testing. Should change to the below eventually
-            // var result = userViewModel.login(login)
-            var result = if (emailEditText.text.toString() == "hi") true else false
-            if (result == false) {
-                showLoginFailed()
-            } else {
-                showLoginSuccess()
-            }
+//            var result = viewModel.loginUser(login)
+            if (emailEditText.text.toString() == "hi") showLoginSuccess() else showLoginFailed()
             // Upon successful login, the user state changes to indicate successful login
             // UI will be updated
         }
@@ -77,7 +72,6 @@ class LoginFragment : Fragment() {
         createAccountButton.setOnClickListener {
             showCreateAccount()
         }
-
 
     }
 

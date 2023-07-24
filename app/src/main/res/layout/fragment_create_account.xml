@@ -33,8 +33,8 @@
 
 
     <EditText
-        android:id="@+id/location_edittext"
-        android:hint="@string/create_account_location_edittext_prompt"
+        android:id="@+id/address_edittext"
+        android:hint="@string/create_account_address_edittext_prompt"
         android:autofillHints="postalCode"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/email_edittext"
         android:layout_marginTop="@dimen/vertical_spacing"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
 
     <EditText
@@ -52,7 +52,7 @@
         android:autofillHints="emailAddress"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/location_edittext"
+        app:layout_constraintTop_toBottomOf="@id/address_edittext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/password_edittext"
@@ -82,6 +82,18 @@
         app:layout_constraintTop_toBottomOf="@+id/password_edittext"
         app:layout_constraintVertical_bias="0.1"
         android:theme="@style/LitGo.Button.White" />
+
+    <TextView
+        android:id="@+id/create_account_error_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_account_button"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="@string/create_account_error_textview_text"
+        android:theme="@style/LitGo.TextView.LoginErrorTextView"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"

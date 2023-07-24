@@ -47,7 +47,7 @@ class CameraFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.uiState.collectAsState()
+//        viewModel.uiState.collectAsState()
     }
 
     override fun onCreateView(

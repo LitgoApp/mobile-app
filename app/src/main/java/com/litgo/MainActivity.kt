@@ -3,9 +3,7 @@ package com.litgo
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
-import com.litgo.ui.UserViewModel
 import com.litgo.ui.profile.UserProfileFragment
 import com.litgo.ui.reports.ReportsFragment
 import com.litgo.viewModel.LitterSiteViewModel
@@ -31,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 //    )[UserViewModel::class.java]
 
     override fun onCreate(savedInstanceState: Bundle?) {
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         val viewModel: LitterSiteViewModel by viewModels()
         lifecycleScope.launch {
@@ -40,10 +38,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         val appBarTitleTextView = findViewById<TextView>(R.id.app_bar_title_textview)
 
         // toggle visibility of navigation bar according to whether user is logged in
-        val bottomNavView = binding.navBottom
-        val appBarLayout = binding.appBarLayout
+//        val bottomNavView = binding.navBottom
+//        val appBarLayout = binding.appBarLayout
 //        userViewModel.userState.observe(this,
 //            Observer {
 //                if (it.loggedIn == true) {
@@ -74,21 +69,23 @@ class MainActivity : AppCompatActivity() {
         // Add actions to navbar icons
         binding.cameraNavBtn.setOnClickListener {
         }
+        binding.mapNavBtn.setOnClickListener {
+        }
         binding.userProfileNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, UserProfileFragment.newInstance())
+            transaction.replace(R.id.nav_host_fragment_content_main, UserProfileFragment())
             transaction.commit()
             appBarTitleTextView.text = "My Profile"
         }
         binding.userReportsNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, ReportsFragment.newInstance("Hello", "World!"))
+            transaction.replace(R.id.nav_host_fragment_content_main, ReportsFragment())
             transaction.commit()
             appBarTitleTextView.text = "My Reports and Cleanups"
         }
         binding.rewardsNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, RewardsFragment.newInstance())
+            transaction.replace(R.id.nav_host_fragment_content_main, RewardsFragment())
             transaction.commit()
             appBarTitleTextView.text = "My Rewards"
         }
@@ -113,13 +110,13 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-//    /**
-//     * Handle scrolling up and down navigation
-//     */
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(R.id.nav_host_fragment_content_main)
-//        return navController.navigateUp(appBarConfiguration)
-//                || super.onSupportNavigateUp()
-//    }
+    /**
+     * Handle scrolling up and down navigation
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return navController.navigateUp()
+                || super.onSupportNavigateUp()
+    }
 
 }

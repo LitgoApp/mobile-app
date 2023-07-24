@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/screen_margin"
     android:background="@color/lightest_gray"
-    android:clipToPadding="false"
-    android:clipChildren="false"
     tools:context=".ui.reports.ReportsFragment">
 
 <!--    &lt;!&ndash; Switch bar for toggling between the different kind of-->
@@ -103,18 +101,18 @@
 
 <!--    </LinearLayout>-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_reports_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/vertical_spacing"
-        tools:listitem="@layout/fragment_report_item"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/user_reports_recycler_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:layout_marginTop="@dimen/vertical_spacing"-->
+<!--        tools:listitem="@layout/fragment_report_item"-->
+<!--        android:clipChildren="false"-->
+<!--        android:clipToPadding="false"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

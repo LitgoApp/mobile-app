@@ -15,10 +15,12 @@
     <string name="create_button_text">Create</string>
     <string name="sign_in_prompt_textview_text">Have an account already?</string>
     <string name="create_account_full_name_edittext_prompt">Full Name</string>
-    <string name="create_account_location_edittext_prompt">Location (City)</string>
+    <string name="create_account_address_edittext_prompt">Address</string>
     <string name="create_account_email_edittext_prompt">Email</string>
     <string name="create_account_password_edittext_prompt">Password</string>
     <string name="create_account_popup_text">Account created! Please login</string>
+    <string name="create_account_error_textview_text">An error has occurred.\nPlease ensure all your details\nhave been entered correctly.</string>
+    <string name="create_account_error_prompt"> is empty or invalid.</string>
 
     <string name="take_photo">Take Photo</string>
 

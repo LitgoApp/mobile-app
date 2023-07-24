@@ -6,27 +6,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.litgo.R
+import com.litgo.databinding.FragmentUserProfileBinding
+import com.litgo.viewModel.LitterSiteViewModel
 
 class UserProfileFragment : Fragment() {
+    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private var _binding: FragmentUserProfileBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
 
-    companion object {
-        fun newInstance() = UserProfileFragment()
-    }
-
-    private lateinit var viewModel: UserProfileViewModel
+//    companion object {
+//        fun newInstance() = UserProfileFragment()
+//    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_user_profile, container, false)
+        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
-
 }
