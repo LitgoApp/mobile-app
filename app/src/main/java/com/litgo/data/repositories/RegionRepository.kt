@@ -11,10 +11,10 @@ class RegionRepository(private val regionRemoteDataSource: RegionRemoteDataSourc
     suspend fun getRegion(id: String): Region =
         regionRemoteDataSource.getRegion(id)
 
-    suspend fun createRegion(coords: List<Coordinates>) =
+    suspend fun createRegion(coords: List<Coordinates>): Region =
         regionRemoteDataSource.createRegion(coords)
 
-    suspend fun updateRegion(id: String, coords: List<Coordinates>) =
+    suspend fun updateRegion(id: String, coords: List<Coordinates>): Region =
         regionRemoteDataSource.updateRegion(id, coords)
 
     suspend fun deleteRegion(id: String) =

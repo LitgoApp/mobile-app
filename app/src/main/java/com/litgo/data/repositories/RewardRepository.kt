@@ -12,13 +12,13 @@ class RewardRepository(private val rewardRemoteDataSource: RewardRemoteDataSourc
     suspend fun getReward(id: String): Reward =
         rewardRemoteDataSource.getReward(id)
 
-    suspend fun createReward(data: RewardCreation) =
+    suspend fun createReward(data: RewardCreation): Reward =
         rewardRemoteDataSource.createReward(data)
 
-    suspend fun redeemReward(id: String) =
+    suspend fun redeemReward(id: String): Reward =
         rewardRemoteDataSource.redeemReward(id)
 
-    suspend fun updateReward(id: String, data: RewardUpdate) =
+    suspend fun updateReward(id: String, data: RewardUpdate): Reward =
         rewardRemoteDataSource.updateReward(id, data)
 
     suspend fun deleteReward(id: String) =

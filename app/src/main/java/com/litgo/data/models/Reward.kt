@@ -6,7 +6,9 @@ data class Reward(
     val id: String,
     val name: String,
     val cost: Int,
-    val description: String,
+    val description: String?,
+    val createdAt: String?,
+    val updatedAt: String?,
 )
 
 data class RewardCreation(
