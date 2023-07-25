@@ -21,6 +21,8 @@ import com.litgo.databinding.FragmentLoginBinding
 import com.litgo.R
 import com.litgo.data.models.Login
 import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -55,18 +57,24 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
-            viewModel.loginUser(login)
+            try {
+                viewModel.loginUser(login)
+            } catch (e: CancellationException) {
+
+            } finally {
+                showLoginFailed()
+            }
         }
 
         createAccountButton.setOnClickListener {
             showCreateAccount()
         }
 
-        lifecycleScope.launch {
-            viewModel.observeState().collect {
-                renderState(it)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.observeState().collect {
+//                renderState(it)
+//            }
+//        }
     }
 
     private fun renderState(it: LitgoUiState) {

@@ -27,19 +27,19 @@ class LitterSiteInfoFragment : Fragment() {
 
         litterSiteViewModel = ViewModelProvider(requireActivity()).get(LitterSiteViewModel::class.java)
 
-        litterSiteViewModel.selectedLitterSite.observe(viewLifecycleOwner) { litterSite ->
-            // TO BE CHANGED
-            binding.harmTextView.text = litterSite.harm
-            binding.descriptionTextView.text = litterSite.description
-            // binding.litterCountTextView.text = litterSite.litterCount.toString() not sure what this is
-            binding.locationTextView.text = TODO("Format location")
-            binding.dateTimeTextView.text = TODO("Format date")
-
-            binding.litterSiteCard.setOnClickListener {
-                TODO("Switch to report details page")
-            }
-
-        }
+//        litterSiteViewModel.selectedLitterSite.observe(viewLifecycleOwner) { litterSite ->
+//            // TO BE CHANGED
+//            binding.harmTextView.text = litterSite.harm
+//            binding.descriptionTextView.text = litterSite.description
+//            // binding.litterCountTextView.text = litterSite.litterCount.toString() not sure what this is
+//            binding.locationTextView.text = TODO("Format location")
+//            binding.dateTimeTextView.text = TODO("Format date")
+//
+//            binding.litterSiteCard.setOnClickListener {
+//                TODO("Switch to report details page")
+//            }
+//
+//        }
     }
 
     override fun onDestroyView() {

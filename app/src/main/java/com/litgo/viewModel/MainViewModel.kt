@@ -57,7 +57,7 @@ class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.23.176.1:3001/")
+        .baseUrl("http://172.17.0.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

@@ -81,12 +81,8 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
                 body.email,
                 body.name,
                 body.phoneNumber,
-<<<<<<< HEAD
-                body.createdAt,
-=======
                 body.registeredAt,
                 body.lastLoginAt,
->>>>>>> main
             )
         } catch (error: Throwable) {
             throw error
@@ -105,19 +101,11 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
             }
 
             return Municipality(
-<<<<<<< HEAD
-                body.id,
-                body.email,
-                body.name,
-                body.phoneNumber,
-                body.createdAt,
-=======
                 body.email,
                 body.name,
                 body.phoneNumber,
                 body.registeredAt,
                 body.lastLoginAt,
->>>>>>> main
             )
         } catch (error: Throwable) {
             throw error
