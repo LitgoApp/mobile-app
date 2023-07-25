@@ -56,8 +56,6 @@ class LoginFragment : Fragment() {
             try {
                 viewModel.loginUser(login)
             } catch (e: HttpException) {
-
-            } finally {
                 showLoginFailed()
             }
         }

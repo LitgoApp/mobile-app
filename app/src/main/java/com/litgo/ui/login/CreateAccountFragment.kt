@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,15 +16,14 @@ import com.litgo.R
 import com.litgo.data.models.UserRegistration
 import com.litgo.databinding.FragmentCreateAccountBinding
 import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import kotlin.system.exitProcess
 
 class CreateAccountFragment : Fragment() {
     private val viewModel: LitterSiteViewModel by activityViewModels()
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
-
-//    companion object {
-//        fun newInstance() = CreateAccountFragment()
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +32,6 @@ class CreateAccountFragment : Fragment() {
     ): View? {
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
         return binding.root
-    //        return inflater.inflate(R.layout.fragment_create_account, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,11 +60,16 @@ class CreateAccountFragment : Fragment() {
                 addressEditText.text.toString()
             )
             if (verifySubmit(register)) {
-//                val result = viewModel.registerUser(register)
-                // TODO: Process result of the registration based on the returned value
-                showSuccess()
+                // Attempt to create a new user
+                try {
+                    viewModel.registerUser(register)
+                    showCreateSuccess()
+                } catch (e : HttpException) {
+                    // TODO: Handle exception
+                    showCreateFailure()
+                }
             } else {
-                binding.createAccountErrorTextview.visibility = View.VISIBLE
+                showCreateFailure()
             }
         }
 
@@ -76,7 +80,6 @@ class CreateAccountFragment : Fragment() {
 
     private fun verifySubmit(register: UserRegistration): Boolean {
         var result = true
-        // TODO: Show the warning label on empty fields
         if (register.email.isNullOrEmpty()) {
             binding.emailEdittext.error = "Email" + R.string.create_account_error_prompt
             result = false
@@ -96,11 +99,15 @@ class CreateAccountFragment : Fragment() {
         return result
     }
 
-    private fun showSuccess() {
+    private fun showCreateSuccess() {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, R.string.create_account_popup_text, Toast.LENGTH_LONG).show()
         // Switch to login screen
         findNavController().navigate(R.id.action_CreateAccountFragment_to_LoginFragment)
-        val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
     }
+
+    private fun showCreateFailure() {
+        binding.createAccountErrorTextview.visibility = View.VISIBLE
+    }
+
 }

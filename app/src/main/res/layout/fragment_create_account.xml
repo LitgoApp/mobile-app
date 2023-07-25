@@ -63,6 +63,7 @@
         android:id="@+id/password_edittext"
         android:hint="@string/create_account_password_edittext_prompt"
         android:autofillHints="password"
+        android:inputType="textPassword"
         android:layout_width="@dimen/login_input_width"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/email_edittext"
