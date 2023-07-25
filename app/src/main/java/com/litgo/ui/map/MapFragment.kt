@@ -33,6 +33,7 @@ import com.litgo.viewModel.LitterSiteViewModel
 import android.Manifest
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import com.google.android.gms.location.Priority
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
@@ -48,10 +49,41 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private lateinit var userCoords: Coordinates
+    private lateinit var locationCallback : LocationCallback
+    private lateinit var locationRequest : LocationRequest
+    private var locationPermissionGranted = false
 
-    private fun openBannerContainer(litterSite: LitterSite) {
-        TODO("Make this so that you can pass it a litterSite and it will create the banner")
+    private fun startLocationUpdates() {
+        if (locationPermissionGranted) {
+
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        }
     }
+
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+
+    }
+
 
     private fun closeBannerContainer() {
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
@@ -79,25 +111,29 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        TODO("Investigate locationRequest")
-        val locationRequest = LocationRequest.create().apply {
-            interval = 10000 // Update location every 10 seconds
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        val locationRequestBuilder = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
+        locationRequestBuilder.setMinUpdateDistanceMeters(10.0F)
+
+        locationRequest = locationRequestBuilder.build()
+
+        startLocationUpdates()
+
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult ?: return
+                for (location in locationResult.locations) {
+                    // update UI through the onLocationChanged method
+                    onLocationChanged(location)
+                }
+            }
         }
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    locationResult ?: return
-                    for (location in locationResult.locations){
-                        // Update UI with location data
-                        onLocationChanged(locationResult.location)
-                    }
-                }
-            }, Looper.getMainLooper())
-        }
+
+
+
+
+
     }
 
     override fun onCreateView(
@@ -126,11 +162,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         }
 
         _binding!!.bannerCloseButton.setOnClickListener {
-            if (bannerContainer != null) {
-                childFragmentManager.beginTransaction()
-                    .hide(bannerContainer)
-                    .commit()
-            }
+            closeBannerContainer()
         }
 
         mapFragment.getMapAsync(this)
@@ -155,11 +187,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 val position = LatLng(litterSite.latitude, litterSite.longitude)
                 val marker = mMap.addMarker(
                     MarkerOptions()
-                    .position(position)
-                    .title("Litter Site")
-                    .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                marker?.tag = litterSite
+                        .position(position)
+                        .title("Litter Site")
+                        .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+                marker?.tag = litterSite.id
             }
         }
 
@@ -204,25 +236,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     fragmentTransaction.replace(R.id.fragmentContainer, litterInfoFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
-
-                    // Fetch the specific litter site based on ID
-                    viewModel.fetchLitterSiteById(it.id, userCoords).observe(viewLifecycleOwner) { litterSite: LiveData<LitterSite> ->
-                        // Pass the litter site to the info fragment
-                        TODO("Fix the following line, newInstance is not a method of LitterSiteInfoFragment")
-                        litterInfoFragment = LitterSiteInfoFragment.newInstance(litterSite)
-                        val fragmentManager = requireActivity().supportFragmentManager
-                        val fragmentTransaction: FragmentTransaction =
-                            fragmentManager.beginTransaction()
-                        fragmentTransaction.replace(R.id.fragmentContainer, litterInfoFragment)
-                        fragmentTransaction.addToBackStack(null)
-                        fragmentTransaction.commit()
-                    }
                 }
             }
             true
         }
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
