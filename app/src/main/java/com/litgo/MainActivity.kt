@@ -10,33 +10,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.litgo.data.dataSources.DisposalSiteRemoteDataSource
-import com.litgo.data.dataSources.LitterSiteRemoteDataSource
-import com.litgo.data.dataSources.MunicipalityRemoteDataSource
-import com.litgo.data.dataSources.RegionRemoteDataSource
-import com.litgo.data.dataSources.RewardRemoteDataSource
-import com.litgo.data.dataSources.UserRemoteDataSource
-import com.litgo.data.dataSources.retrofit.DisposalSiteRetrofitApi
-import com.litgo.data.dataSources.retrofit.LitterSiteRetrofitApi
-import com.litgo.data.dataSources.retrofit.MunicipalityRetrofitApi
-import com.litgo.data.dataSources.retrofit.RegionRetrofitApi
-import com.litgo.data.dataSources.retrofit.RewardRetrofitApi
-import com.litgo.data.dataSources.retrofit.UserRetrofitApi
-import com.litgo.data.repositories.DisposalSiteRepository
-import com.litgo.data.repositories.LitterSiteRepository
-import com.litgo.data.repositories.MunicipalityRepository
-import com.litgo.data.repositories.RegionRepository
-import com.litgo.data.repositories.RewardRepository
-import com.litgo.data.repositories.UserRepository
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
-import com.litgo.ui.profile.UserProfileFragment
-import com.litgo.ui.reports.LitterSiteReportsFragment
+import com.litgo.ui.user.UserProfileFragment
+import com.litgo.ui.litterSite.LitterSiteReportsFragment
 import com.litgo.viewModel.LitterSiteViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration

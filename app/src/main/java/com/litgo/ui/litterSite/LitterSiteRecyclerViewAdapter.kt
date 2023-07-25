@@ -1,4 +1,4 @@
-package com.litgo.ui.reports
+package com.litgo.ui.litterSite
 
 import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
@@ -51,8 +51,8 @@ class LitterSitesRecyclerViewAdapter(
         var statusImageView: ImageView = binding.litterSiteStatusIconImageview
         var lastUpdatedTextView: TextView = binding.litterSiteLastUpdatedTextview
         val descriptionTextView: TextView = binding.litterSiteDescriptionTextview
-        val cleanupPointsTextView: TextView = binding.litterSitePointsTextview
-        val reportPointsTextView: TextView = binding.litterSitePointsTextview
+        val cleanupPointsTextView: TextView = binding.litterSiteCleanupPointsTextview
+        val reportPointsTextView: TextView = binding.litterSiteReportPointsTextview
         val locationTextView: TextView = binding.litterSiteAddressTextview
         val photoImageView: ImageView = binding.litterSitePhotoImageview
 

@@ -1,17 +1,13 @@
-package com.litgo.ui.profile
+package com.litgo.ui.user
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.example.litgotesting.viewModel.LitgoUiState
-import com.litgo.R
 import com.litgo.databinding.FragmentUserProfileBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.launch

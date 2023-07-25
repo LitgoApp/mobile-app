@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/CreateAccountFragment"
-        android:name="com.litgo.ui.CreateAccountFragment"
+        android:name="com.litgo.ui.login.CreateAccountFragment"
         tools:layout="@layout/fragment_create_account">
         <action
             android:id="@+id/action_CreateAccountFragment_to_LoginFragment"
@@ -28,13 +28,13 @@
 
     <fragment
         android:id="@+id/UserProfileFragment"
-        android:name="com.litgo.ui.profile.UserProfileFragment"
+        android:name="com.litgo.ui.user.UserProfileFragment"
         tools:layout="@layout/fragment_user_profile">
     </fragment>
 
     <fragment
         android:id="@+id/ReportsFragment"
-        android:name="com.litgo.ui.reports.ReportsFragment"
+        android:name="com.litgo.ui.litterSite.ReportsFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 

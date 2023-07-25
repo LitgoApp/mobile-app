@@ -1,4 +1,4 @@
-package com.litgo.ui.reports
+package com.litgo.ui.litterSite
 
 import android.os.Bundle
 import android.view.LayoutInflater
