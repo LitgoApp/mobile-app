@@ -1,17 +1,42 @@
 package com.litgo.ui.map
 
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.litgo.MainActivity
+import com.litgo.Manifest
 import com.litgo.R
+import com.litgo.data.models.Coordinates
+import com.litgo.data.models.LitterSite
+import com.litgo.databinding.FragmentMapBinding
+import com.litgo.viewModel.LitterSiteViewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     private var _binding: FragmentMapBinding? = null
+
+    private lateinit var latLng: LatLng
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
@@ -21,10 +46,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onLocationChanged(location: Location) {
         // Update the map with the new location
-        val latLng = LatLng(location.latitude, location.longitude)
-
-        // This will restrict users from navigating the map entirely.
-        // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        latLng = LatLng(location.latitude, location.longitude)
 
         val userCoords = Coordinates(location.latitude, location.longitude)
         litterSiteViewModel.fetchNearbyLitterSites(userCoords)
@@ -70,13 +92,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         _binding!!.centerCurrentLocationButton.setOnClickListener {
-            // Fetch the last known location directly
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null) {
-                    val userLatLng = LatLng(location.latitude, location.longitude)
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
-                }
-            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+
         }
 
         mapFragment.getMapAsync(this)
@@ -99,12 +116,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             // Add a new marker for each litter site
             litterSites.forEach { litterSite ->
                 val position = LatLng(litterSite.latitude, litterSite.longitude)
-                val marker = mMap.addMarker(MarkerOptions()
+                val marker = mMap.addMarker(
+                    MarkerOptions()
                     .position(position)
                     .title("Litter Site")
                     .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                marker.tag = litterSite
+                marker?.tag = litterSite
             }
         }
 
@@ -121,7 +139,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         }
 
         // Add a marker for the user's current location
-        val userPosition = LatLng(userCoords.latitude, userCoords.longitude)
+        val userPosition = latLng
         mMap.addMarker(MarkerOptions()
             .position(userPosition)
             .title("Your Location")
@@ -142,6 +160,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     fragmentTransaction.replace(R.id.cardHolder, litterInfoFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
+
                 }
             }
             true
