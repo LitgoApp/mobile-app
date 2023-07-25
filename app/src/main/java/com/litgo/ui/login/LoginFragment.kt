@@ -19,6 +19,7 @@ import com.litgo.R
 import com.litgo.data.models.Login
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class LoginFragment : Fragment() {
     private val viewModel: LitterSiteViewModel by activityViewModels()
@@ -54,7 +55,7 @@ class LoginFragment : Fragment() {
             var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
             try {
                 viewModel.loginUser(login)
-            } catch (e: retrofit2.HttpException) {
+            } catch (e: HttpException) {
 
             } finally {
                 showLoginFailed()

@@ -57,8 +57,12 @@ import java.util.Date
 class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude
 
+//    private val retrofit: Retrofit = Retrofit.Builder()
+//        .baseUrl("https://backend-service-v0b8.onrender.com/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://backend-service-v0b8.onrender.com/")
+        .baseUrl("http://172.17.0.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -334,20 +338,20 @@ class LitterSiteViewModel : ViewModel() {
             try {
                 val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
                 val updatedState = _uiState.value.copy(
-                    nearbyLitterSites = litterSites.map { litterSite ->
-                        LitterSiteUiState(
-                            id = litterSite.id,
-                            reportingUserId = litterSite.reportingUserId,
-                            collectingUserId = litterSite.collectingUserId,
-                            isCollected = litterSite.isCollected,
-                            litterCount = litterSite.litterCount,
-                            image = "",
-                            harm = litterSite.harm,
-                            description = litterSite.description,
-                            latitude = litterSite.latitude,
-                            longitude = litterSite.longitude
-                        )
-                    }
+//                    nearbyLitterSites = litterSites.map { litterSite ->
+//                        LitterSiteUiState(
+//                            id = litterSite.id,
+//                            reportingUserId = litterSite.reportingUserId,
+//                            collectingUserId = litterSite.collectingUserId,
+//                            isCollected = litterSite.isCollected,
+//                            litterCount = litterSite.litterCount,
+//                            image = "",
+//                            harm = litterSite.harm,
+//                            description = litterSite.description,
+//                            latitude = litterSite.latitude,
+//                            longitude = litterSite.longitude
+//                        )
+//                    }
                 )
                 _uiState.value = updatedState
             } catch (e: Exception) {
@@ -356,49 +360,49 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
-    fun fetchLitterSiteById(id: String, userCoords: Coordinates) {
-        viewModelScope.launch {
-            try {
-                val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
-                val updatedState = _uiState.value.copy(
-                    litterSiteUiState = LitterSiteUiState(
-                        id = litterSite.id,
-                        reportingUserId = litterSite.reportingUserId,
-                        collectingUserId = litterSite.collectingUserId,
-                        isCollected = litterSite.isCollected,
-                        litterCount = litterSite.litterCount,
-                        image = "",
-                        harm = litterSite.harm,
-                        description = litterSite.description,
-                        latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
-                    )
-                )
-                _uiState.value = updatedState
-            } catch (e: Exception) {
-                Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
-            }
-        }
-    }
+//    fun fetchLitterSiteById(id: String, userCoords: Coordinates) {
+//        viewModelScope.launch {
+//            try {
+//                val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
+//                val updatedState = _uiState.value.copy(
+//                    litterSiteUiState = LitterSiteUiState(
+//                        id = litterSite.id,
+//                        reportingUserId = litterSite.reportingUserId,
+//                        collectingUserId = litterSite.collectingUserId,
+//                        isCollected = litterSite.isCollected,
+//                        litterCount = litterSite.litterCount,
+//                        image = "",
+//                        harm = litterSite.harm,
+//                        description = litterSite.description,
+//                        latitude = litterSite.latitude,
+//                        longitude = litterSite.longitude
+//                    )
+//                )
+//                _uiState.value = updatedState
+//            } catch (e: Exception) {
+//                Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
+//            }
+//        }
+//    }
 
     val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
-    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
-        viewModelScope.launch {
-            try {
-                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
-                val updatedState = _uiState.value.copy(
-                    nearbyDisposalSites = disposalSites.map { disposalSite ->
-                        DisposalSiteUiState(
-                            // TODO
-                        )
-                    }
-                )
-                _uiState.value = updatedState
-            } catch (e: Exception) {
-                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
-            }
-        }
-    }
+//    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
+//        viewModelScope.launch {
+//            try {
+//                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
+//                val updatedState = _uiState.value.copy(
+//                    nearbyDisposalSites = disposalSites.map { disposalSite ->
+//                        DisposalSiteUiState(
+//                            // TODO
+//                        )
+//                    }
+//                )
+//                _uiState.value = updatedState
+//            } catch (e: Exception) {
+//                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
+//            }
+//        }
+//    }
 
 }
 
