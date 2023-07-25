@@ -7,6 +7,8 @@ import com.litgo.data.models.DisposalSite
 class DisposalSiteRepository(
     private val disposalSiteRemoteDataSource: DisposalSiteRemoteDataSource
 ) {
+    suspend fun getNearbyDisposalSites(userCoords: Coordinates): List<LitterSite> =
+        disposalSiteRemoteDataSource.getNearbyDisposalSites(userCoords)
     suspend fun getDisposalSites(): List<DisposalSite> =
         disposalSiteRemoteDataSource.getDisposalSites()
 

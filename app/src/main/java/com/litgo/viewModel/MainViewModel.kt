@@ -40,6 +40,7 @@ import com.litgo.data.repositories.MunicipalityRepository
 import com.litgo.data.repositories.RegionRepository
 import com.litgo.data.repositories.RewardRepository
 import com.litgo.data.repositories.UserRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,7 +58,7 @@ class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.17.0.1:3001/")
+        .baseUrl("https://backend-service-v0b8.onrender.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -88,6 +89,10 @@ class LitterSiteViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(LitgoUiState())
     val uiState: StateFlow<LitgoUiState> = _uiState.asStateFlow()
 
+    private val throwExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throw throwable
+    }
+
     private var registerUserJob: Job? = null
     private var loginUserJob: Job? = null
     private var updateUserJob: Job? = null
@@ -109,220 +114,176 @@ class LitterSiteViewModel : ViewModel() {
 
     fun registerUser(data: UserRegistration) {
         registerUserJob?.cancel()
-        registerUserJob = viewModelScope.launch {
-            try {
-                userRepo.registerUser(data)
-            } catch (error: Throwable) {
-                throw error
-            }
+        registerUserJob = viewModelScope.launch(throwExceptionHandler) {
+            userRepo.registerUser(data)
         }
     }
 
     fun loginUser(data: Login) {
         loginUserJob?.cancel()
-        loginUserJob = viewModelScope.launch {
-            try {
-                userRepo.loginUser(data)
-                val userData = userRepo.getUser()
-                val updatedState = _uiState.value.userUiState.copy(
-                    name = userData.name,
-                    joinDate = frontendDateFormat.format(
-                        backendDateFormat.parse(userData.registeredAt)
-                    ),
-                    points = userData.points,
-                )
+        loginUserJob = viewModelScope.launch(throwExceptionHandler) {
+            userRepo.loginUser(data)
+            val userData = userRepo.getUser()
+            val updatedState = _uiState.value.userUiState.copy(
+                name = userData.name,
+                joinDate = frontendDateFormat.format(
+                    backendDateFormat.parse(userData.registeredAt)
+                ),
+                points = userData.points,
+            )
 
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
-                }
-            } catch (error: Throwable) {
-                throw error
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun updateUser(data: UserUpdate) {
         updateUserJob?.cancel()
-        updateUserJob = viewModelScope.launch {
-            try {
-                val userData = userRepo.updateUser(data)
-                val updatedState = _uiState.value.userUiState.copy(
-                    name = userData.name
-                )
+        updateUserJob = viewModelScope.launch(throwExceptionHandler) {
+            val userData = userRepo.updateUser(data)
+            val updatedState = _uiState.value.userUiState.copy(
+                name = userData.name
+            )
 
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
-                }
-            } catch (error: Throwable) {
-                throw error
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun deleteUser() {
         deleteUserJob?.cancel()
-        deleteUserJob = viewModelScope.launch {
-            try {
-                userRepo.deleteUser()
-                _uiState.update {
-                    it.copy(userUiState = UserUiState())
-                }
-            } catch (error: Throwable) {
-                throw error
+        deleteUserJob = viewModelScope.launch(throwExceptionHandler) {
+            userRepo.deleteUser()
+            _uiState.update {
+                it.copy(userUiState = UserUiState())
             }
         }
     }
 
     fun registerMunicipality(data: MunicipalityRegistration) {
         registerMunicipalityJob?.cancel()
-        registerMunicipalityJob = viewModelScope.launch {
-            try {
-                municipalityRepo.registerMunicipality(data)
-            } catch (error: Throwable) {
-                throw error
-            }
+        registerMunicipalityJob = viewModelScope.launch(throwExceptionHandler) {
+            municipalityRepo.registerMunicipality(data)
         }
     }
 
     fun loginMunicipality(data: Login) {
         loginMunicipalityJob?.cancel()
-        loginMunicipalityJob = viewModelScope.launch {
-            try {
-                municipalityRepo.loginMunicipality(data)
-                val municipalityData = municipalityRepo.getMunicipality()
-                val updatedState = _uiState.value.userUiState.copy(
-                    name = municipalityData.name,
-                    joinDate = frontendDateFormat.format(
-                        backendDateFormat.parse(municipalityData.registeredAt)
-                    ),
-                )
+        loginMunicipalityJob = viewModelScope.launch(throwExceptionHandler) {
+            municipalityRepo.loginMunicipality(data)
+            val municipalityData = municipalityRepo.getMunicipality()
+            val updatedState = _uiState.value.userUiState.copy(
+                name = municipalityData.name,
+                joinDate = frontendDateFormat.format(
+                    backendDateFormat.parse(municipalityData.registeredAt)
+                ),
+            )
 
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
-                }
-            } catch (error: Throwable) {
-                throw error
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun updateMunicipality(data: MunicipalityUpdate) {
         updateMunicipalityJob?.cancel()
-        updateMunicipalityJob = viewModelScope.launch {
-            try {
-                val municipalityData = municipalityRepo.updateMunicipality(data)
-                val updatedState = _uiState.value.userUiState.copy(
-                    name = municipalityData.name
-                )
+        updateMunicipalityJob = viewModelScope.launch(throwExceptionHandler) {
+            val municipalityData = municipalityRepo.updateMunicipality(data)
+            val updatedState = _uiState.value.userUiState.copy(
+                name = municipalityData.name
+            )
 
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
-                }
-            } catch (error: Throwable) {
-                throw error
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun deleteMunicipality() {
         deleteMunicipalityJob?.cancel()
-        deleteMunicipalityJob = viewModelScope.launch {
-            try {
-                municipalityRepo.deleteMunicipality()
-                _uiState.update {
-                    it.copy(userUiState = UserUiState())
-                }
-            } catch (error: Throwable) {
-                throw error
+        deleteMunicipalityJob = viewModelScope.launch(throwExceptionHandler) {
+            municipalityRepo.deleteMunicipality()
+            _uiState.update {
+                it.copy(userUiState = UserUiState())
             }
         }
     }
 
     fun getLitterSitesCreatedByUser() {
         getLitterSitesCreatedByUserJob?.cancel()
-        getLitterSitesCreatedByUserJob = viewModelScope.launch {
-            try {
-                val litterSites = litterSiteRepo.getLitterSitesCreatedByUser()
-                val updatedState = _uiState.value.userUiState.copy(
-                    reports = litterSites.map { litterSite ->
-                        LitterSiteUiState(
-                            id = litterSite.id,
-                            reportingUserId = litterSite.reportingUserId,
-                            collectingUserId = litterSite.collectingUserId,
-                            isCollected = litterSite.isCollected,
-                            litterCount = litterSite.litterCount,
-                            image = "",
-                            harm = litterSite.harm,
-                            description = litterSite.description,
-                            latitude = litterSite.latitude,
-                            longitude = litterSite.longitude
-                        )
-                    }
-                )
-
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
+        getLitterSitesCreatedByUserJob = viewModelScope.launch(throwExceptionHandler) {
+            val litterSites = litterSiteRepo.getLitterSitesCreatedByUser()
+            val updatedState = _uiState.value.userUiState.copy(
+                reports = litterSites.map { litterSite ->
+                    LitterSiteUiState(
+                        id = litterSite.id,
+                        reportingUserId = litterSite.reportingUserId,
+                        collectingUserId = litterSite.collectingUserId,
+                        isCollected = litterSite.isCollected,
+                        litterCount = litterSite.litterCount,
+                        image = "",
+                        harm = litterSite.harm,
+                        description = litterSite.description,
+                        latitude = litterSite.latitude,
+                        longitude = litterSite.longitude
+                    )
                 }
-            } catch (error: Throwable) {
-                throw error
+            )
+
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun getLitterSitesCleanedByUser() {
         getLitterSitesCleanedByUserJob?.cancel()
-        getLitterSitesCleanedByUserJob = viewModelScope.launch {
-            try {
-                val litterSites = litterSiteRepo.getLitterSitesCleanedByUser()
-                val updatedState = _uiState.value.userUiState.copy(
-                    cleanups = litterSites.map { litterSite ->
-                        LitterSiteUiState(
-                            id = litterSite.id,
-                            reportingUserId = litterSite.reportingUserId,
-                            collectingUserId = litterSite.collectingUserId,
-                            isCollected = litterSite.isCollected,
-                            litterCount = litterSite.litterCount,
-                            image = "",
-                            harm = litterSite.harm,
-                            description = litterSite.description,
-                            latitude = litterSite.latitude,
-                            longitude = litterSite.longitude
-                        )
-                    }
-                )
-
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
+        getLitterSitesCleanedByUserJob = viewModelScope.launch(throwExceptionHandler) {
+            val litterSites = litterSiteRepo.getLitterSitesCleanedByUser()
+            val updatedState = _uiState.value.userUiState.copy(
+                cleanups = litterSites.map { litterSite ->
+                    LitterSiteUiState(
+                        id = litterSite.id,
+                        reportingUserId = litterSite.reportingUserId,
+                        collectingUserId = litterSite.collectingUserId,
+                        isCollected = litterSite.isCollected,
+                        litterCount = litterSite.litterCount,
+                        image = "",
+                        harm = litterSite.harm,
+                        description = litterSite.description,
+                        latitude = litterSite.latitude,
+                        longitude = litterSite.longitude
+                    )
                 }
-            } catch (error: Throwable) {
-                throw error
+            )
+
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
 
     fun getEligibleRewards() {
         getEligibleRewardsJob?.cancel()
-        getEligibleRewardsJob = viewModelScope.launch {
-            try {
-                val rewards = rewardRepo.getRewards()
-                val updatedState = _uiState.value.userUiState.copy(
-                    eligibleRewards = rewards.filter { reward ->
-                        reward.cost <= _uiState.value.userUiState.points
-                    }.map { reward ->
-                        RewardUiState(
-                            id = reward.id,
-                            name = reward.name,
-                            cost = reward.cost,
-                            description = "",
-                        )
-                    }
-                )
-
-                _uiState.update {
-                    it.copy(userUiState = updatedState)
+        getEligibleRewardsJob = viewModelScope.launch(throwExceptionHandler) {
+            val rewards = rewardRepo.getRewards()
+            val updatedState = _uiState.value.userUiState.copy(
+                eligibleRewards = rewards.filter { reward ->
+                    reward.cost <= _uiState.value.userUiState.points
+                }.map { reward ->
+                    RewardUiState(
+                        id = reward.id,
+                        name = reward.name,
+                        cost = reward.cost,
+                        description = "",
+                    )
                 }
-            } catch (error: Throwable) {
-                throw error
+            )
+
+            _uiState.update {
+                it.copy(userUiState = updatedState)
             }
         }
     }
@@ -372,39 +333,72 @@ class LitterSiteViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
-                nearbyLitterSites.value = litterSites
+                val updatedState = _uiState.value.copy(
+                    nearbyLitterSites = litterSites.map { litterSite ->
+                        LitterSiteUiState(
+                            id = litterSite.id,
+                            reportingUserId = litterSite.reportingUserId,
+                            collectingUserId = litterSite.collectingUserId,
+                            isCollected = litterSite.isCollected,
+                            litterCount = litterSite.litterCount,
+                            image = "",
+                            harm = litterSite.harm,
+                            description = litterSite.description,
+                            latitude = litterSite.latitude,
+                            longitude = litterSite.longitude
+                        )
+                    }
+                )
+                _uiState.value = updatedState
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching nearby litter sites", e)
             }
         }
     }
 
-    fun fetchLitterSiteById(id: String, userCoords: Coordinates): LiveData<LitterSite> {
-        val litterSiteLiveData = MutableLiveData<LitterSite>()
-
+    fun fetchLitterSiteById(id: String, userCoords: Coordinates) {
         viewModelScope.launch {
             try {
                 val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
-                litterSiteLiveData.postValue(litterSite)
+                val updatedState = _uiState.value.copy(
+                    litterSiteUiState = LitterSiteUiState(
+                        id = litterSite.id,
+                        reportingUserId = litterSite.reportingUserId,
+                        collectingUserId = litterSite.collectingUserId,
+                        isCollected = litterSite.isCollected,
+                        litterCount = litterSite.litterCount,
+                        image = "",
+                        harm = litterSite.harm,
+                        description = litterSite.description,
+                        latitude = litterSite.latitude,
+                        longitude = litterSite.longitude
+                    )
+                )
+                _uiState.value = updatedState
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
             }
         }
-        return litterSiteLiveData
     }
 
-
-//    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
-//    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
-//        viewModelScope.launch {
-//            try {
-//                val disposalSites = repository.getNearbyDisposalSites(userCoords)
-//                nearbyDisposalSites.value = disposalSites
-//            } catch (e: Exception) {
-//                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
-//            }
-//        }
-//    }
+    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
+    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
+        viewModelScope.launch {
+            try {
+                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
+                val updatedState = _uiState.value.copy(
+                    nearbyDisposalSites = disposalSites.map { disposalSite ->
+                        DisposalSiteUiState(
+                            // TODO
+                        )
+                    }
+                )
+                _uiState.value = updatedState
+            } catch (e: Exception) {
+                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
+            }
+        }
+    }
 
 }
 
