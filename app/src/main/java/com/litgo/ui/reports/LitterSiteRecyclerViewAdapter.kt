@@ -1,27 +1,27 @@
 package com.litgo.ui.reports
 
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.litgo.R
-import com.litgo.data.models.LitterSite
-import com.litgo.databinding.FragmentLitterSiteBinding
+import com.litgo.databinding.FragmentLitterSiteItemBinding
 
 /**
  * [RecyclerView.Adapter] that can display LitterSites that the user has reported
  * (that may or may not have been cleaned by them)
  */
 class LitterSitesRecyclerViewAdapter(
-    private val values: List<LitterSite>
+    private val values: List<LitterSiteUiState>
 ) : RecyclerView.Adapter<LitterSitesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentLitterSiteBinding.inflate(
+            FragmentLitterSiteItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -33,25 +33,26 @@ class LitterSitesRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val litterSite = values[position]
         holder.descriptionTextView.text = litterSite.description
-        holder.lastUpdatedTextView.text = litterSite.updatedAt
+//        holder.lastUpdatedTextView.text = litterSite.updated
         holder.locationTextView.text = litterSite.longitude.toString() + ", " + litterSite.latitude.toString()
-        // TODO: How to get the number of points associated with the cleanup?
-        holder.pointsTextView.text = litterSite.description
-        // TODO: Set the status icon for the report accordingly
+        holder.cleanupPointsTextView.text = (litterSite.litterCount * 10).toString()
+        holder.reportPointsTextView.text = (litterSite.litterCount * 3).toString()
         when (litterSite.isCollected) {
-            true -> holder.statusImageView.drawable = Drawable(R.drawable.checkmark_90_green)
-            else -> holder.statusImageView.drawable = Drawable(R.drawable.do_not_disturb_100_black)
+            true -> holder.statusImageView.setImageResource(R.drawable.checkmark_90_green)
+            false -> holder.statusImageView.setImageResource(R.drawable.do_not_disturb_100_black)
         }
+        holder.photoImageView.setImageURI(Uri.parse(litterSite.image))
         // TODO: Show the first 1-2 images of the report
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentLitterSiteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: FragmentLitterSiteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var statusImageView: ImageView = binding.litterSiteStatusIconImageview
         var lastUpdatedTextView: TextView = binding.litterSiteLastUpdatedTextview
         val descriptionTextView: TextView = binding.litterSiteDescriptionTextview
-        val pointsTextView: TextView = binding.litterSitePointsTextview
+        val cleanupPointsTextView: TextView = binding.litterSitePointsTextview
+        val reportPointsTextView: TextView = binding.litterSitePointsTextview
         val locationTextView: TextView = binding.litterSiteAddressTextview
         val photoImageView: ImageView = binding.litterSitePhotoImageview
 

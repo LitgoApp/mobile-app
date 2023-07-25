@@ -31,7 +31,7 @@ import com.litgo.data.repositories.UserRepository
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
 import com.litgo.ui.profile.UserProfileFragment
-import com.litgo.ui.reports.ReportsFragment
+import com.litgo.ui.reports.LitterSiteReportsFragment
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.userReportsNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, ReportsFragment())
+            transaction.replace(R.id.nav_host_fragment_content_main, LitterSiteReportsFragment())
             transaction.commit()
             appBarTitleTextView.text = "My Reports and Cleanups"
         }

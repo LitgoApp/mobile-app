@@ -42,6 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/user_points_layout"
-        tools:listitem="@layout/fragment_litter_site"/>
+        tools:listitem="@layout/fragment_litter_site_item"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

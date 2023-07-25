@@ -6,27 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.litgo.R
+import com.litgo.viewModel.LitterSiteViewModel
 
 class RewardsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = RewardsFragment()
-    }
-
-    private lateinit var viewModel: RewardsViewModel
+    private val viewModel: LitterSiteViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_rewards, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RewardsViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

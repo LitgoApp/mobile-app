@@ -8,21 +8,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.litgo.MainActivity
 import com.litgo.databinding.FragmentLoginBinding
 
 import com.litgo.R
 import com.litgo.data.models.Login
 import com.litgo.viewModel.LitterSiteViewModel
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -59,7 +54,7 @@ class LoginFragment : Fragment() {
             var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
             try {
                 viewModel.loginUser(login)
-            } catch (e: CancellationException) {
+            } catch (e: retrofit2.HttpException) {
 
             } finally {
                 showLoginFailed()
@@ -70,11 +65,11 @@ class LoginFragment : Fragment() {
             showCreateAccount()
         }
 
-//        lifecycleScope.launch {
-//            viewModel.observeState().collect {
-//                renderState(it)
-//            }
-//        }
+        lifecycleScope.launch {
+            viewModel.observeState().collect {
+                renderState(it)
+            }
+        }
     }
 
     private fun renderState(it: LitgoUiState) {
