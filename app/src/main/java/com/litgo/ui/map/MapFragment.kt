@@ -111,7 +111,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 }
             }
         }
-
     }
 
     private fun closeBannerContainer() {
