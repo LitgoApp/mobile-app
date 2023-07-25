@@ -31,9 +31,6 @@ class FormFragment() : Fragment() {
         return (this * density + 0.5f).toInt()
     }
 
-    // not certain if this can be late init
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -68,7 +65,6 @@ class FormFragment() : Fragment() {
                 imageView.setImageURI(uri)
                 cardView.addView(imageView)
                 parentLayout.addView(cardView)
-
             }
 
         }
@@ -89,8 +85,6 @@ class FormFragment() : Fragment() {
 
         return view
     }
-
-
 
 
 

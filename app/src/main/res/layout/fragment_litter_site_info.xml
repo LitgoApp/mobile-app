@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/litterSiteInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/litterSiteCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#E6E6E6"
-        app:cardCornerRadius="20dp">
+        android:clickable="true"
+        app:cardBackgroundColor="#E6E6E6">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Status: "
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -39,7 +42,7 @@
                     app:srcCompat="@drawable/checkmark_90_green" />
 
                 <TextView
-                    android:id="@+id/datetime"
+                    android:id="@+id/dateTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -53,7 +56,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/cautionLevel"
+                    android:id="@+id/harmTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Caution"
@@ -67,16 +70,17 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="This is the description text." />
 
             <TextView
-                android:id="@+id/location"
+                android:id="@+id/locationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Westmount Rd N, Waterloo" />
+                android:text="Westmount Rd N, Waterloo"
+                android:textColor="#000000" />
 
         </LinearLayout>
 

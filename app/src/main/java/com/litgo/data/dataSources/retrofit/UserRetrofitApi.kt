@@ -19,22 +19,22 @@ import retrofit2.http.PUT
 
 interface UserRetrofitApiService {
     @POST("api/user/register")
-    fun registerUser(@Body data: UserRegistration): Call<HashMap<String, String>>
+    fun registerUser(@Body data: UserRegistration): Call<Unit>
 
     @POST("api/user/login")
     fun loginUser(@Body data: Login): Call<HashMap<String, String>>
 
     @GET("api/user")
-    fun getUser(@Header("auth-token") token: String): Call<UserApiModel>
+    fun getUser(@Header("Authorization") token: String): Call<UserApiModel>
 
     @PUT("api/user")
     fun updateUser(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Body data: UserUpdate
     ): Call<UserApiModel>
 
     @DELETE("api/user")
-    fun deleteUser(@Header("auth-token") token: String): Call<UserApiModel>
+    fun deleteUser(@Header("Authorization") token: String): Call<Unit>
 }
 
 class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
@@ -61,7 +61,7 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
                 throw HttpException(response)
             }
 
-            authToken = body["token"]
+            authToken = "Bearer " + body["token"]
         } catch (error: Throwable) {
             throw error
         }
@@ -78,12 +78,12 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
             }
 
             return User(
-                body.id,
                 body.email,
                 body.name,
                 body.points,
                 body.address,
-                body.createdAt,
+                body.registeredAt,
+                body.lastLoginAt,
             )
         } catch (error: Throwable) {
             throw error
@@ -101,12 +101,12 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
             }
 
             return User(
-                body.id,
                 body.email,
                 body.name,
                 body.points,
                 body.address,
-                body.createdAt,
+                body.registeredAt,
+                body.lastLoginAt,
             )
         } catch (error: Throwable) {
             throw error
@@ -121,6 +121,8 @@ class UserRetrofitApi(private val retrofit: Retrofit) : UserApi {
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
+
+            authToken = ""
         } catch (error: Throwable) {
             throw error
         }

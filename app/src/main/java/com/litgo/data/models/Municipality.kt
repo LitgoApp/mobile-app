@@ -3,11 +3,11 @@ package com.litgo.data.models
 import com.google.gson.annotations.SerializedName
 
 data class Municipality(
-    val id: String,
     val email: String,
     val name: String,
     val phoneNumber: String,
-    val createdAt: String,
+    val registeredAt: String,
+    val lastLoginAt: String,
 )
 
 data class MunicipalityRegistration(

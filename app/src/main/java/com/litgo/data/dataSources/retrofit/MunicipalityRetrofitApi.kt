@@ -19,22 +19,22 @@ import retrofit2.http.PUT
 
 interface MunicipalityRetrofitApiService {
     @POST("api/municipality/register")
-    fun registerMunicipality(@Body data: MunicipalityRegistration): Call<HashMap<String, String>>
+    fun registerMunicipality(@Body data: MunicipalityRegistration): Call<Unit>
 
     @POST("api/municipality/login")
     fun loginMunicipality(@Body data: Login): Call<HashMap<String, String>>
 
     @GET("api/municipality")
-    fun getMunicipality(@Header("auth-token") token: String): Call<MunicipalityApiModel>
+    fun getMunicipality(@Header("Authorization") token: String): Call<MunicipalityApiModel>
 
     @PUT("api/municipality")
     fun updateMunicipality(
-        @Header("auth-token") token: String,
+        @Header("Authorization") token: String,
         @Body data: MunicipalityUpdate
     ): Call<MunicipalityApiModel>
 
     @DELETE("api/municipality")
-    fun deleteMunicipality(@Header("auth-token") token: String): Call<MunicipalityApiModel>
+    fun deleteMunicipality(@Header("Authorization") token: String): Call<Unit>
 }
 
 class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi {
@@ -61,7 +61,7 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
                 throw HttpException(response)
             }
 
-            authToken = body["token"]
+            authToken = "Bearer " + body["token"]
         } catch (error: Throwable) {
             throw error
         }
@@ -78,11 +78,15 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
             }
 
             return Municipality(
-                body.id,
                 body.email,
                 body.name,
                 body.phoneNumber,
+<<<<<<< HEAD
                 body.createdAt,
+=======
+                body.registeredAt,
+                body.lastLoginAt,
+>>>>>>> main
             )
         } catch (error: Throwable) {
             throw error
@@ -101,11 +105,19 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
             }
 
             return Municipality(
+<<<<<<< HEAD
                 body.id,
                 body.email,
                 body.name,
                 body.phoneNumber,
                 body.createdAt,
+=======
+                body.email,
+                body.name,
+                body.phoneNumber,
+                body.registeredAt,
+                body.lastLoginAt,
+>>>>>>> main
             )
         } catch (error: Throwable) {
             throw error
@@ -120,6 +132,8 @@ class MunicipalityRetrofitApi(private val retrofit: Retrofit) : MunicipalityApi 
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
+
+            authToken = ""
         } catch (error: Throwable) {
             throw error
         }
