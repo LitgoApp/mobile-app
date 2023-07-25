@@ -70,11 +70,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         _binding!!.centerCurrentLocationButton.setOnClickListener {
-            // Center the user's current location
-            litterSiteViewModel.userLocation.observe(viewLifecycleOwner, { location ->
-                val userLatLng = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
-            })
+            // Fetch the last known location directly
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val userLatLng = LatLng(location.latitude, location.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
+                }
+            }
         }
 
         mapFragment.getMapAsync(this)
@@ -128,6 +130,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         mMap.setOnMarkerClickListener { marker ->
             marker.tag?.let {
                 if (it is LitterSite) {
+                    // get the id of it as littersite
+                    // query the datalyer and return the specific litter based on ID
                     litterSiteViewModel.selectLitterSite(it)
 
                     // show info fragment
