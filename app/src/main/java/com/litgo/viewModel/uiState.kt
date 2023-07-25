@@ -8,7 +8,7 @@ data class CameraUiState(
 )
 
 data class MapUiState(
-    val litterSiteIdSelected: LitterSite? = null
+    val litterSiteSelected: LitterSite? = null
 )
 
 data class LitterSiteUiState(

@@ -36,18 +36,20 @@ import androidx.lifecycle.LiveData
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
+    private val viewModel: LitterSiteViewModel by viewModels()
+
     private var _binding: FragmentMapBinding? = null
 
     private lateinit var latLng: LatLng
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
-    private val viewModel: LitterSiteViewModel by viewModels()
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private lateinit var userCoords: Coordinates
 
-    private fun openBannerContainer(litterSite: LiveData<LitterSite>) {
+    private fun openBannerContainer(litterSite: LitterSite) {
         TODO("Make this so that you can pass it a litterSite and it will create the banner")
     }
 
@@ -59,7 +61,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 .commit()
         }
     }
-
 
 
     override fun onLocationChanged(location: Location) {
@@ -87,7 +88,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
         if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            TODO("Overrides nothing")
             fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
@@ -139,14 +139,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.setLocationSource(this)
+        mMap.setLocationSource(this)  // Fix this?
 
         // Fetch nearby litter sites and disposal sites
-        litterSiteViewModel.fetchNearbyLitterSites(userCoords)
-        litterSiteViewModel.fetchNearbyDisposalSites(userCoords)
+        viewModel.fetchNearbyLitterSites(userCoords)
+        viewModel.fetchNearbyDisposalSites(userCoords)
 
         // Observe litter sites and add markers to map
-        litterSiteViewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
+        viewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
             // Clear old markers
             mMap.clear()
 
@@ -164,7 +164,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         }
 
         // Observe disposal sites and add markers to map
-        litterSiteViewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->
+        viewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->
             // Add a new marker for each disposal site
             disposalSites.forEach { disposalSite ->
                 val position = LatLng(disposalSite.latitude, disposalSite.longitude)
@@ -187,8 +187,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 if (it is LitterSite) {
                     // get the id of it as littersite
                     // query the datalyer and return the specific litter based on ID
-                    litterSiteViewModel.selectLitterSite(it)
-
+                    viewModel.setSelectedLitterSite(it.id, userCoords)
 
                     val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
 
@@ -207,7 +206,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     fragmentTransaction.commit()
 
                     // Fetch the specific litter site based on ID
-                    litterSiteViewModel.fetchLitterSiteById(it.id, userCoords).observe(viewLifecycleOwner) { litterSite: LiveData<LitterSite> ->
+                    viewModel.fetchLitterSiteById(it.id, userCoords).observe(viewLifecycleOwner) { litterSite: LiveData<LitterSite> ->
                         // Pass the litter site to the info fragment
                         TODO("Fix the following line, newInstance is not a method of LitterSiteInfoFragment")
                         litterInfoFragment = LitterSiteInfoFragment.newInstance(litterSite)

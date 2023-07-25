@@ -34,7 +34,6 @@ class FormFragment() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Customize your form interactions and logic here
 
         fun onUpdate() {
 
@@ -85,7 +84,6 @@ class FormFragment() : Fragment() {
 
         return view
     }
-
 
 
     fun submitButtonClicked() {

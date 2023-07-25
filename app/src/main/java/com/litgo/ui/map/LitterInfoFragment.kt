@@ -15,14 +15,19 @@ import kotlinx.coroutines.launch
 
 class LitterSiteInfoFragment : Fragment() {
     private val viewModel: LitterSiteViewModel by viewModels()
-    private var _binding: FragmentLitterSiteInfoBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentLitterSiteInfoBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = FragmentLitterSiteInfoBinding.inflate(layoutInflater)
+        val view = binding.root
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLitterSiteInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,7 +41,7 @@ class LitterSiteInfoFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    val litterSite = uiState.mapUiState.litterSiteIdSelected
+                    val litterSite = uiState.mapUiState.litterSiteSelected
                     if (litterSite != null) {
                         binding.harmTextView.text = litterSite?.harm
                         binding.descriptionTextView.text = litterSite.description
@@ -45,10 +50,5 @@ class LitterSiteInfoFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

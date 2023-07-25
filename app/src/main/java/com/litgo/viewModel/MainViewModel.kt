@@ -56,7 +56,7 @@ class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.23.176.1:3001/")
+        .baseUrl("https://backend-service-v0b8.onrender.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -237,13 +237,23 @@ class LitterSiteViewModel : ViewModel() {
         try {
             val selectedLitterSite = fetchLitterSiteById(id, location)
             val updatedState = _uiState.value.mapUiState.copy(
-                litterSiteIdSelected = selectedLitterSite
+                litterSiteSelected = selectedLitterSite
             )
 
             _uiState.update {
                 it.copy(mapUiState = updatedState)
             }
 
+        } catch (error: Throwable) {
+            throw error
+        }
+    }
+
+    fun clearSelectedLitterSite() {
+        try {
+            _uiState.update {
+                it.copy(mapUiState = MapUiState())
+            }
         } catch (error: Throwable) {
             throw error
         }
@@ -390,6 +400,8 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+
+    TODO("Properly implement this")
     fun fetchLitterSiteById(id: String, userCoords: Coordinates): LiveData<LitterSite> {
         val litterSiteLiveData = MutableLiveData<LitterSite>()
 
@@ -406,6 +418,8 @@ class LitterSiteViewModel : ViewModel() {
 
 
     val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
+
+    TODO("Implement this?")
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
