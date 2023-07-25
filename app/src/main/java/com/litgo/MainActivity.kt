@@ -74,43 +74,7 @@ class MainActivity : AppCompatActivity() {
 //                .setAction("Action", null).show()
 //        }
 
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://backend-service-v0b8.onrender.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
 
-                val userRepo: UserRepository = UserRepository(
-                UserRemoteDataSource(UserRetrofitApi(retrofit), Dispatchers.IO)
-                )
-
-        val municipalityRepo: MunicipalityRepository = MunicipalityRepository(
-            MunicipalityRemoteDataSource(MunicipalityRetrofitApi(retrofit), Dispatchers.IO)
-        )
-
-        val litterSiteRepo: LitterSiteRepository = LitterSiteRepository(
-            LitterSiteRemoteDataSource(LitterSiteRetrofitApi(retrofit), Dispatchers.IO)
-        )
-
-        val regionRepo: RegionRepository = RegionRepository(
-            RegionRemoteDataSource(RegionRetrofitApi(retrofit), Dispatchers.IO)
-        )
-
-        val rewardRepo: RewardRepository = RewardRepository(
-            RewardRemoteDataSource(RewardRetrofitApi(retrofit), Dispatchers.IO)
-        )
-
-        val disposalSiteRepo: DisposalSiteRepository = DisposalSiteRepository(
-            DisposalSiteRemoteDataSource(DisposalSiteRetrofitApi(retrofit), Dispatchers.IO)
-        )
-
-        viewModel = LitterSiteViewModel(
-            userRepo,
-            municipalityRepo,
-            litterSiteRepo,
-            regionRepo,
-            rewardRepo,
-            disposalSiteRepo
-        )
     }
 
     /**
