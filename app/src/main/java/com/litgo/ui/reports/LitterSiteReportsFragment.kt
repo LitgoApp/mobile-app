@@ -47,6 +47,7 @@ class LitterSiteReportsFragment : Fragment() {
                     }
                     adapter = LitterSitesRecyclerViewAdapter(viewModel.getLitterSitesCreatedByUser())
                 }
+
             }
         }
 
