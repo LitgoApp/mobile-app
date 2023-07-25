@@ -2,6 +2,7 @@ package com.litgo
 
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -42,52 +43,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.23.176.1:3001/%22")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    private val userRepo: UserRepository = UserRepository(
-        UserRemoteDataSource(UserRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val municipalityRepo: MunicipalityRepository = MunicipalityRepository(
-        MunicipalityRemoteDataSource(MunicipalityRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val litterSiteRepo: LitterSiteRepository = LitterSiteRepository(
-        LitterSiteRemoteDataSource(LitterSiteRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val regionRepo: RegionRepository = RegionRepository(
-        RegionRemoteDataSource(RegionRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val rewardRepo: RewardRepository = RewardRepository(
-        RewardRemoteDataSource(RewardRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val disposalSiteRepo: DisposalSiteRepository = DisposalSiteRepository(
-        DisposalSiteRemoteDataSource(DisposalSiteRetrofitApi(retrofit), Dispatchers.IO)
-    )
-
-    private val viewModel: LitterSiteViewModel = LitterSiteViewModel(
-        userRepo,
-        municipalityRepo,
-        litterSiteRepo,
-        regionRepo,
-        rewardRepo,
-        disposalSiteRepo
-    )
+    private val viewModel: LitterSiteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //viewModel.uiState.collect {
-                // Update UI elements
-//                }
+                viewModel.uiState.collect {
+
+                }
             }
         }
 
