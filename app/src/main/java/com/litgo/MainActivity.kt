@@ -13,17 +13,39 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.litgo.data.dataSources.DisposalSiteRemoteDataSource
+import com.litgo.data.dataSources.LitterSiteRemoteDataSource
+import com.litgo.data.dataSources.MunicipalityRemoteDataSource
+import com.litgo.data.dataSources.RegionRemoteDataSource
+import com.litgo.data.dataSources.RewardRemoteDataSource
+import com.litgo.data.dataSources.UserRemoteDataSource
+import com.litgo.data.dataSources.retrofit.DisposalSiteRetrofitApi
+import com.litgo.data.dataSources.retrofit.LitterSiteRetrofitApi
+import com.litgo.data.dataSources.retrofit.MunicipalityRetrofitApi
+import com.litgo.data.dataSources.retrofit.RegionRetrofitApi
+import com.litgo.data.dataSources.retrofit.RewardRetrofitApi
+import com.litgo.data.dataSources.retrofit.UserRetrofitApi
+import com.litgo.data.repositories.DisposalSiteRepository
+import com.litgo.data.repositories.LitterSiteRepository
+import com.litgo.data.repositories.MunicipalityRepository
+import com.litgo.data.repositories.RegionRepository
+import com.litgo.data.repositories.RewardRepository
+import com.litgo.data.repositories.UserRepository
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
+
+    lateinit var viewModel: LitterSiteViewModel
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val viewModel: LitterSiteViewModel by viewModels()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 //viewModel.uiState.collect {
@@ -51,6 +73,44 @@ class MainActivity : AppCompatActivity() {
 //                .setAnchorView(R.id.fab)
 //                .setAction("Action", null).show()
 //        }
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://backend-service-v0b8.onrender.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+                val userRepo: UserRepository = UserRepository(
+                UserRemoteDataSource(UserRetrofitApi(retrofit), Dispatchers.IO)
+                )
+
+        val municipalityRepo: MunicipalityRepository = MunicipalityRepository(
+            MunicipalityRemoteDataSource(MunicipalityRetrofitApi(retrofit), Dispatchers.IO)
+        )
+
+        val litterSiteRepo: LitterSiteRepository = LitterSiteRepository(
+            LitterSiteRemoteDataSource(LitterSiteRetrofitApi(retrofit), Dispatchers.IO)
+        )
+
+        val regionRepo: RegionRepository = RegionRepository(
+            RegionRemoteDataSource(RegionRetrofitApi(retrofit), Dispatchers.IO)
+        )
+
+        val rewardRepo: RewardRepository = RewardRepository(
+            RewardRemoteDataSource(RewardRetrofitApi(retrofit), Dispatchers.IO)
+        )
+
+        val disposalSiteRepo: DisposalSiteRepository = DisposalSiteRepository(
+            DisposalSiteRemoteDataSource(DisposalSiteRetrofitApi(retrofit), Dispatchers.IO)
+        )
+
+        viewModel = LitterSiteViewModel(
+            userRepo,
+            municipalityRepo,
+            litterSiteRepo,
+            regionRepo,
+            rewardRepo,
+            disposalSiteRepo
+        )
     }
 
     /**
