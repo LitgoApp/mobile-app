@@ -3,22 +3,23 @@ package com.litgo.ui.reports
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
-import com.litgo.ui.reports.PlaceholderContent.PlaceholderItem
-import com.litgo.databinding.FragmentReportItemBinding
+import android.widget.ImageView
+import android.widget.TextView
+import com.litgo.data.models.LitterSite
+import com.litgo.databinding.FragmentLitterSiteBinding
 
 /**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
+ * [RecyclerView.Adapter] that can display LitterSites that the user has reported
+ * (that may or may not have been cleaned by them)
  */
-class ReportRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<ReportRecyclerViewAdapter.ViewHolder>() {
+class LitterReportsRecyclerViewAdapter(
+    private val values: List<LitterSite>
+) : RecyclerView.Adapter<LitterReportsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentReportItemBinding.inflate(
+            FragmentLitterSiteBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -28,8 +29,8 @@ class ReportRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val report = values[position]
-
+        val litterSite = values[position]
+        litterSite.
 //        // TODO: Set the status icon for the report accordingly
 //        holder.dateCreatedView.text = report.date_created
 //        holder.descriptionView.text = report.description
@@ -40,13 +41,13 @@ class ReportRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentReportItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val statusView: ImageView = binding.reportStatusImageviewIcon
-//        val dateCreatedView: TextView = binding.reportDateCreatedTextview
-//        val descriptionView: TextView = binding.reportDescriptionTextview
-//        val pointsView: ImageView = binding.reportPointsImageview
-//        val locationView: TextView = binding.reportLocationTextview
-//        val imagesView: ImageView = binding.reportImageview
+    inner class ViewHolder(binding: FragmentLitterSiteBinding) : RecyclerView.ViewHolder(binding.root) {
+        val statusImageView: ImageView = binding.litterSiteStatusIconImageview
+        val lastUpdatedTextView: TextView = binding.litterSiteLastUpdatedTextview
+        val descriptionTextView: TextView = binding.litterSiteDescriptionTextview
+        val pointsTextView: TextView = binding.litterSitePointsTextview
+        val locationTextView: TextView = binding.litterSiteAddressTextview
+        val photoImageView: ImageView = binding.litterSitePhotoImageview
 
         override fun toString(): String {
             return ""

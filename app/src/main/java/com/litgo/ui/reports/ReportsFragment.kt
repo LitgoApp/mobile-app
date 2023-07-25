@@ -13,7 +13,7 @@ import com.litgo.R
 /**
  * A fragment representing a list of Items.
  */
-class ReportsFragment : Fragment() {
+class LitterReportsFragment : Fragment() {
 
     private var columnCount = 1
 
@@ -38,7 +38,7 @@ class ReportsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ReportRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = LitterReportsRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
         return view
