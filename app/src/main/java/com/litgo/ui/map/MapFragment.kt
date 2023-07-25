@@ -32,8 +32,12 @@ import com.litgo.databinding.FragmentMapBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import android.Manifest
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.location.Priority
+import kotlinx.coroutines.launch
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
@@ -52,6 +56,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private lateinit var locationCallback : LocationCallback
     private lateinit var locationRequest : LocationRequest
     private var locationPermissionGranted = false
+
+
 
     private fun startLocationUpdates() {
         if (locationPermissionGranted) {
@@ -84,6 +90,29 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     }
 
+    private fun populateMap() {
+        mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
+
+        // Add a new marker for each litter site
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    /*
+                    val litterSite = uiState.mapUiState.litterSiteSelected
+                    _________.forEach { disposalSite ->
+                        val position = LatLng(disposalSite.latitude, disposalSite.longitude)
+                        mMap.addMarker(MarkerOptions()
+                            .position(position)
+                            .title("Disposal Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                    }
+                     */
+
+                }
+            }
+        }
+
+    }
 
     private fun closeBannerContainer() {
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
@@ -104,6 +133,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             viewModel.fetchNearbyLitterSites(it)
             viewModel.fetchNearbyDisposalSites(it)
         }
+
+        populateMap()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,7 +143,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         val locationRequestBuilder = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
-        locationRequestBuilder.setMinUpdateDistanceMeters(10.0F)
+        // The map will update whenever users move 30m (30.0F)
+        locationRequestBuilder.setMinUpdateDistanceMeters(30.0F)
 
         locationRequest = locationRequestBuilder.build()
 
@@ -121,18 +153,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                locationResult ?: return
+                locationResult
                 for (location in locationResult.locations) {
                     // update UI through the onLocationChanged method
                     onLocationChanged(location)
                 }
             }
         }
-
-
-
-
-
 
     }
 
@@ -141,11 +168,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
@@ -166,8 +188,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         }
 
         mapFragment.getMapAsync(this)
+        return binding.root
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -176,36 +198,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         // Fetch nearby litter sites and disposal sites
         viewModel.fetchNearbyLitterSites(userCoords)
         viewModel.fetchNearbyDisposalSites(userCoords)
-
-        // Observe litter sites and add markers to map
-        viewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
-            // Clear old markers
-            mMap.clear()
-
-            // Add a new marker for each litter site
-            litterSites.forEach { litterSite ->
-                val position = LatLng(litterSite.latitude, litterSite.longitude)
-                val marker = mMap.addMarker(
-                    MarkerOptions()
-                        .position(position)
-                        .title("Litter Site")
-                        .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                marker?.tag = litterSite.id
-            }
-        }
-
-        // Observe disposal sites and add markers to map
-        viewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->
-            // Add a new marker for each disposal site
-            disposalSites.forEach { disposalSite ->
-                val position = LatLng(disposalSite.latitude, disposalSite.longitude)
-                mMap.addMarker(MarkerOptions()
-                    .position(position)
-                    .title("Disposal Site")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
-            }
-        }
+        populateMap()
 
         // Add a marker for the user's current location
         val userPosition = latLng
@@ -218,7 +211,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             marker.tag?.let {
                 if (it is LitterSite) {
                     // get the id of it as littersite
-                    // query the datalyer and return the specific litter based on ID
+                    // query the data layer and return the specific litter based on ID
                     viewModel.setSelectedLitterSite(it.id, userCoords)
 
                     val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
@@ -245,11 +238,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onPause() {
         super.onPause()
+        mMap.clear()
         stopLocationUpdates()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mMap.clear()
+        stopLocationUpdates()
         _binding = null
     }
 }
