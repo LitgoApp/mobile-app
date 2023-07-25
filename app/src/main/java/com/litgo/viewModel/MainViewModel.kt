@@ -52,6 +52,52 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
 
+data class LitterSiteUiState(
+    val id: String,
+    val reportingUserId: String,
+    val collectingUserId: String?,
+    val isCollected: Boolean,
+    val litterCount: Int,
+    val image: String?,
+    val harm: String,
+    val description: String,
+    val latitude: Double,
+    val longitude: Double,
+    val closestDisposalSite: DisposalSiteUiState?,
+    val createdAt: String,
+    val updatedAt: String,
+)
+
+data class DisposalSiteUiState(
+    val id: String,
+    val municipalityId: String,
+    val latitude: Double,
+    val longitude: Double,
+    val createdAt: String,
+    val updatedAt: String,
+)
+
+data class LitgoUiState(
+    val userUiState: UserUiState = UserUiState(),
+    val litterSiteUiState: LitterSiteUiState? = null,
+    val nearbyLitterSites: List<LitterSiteUiState> = emptyList(),
+    val nearbyDisposalSites: List<DisposalSiteUiState> = emptyList(),
+    val cameraUiState: CameraUiState = CameraUiState()
+)
+
+data class UserUiState(
+    val name: String = "",
+    val joinDate: String = "",
+    val points: Int = 0,
+    val reports: List<LitterSiteUiState> = emptyList(),
+    val cleanups: List<LitterSiteUiState> = emptyList(),
+    val eligibleRewards: List<RewardUiState> = emptyList(),
+)
+
+data class CameraUiState(
+    val imagesCaptured: List<String> = emptyList()
+)
+
 class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude
 
@@ -323,6 +369,7 @@ class LitterSiteViewModel : ViewModel() {
      */
 
     val nearbyLitterSites = MutableLiveData<List<LitterSite>>()
+    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
     fun fetchNearbyLitterSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
@@ -335,11 +382,23 @@ class LitterSiteViewModel : ViewModel() {
                             collectingUserId = litterSite.collectingUserId,
                             isCollected = litterSite.isCollected,
                             litterCount = litterSite.litterCount,
-                            image = "",
+                            image = litterSite.image,
                             harm = litterSite.harm,
                             description = litterSite.description,
                             latitude = litterSite.latitude,
-                            longitude = litterSite.longitude
+                            longitude = litterSite.longitude,
+                            closestDisposalSite = litterSite.closestDisposalSite?.let {
+                                DisposalSiteUiState(
+                                    id = it.id,
+                                    municipalityId = it.municipalityId,
+                                    latitude = it.latitude,
+                                    longitude = it.longitude,
+                                    createdAt = it.createdAt,
+                                    updatedAt = it.updatedAt
+                                )
+                            },
+                            createdAt = litterSite.createdAt,
+                            updatedAt = litterSite.updatedAt
                         )
                     }
                 )
@@ -361,11 +420,23 @@ class LitterSiteViewModel : ViewModel() {
                         collectingUserId = litterSite.collectingUserId,
                         isCollected = litterSite.isCollected,
                         litterCount = litterSite.litterCount,
-                        image = "",
+                        image = litterSite.image,
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
+                        longitude = litterSite.longitude,
+                        closestDisposalSite = litterSite.closestDisposalSite?.let {
+                            DisposalSiteUiState(
+                                id = it.id,
+                                municipalityId = it.municipalityId,
+                                latitude = it.latitude,
+                                longitude = it.longitude,
+                                createdAt = it.createdAt,
+                                updatedAt = it.updatedAt
+                            )
+                        },
+                        createdAt = litterSite.createdAt,
+                        updatedAt = litterSite.updatedAt
                     )
                 )
                 _uiState.value = updatedState
@@ -375,8 +446,6 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
-
-    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
@@ -384,7 +453,12 @@ class LitterSiteViewModel : ViewModel() {
                 val updatedState = _uiState.value.copy(
                     nearbyDisposalSites = disposalSites.map { disposalSite ->
                         DisposalSiteUiState(
-                            // TODO
+                            id = disposalSite.id,
+                            municipalityId = disposalSite.municipalityId,
+                            latitude = disposalSite.latitude,
+                            longitude = disposalSite.longitude,
+                            createdAt = disposalSite.createdAt,
+                            updatedAt = disposalSite.updatedAt
                         )
                     }
                 )
@@ -394,6 +468,5 @@ class LitterSiteViewModel : ViewModel() {
             }
         }
     }
-
 }
 
