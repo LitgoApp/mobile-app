@@ -30,16 +30,13 @@ data class CreateAccountUiState(
 )
 
 class CreateAccountFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = CreateAccountFragment()
-    }
-
     private val viewModel: LitterSiteViewModel by activityViewModels()
-
     private var _binding: FragmentCreateAccountBinding? = null
-
     private val binding get() = _binding!!
+
+//    companion object {
+//        fun newInstance() = CreateAccountFragment()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

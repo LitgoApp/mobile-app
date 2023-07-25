@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,6 +19,7 @@ import com.litgo.databinding.FragmentLoginBinding
 import com.litgo.R
 import com.litgo.data.models.Login
 import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private val viewModel: LitterSiteViewModel by activityViewModels()
@@ -44,29 +46,25 @@ class LoginFragment : Fragment() {
         appBarLayout?.visibility = View.GONE
         navBar?.visibility = View.GONE
 
+        lifecycleScope.launch {
+            viewModel.observeState().collect {
+                renderState(it)
+            }
+        }
+
         val emailEditText = binding.emailEdittext
         val passwordEditText = binding.passwordEdittext
         val loginButton = binding.signInButton
         val createAccountButton = binding.createAccountButton
 
-        // Observe the user state
-        // Upon successful login, update UI
-//        userViewModel.userState.observe(viewLifecycleOwner,
-//            Observer {
-//                it.loggedIn ?: return@Observer
-//                if (it.loggedIn == true) {
-//                    updateUi()
-//                }
-//            }
-//        )
-
         loginButton.setOnClickListener {
             var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
             // TODO: temporary login credentials for testing. Should change to the below eventually
-//            var result = viewModel.loginUser(login)
+            var result = viewModel.loginUser(login)
             if (emailEditText.text.toString() == "hi") showLoginSuccess() else showLoginFailed()
             // Upon successful login, the user state changes to indicate successful login
             // UI will be updated
+            if (result) showLoginSuccess() else showLoginFailed()
         }
 
         createAccountButton.setOnClickListener {

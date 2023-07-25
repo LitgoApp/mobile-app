@@ -64,6 +64,10 @@ class LitterSiteViewModel(
 
     private var getEligibleRewardsJob: Job? = null
 
+    fun observeState(): StateFlow<LitgoUiState> {
+        return _uiState
+    }
+
     fun registerUser(data: UserRegistration) {
         registerUserJob?.cancel()
         registerUserJob = viewModelScope.launch {
