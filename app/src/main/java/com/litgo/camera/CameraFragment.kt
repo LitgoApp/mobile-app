@@ -46,12 +46,6 @@ class CameraFragment : Fragment() {
         // ie. model.imageListAdd(uri)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        TODO("Investigate this")
-        viewModel.uiState.collectAsState()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
