@@ -11,6 +11,7 @@ import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.example.litgotesting.viewModel.RewardUiState
 import com.example.litgotesting.viewModel.UserUiState
+import com.example.litgotesting.viewModel.MapUiState
 import com.litgo.data.dataSources.DisposalSiteRemoteDataSource
 import com.litgo.data.dataSources.LitterSiteRemoteDataSource
 import com.litgo.data.dataSources.MunicipalityRemoteDataSource
@@ -229,6 +230,22 @@ class LitterSiteViewModel : ViewModel() {
             } catch (error: Throwable) {
                 throw error
             }
+        }
+    }
+
+    fun setSelectedLitterSite(id: String, location: Coordinates) {
+        try {
+            val selectedLitterSite = fetchLitterSiteById(id, location)
+            val updatedState = _uiState.value.mapUiState.copy(
+                litterSiteIdSelected = selectedLitterSite
+            )
+
+            _uiState.update {
+                it.copy(mapUiState = updatedState)
+            }
+
+        } catch (error: Throwable) {
+            throw error
         }
     }
 

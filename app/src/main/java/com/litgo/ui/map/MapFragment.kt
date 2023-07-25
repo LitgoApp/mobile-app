@@ -31,6 +31,7 @@ import com.litgo.data.models.LitterSite
 import com.litgo.databinding.FragmentMapBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import android.Manifest
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
@@ -41,7 +42,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
-    private lateinit var litterSiteViewModel: LitterSiteViewModel
+    private val viewModel: LitterSiteViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private lateinit var userCoords: Coordinates
@@ -66,9 +67,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         latLng = LatLng(location.latitude, location.longitude)
 
         val userCoords = Coordinates(location.latitude, location.longitude)
-        userCoords?.let {
-            litterSiteViewModel.fetchNearbyLitterSites(it)
-            litterSiteViewModel.fetchNearbyDisposalSites(it)
+        userCoords.let {
+            viewModel.fetchNearbyLitterSites(it)
+            viewModel.fetchNearbyDisposalSites(it)
         }
     }
 
@@ -76,6 +77,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         super.onCreate(savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        TODO("Investigate locationRequest")
         val locationRequest = LocationRequest.create().apply {
             interval = 10000 // Update location every 10 seconds
             fastestInterval = 5000
@@ -107,8 +110,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        litterSiteViewModel = ViewModelProvider(this).get(LitterSiteViewModel::class.java)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment

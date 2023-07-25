@@ -1,4 +1,4 @@
-package com.litgo
+package com.litgo.camera
 
 import android.Manifest
 import android.content.ContentValues
@@ -27,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.litgo.R
 import com.litgo.databinding.FragmentCameraBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import java.text.SimpleDateFormat
@@ -47,6 +48,7 @@ class CameraFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TODO("Investigate this")
         viewModel.uiState.collectAsState()
     }
 

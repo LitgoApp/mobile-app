@@ -1,9 +1,14 @@
 package com.example.litgotesting.viewModel
 
+import com.litgo.data.models.LitterSite
 import java.util.Date
 
 data class CameraUiState(
     val imagesCaptured: List<String> = listOf(),
+)
+
+data class MapUiState(
+    val litterSiteIdSelected: LitterSite? = null
 )
 
 data class LitterSiteUiState(
@@ -41,4 +46,5 @@ data class UserUiState(
 data class LitgoUiState(
     val cameraUiState: CameraUiState = CameraUiState(),
     val userUiState: UserUiState = UserUiState(),
+    val mapUiState: MapUiState = MapUiState()
 )
