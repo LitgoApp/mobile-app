@@ -373,6 +373,21 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    fun fetchLitterSiteById(id: String, userCoords: Coordinates): LiveData<LitterSite> {
+        val litterSiteLiveData = MutableLiveData<LitterSite>()
+
+        viewModelScope.launch {
+            try {
+                val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
+                litterSiteLiveData.postValue(litterSite)
+            } catch (e: Exception) {
+                Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
+            }
+        }
+        return litterSiteLiveData
+    }
+
+
     val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
