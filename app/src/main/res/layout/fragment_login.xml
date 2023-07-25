@@ -5,52 +5,95 @@
     android:id="@+id/LoginFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin"
-    android:paddingRight="@dimen/fragment_horizontal_margin"
-    android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:padding="@dimen/screen_margin"
+    android:background="@color/white"
     tools:context=".ui.login.LoginFragment">
 
-    <ImageView
-        android:background="@drawable/ring_100_green"
+    <LinearLayout
+        android:id="@+id/logo_title_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/username_edittext"/>
-
-    <ImageView
-        android:background="@drawable/garbage_icon_100_green"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/username_edittext"/>
+        app:layout_constraintVertical_bias="0.2"
+        android:gravity="center_vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/logo_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/logo_background"
+                android:background="@drawable/ring_100_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <ImageView
+                android:background="@drawable/garbage_icon_100_green"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="@id/logo_background"
+                app:layout_constraintStart_toStartOf="@id/logo_background"
+                app:layout_constraintTop_toTopOf="@id/logo_background"
+                app:layout_constraintBottom_toBottomOf="@id/logo_background" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/username_edittext"
-        android:autofillHints="@string/username_edittext_prompt"
-        android:hint="@string/username_edittext_prompt"
-        android:layout_width="250dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="60dp"
+            android:theme="@style/LitGo.TextView.Title.Green"
+            android:layout_marginStart="@dimen/vertical_spacing"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/login_error_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        app:layout_constraintTop_toBottomOf="@id/logo_title_layout"
+        app:layout_constraintBottom_toTopOf="@id/email_edittext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/login_error_textview_text"
+        android:theme="@style/LitGo.TextView.LoginErrorTextView"/>
+
+    <!--    EditText for if we want the user to login using username -->
+<!--    <EditText-->
+<!--        android:id="@+id/username_edittext"-->
+<!--        android:autofillHints="@string/username_edittext_prompt"-->
+<!--        android:hint="@string/username_edittext_prompt"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="300dp"-->
+<!--        android:selectAllOnFocus="true"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!-- EditText for if we want the user to login using email -->
+    <EditText
+        android:id="@+id/email_edittext"
+        android:autofillHints="@string/email_edittext_prompt"
+        android:hint="@string/email_edittext_prompt"
+        android:inputType="textEmailAddress"
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="wrap_content"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-<!--    READD DEPENDING ON HOW WE WANT TO VERIFY USER ACCESS TO THE SYSTEM -->
-<!--    android:autofillHints="@string/prompt_email"-->
-<!--    android:hint="@string/prompt_email"-->
-<!--    android:inputType="textEmailAddress"-->
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
         android:id="@+id/password_edittext"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/login_input_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
         android:autofillHints="@string/password_edittext_prompt"
         android:hint="@string/password_edittext_prompt"
         android:imeOptions="actionDone"
@@ -58,50 +101,39 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/email_edittext" />
 
-    <Button
-        android:id="@+id/sign_in_button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:enabled="false"
+        android:text="@string/create_account_prompt_textview_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/create_account_button"
+        android:layout_marginBottom="@dimen/vertical_spacing"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="wrap_content"
         android:text="@string/sign_in_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_edittext"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.3"
+        android:theme="@style/LitGo.Button.Green" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/create_account_button"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/login_input_width"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="20dp"
-        android:enabled="false"
         android:text="@string/create_account_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.7"
+        android:theme="@style/LitGo.Button.White" />
 
-<!--    <ProgressBar-->
-<!--        android:id="@+id/loading"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="64dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:layout_marginBottom="64dp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/password_edittext"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/password_edittext"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.3" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

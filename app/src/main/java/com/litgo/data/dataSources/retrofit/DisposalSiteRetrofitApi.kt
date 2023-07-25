@@ -42,6 +42,9 @@ interface DisposalSiteRetrofitApiService {
 
 class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi {
     private val service = retrofit.create(DisposalSiteRetrofitApiService::class.java)
+    override fun getNearbyDisposalSites(userCoords: Coordinates): List<DisposalSite> {
+        TODO("Not yet implemented")
+    }
 
     override fun getDisposalSites(): List<DisposalSite> {
         try {

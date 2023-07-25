@@ -1,26 +1,50 @@
 <resources>
     <string name="app_name">LitGo</string>
     <!-- FOR THE LOGIN ACTIVITY SCREEN -->
+    <string name="welcome_title_textview">Welcome back!</string>
     <string name="username_edittext_prompt">Enter your username</string>
+    <string name="email_edittext_prompt">Enter your email</string>
     <string name="password_edittext_prompt">Enter your password</string>
     <string name="sign_in_button_text">Sign in</string>
     <string name="create_account_button_text">Create an account</string>
 
-    <string name="login_error_textview_text">The username and/or password entered is incorrect.</string>
+    <string name="login_error_textview_text">The email and/or password\nentered is incorrect.</string>
+    <string name="create_account_prompt_textview_text">New here? Create an account</string>
+
+    <!-- FOR THE CREATE AN ACCOUNT SCREEN -->
+    <string name="create_button_text">Create</string>
+    <string name="sign_in_prompt_textview_text">Have an account already?</string>
+    <string name="create_account_full_name_edittext_prompt">Full Name</string>
+    <string name="create_account_address_edittext_prompt">Address</string>
+    <string name="create_account_email_edittext_prompt">Email</string>
+    <string name="create_account_password_edittext_prompt">Password</string>
+    <string name="create_account_popup_text">Account created! Please login</string>
+    <string name="create_account_error_textview_text">An error has occurred.\nPlease ensure all your details\nhave been entered correctly.</string>
+    <string name="create_account_error_prompt"> is empty or invalid.</string>
 
     <string name="take_photo">Take Photo</string>
 
-    <string name="login_error">The username and/or password entered is incorrect.</string>
 
     <string name="report_status_textview_text">Status:</string>
+    <string name="report_details_textview_text">Report Details</string>
+    <string name="report_details_title_textview_text">Details</string>
+    <string name="report_details_points_available_textview_text">Points Available:</string>
 
-    <!-- For the user's profile screen -->
+    <!-- FOR USER PROFILE SCREEN -->
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
     <string name="user_profile_joined_textview_text">Lifetime Achievements</string>
     <string name="user_profile_textview_text">My Profile</string>
+
+    <string name="user_recent_activity_textview_text">Recent Activity</string>
+    <string name="see_more_textview_text">See more</string>
+
+
     <string name="user_reports_textview_text">My Reports</string>
     <string name="user_cleanups_textview_text">My Cleanups</string>
-    <string name="see_more_textview_text">See more</string>
+    <string name="user_all_textview_text">All</string>
+    <string name="user_all_reports_and_cleanups_textview_text">All My Reports and Cleanups</string>
+
+    <string name="sort_text">Sort</string>
 
 
     <string name="welcome">"Welcome! "</string>
@@ -70,5 +94,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
->>>>>>> 68216a831ff8e3f98f7d839c170123be9c3ab2c7
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
