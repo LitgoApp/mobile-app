@@ -366,25 +366,52 @@ class LitterSiteViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
-                nearbyLitterSites.value = litterSites
+                val updatedState = _uiState.value.copy(
+                    nearbyLitterSites = litterSites.map { litterSite ->
+                        LitterSiteUiState(
+                            id = litterSite.id,
+                            reportingUserId = litterSite.reportingUserId,
+                            collectingUserId = litterSite.collectingUserId,
+                            isCollected = litterSite.isCollected,
+                            litterCount = litterSite.litterCount,
+                            image = "",
+                            harm = litterSite.harm,
+                            description = litterSite.description,
+                            latitude = litterSite.latitude,
+                            longitude = litterSite.longitude
+                        )
+                    }
+                )
+                _uiState.value = updatedState
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching nearby litter sites", e)
             }
         }
     }
 
-    fun fetchLitterSiteById(id: String, userCoords: Coordinates): LiveData<LitterSite> {
-        val litterSiteLiveData = MutableLiveData<LitterSite>()
-
+    fun fetchLitterSiteById(id: String, userCoords: Coordinates) {
         viewModelScope.launch {
             try {
                 val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
-                litterSiteLiveData.postValue(litterSite)
+                val updatedState = _uiState.value.copy(
+                    litterSiteUiState = LitterSiteUiState(
+                        id = litterSite.id,
+                        reportingUserId = litterSite.reportingUserId,
+                        collectingUserId = litterSite.collectingUserId,
+                        isCollected = litterSite.isCollected,
+                        litterCount = litterSite.litterCount,
+                        image = "",
+                        harm = litterSite.harm,
+                        description = litterSite.description,
+                        latitude = litterSite.latitude,
+                        longitude = litterSite.longitude
+                    )
+                )
+                _uiState.value = updatedState
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
             }
         }
-        return litterSiteLiveData
     }
 
 
@@ -392,8 +419,15 @@ class LitterSiteViewModel : ViewModel() {
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
-                val disposalSites = litterSiteRepo.getNearbyDisposalSites(userCoords)
-                nearbyDisposalSites.value = disposalSites
+                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
+                val updatedState = _uiState.value.copy(
+                    nearbyDisposalSites = disposalSites.map { disposalSite ->
+                        DisposalSiteUiState(
+                            // TODO
+                        )
+                    }
+                )
+                _uiState.value = updatedState
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
             }
