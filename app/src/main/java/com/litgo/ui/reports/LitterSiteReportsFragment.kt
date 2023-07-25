@@ -8,12 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.litgo.R
+import com.litgo.data.models.LitterSite
+import com.litgo.viewModel.LitterSiteViewModel
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of LitterSite reports
+ * (that may or may not have been cleaned up by the user)
  */
-class ReportsFragment : Fragment() {
+class LitterSiteReportsFragment : Fragment() {
+
+    private val viewModel: LitterSiteViewModel by activityViewModels()
 
     private var columnCount = 1
 
@@ -31,16 +37,19 @@ class ReportsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_reports, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+        viewModel.observeState().collect {
+            // Set the adapter
+            if (view is RecyclerView) {
+                with(view) {
+                    layoutManager = when {
+                        columnCount <= 1 -> LinearLayoutManager(context)
+                        else -> GridLayoutManager(context, columnCount)
+                    }
+                    adapter = LitterSitesRecyclerViewAdapter(viewModel.getLitterSitesCreatedByUser())
                 }
-                adapter = ReportRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
+
         return view
     }
 
@@ -52,7 +61,7 @@ class ReportsFragment : Fragment() {
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            ReportsFragment().apply {
+            LitterSiteReportsFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

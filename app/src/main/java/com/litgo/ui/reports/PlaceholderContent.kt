@@ -9,34 +9,34 @@ import java.util.HashMap
  *
  * TODO: Replace all uses of this class before publishing your app.
  */
-object PlaceholderContent {
+object ReportContent {
 
     /**
      * An array of sample (placeholder) items.
      */
-    val ITEMS: MutableList<PlaceholderItem> = ArrayList()
+    val ITEMS: MutableList<ReportItem> = ArrayList()
 
     /**
      * A map of sample (placeholder) items, by ID.
      */
-    val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
+    val ITEM_MAP: MutableMap<String, ReportItem> = HashMap()
 
     private val COUNT = 25
 
     init {
         // Add some sample items.
         for (i in 1..COUNT) {
-            addItem(createPlaceholderItem(i))
+            addItem(createReportItem(i))
         }
     }
 
-    private fun addItem(item: PlaceholderItem) {
+    private fun addItem(item: ReportItem) {
         ITEMS.add(item)
         ITEM_MAP.put(item.id, item)
     }
 
-    private fun createPlaceholderItem(position: Int): PlaceholderItem {
-        return PlaceholderItem(position.toString(), "Item " + position, makeDetails(position))
+    private fun createReportItem(position: Int): ReportItem {
+        return ReportItem(position.toString(), "Item " + position, makeDetails(position))
     }
 
     private fun makeDetails(position: Int): String {
@@ -51,7 +51,7 @@ object PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    data class PlaceholderItem(val id: String, val content: String, val details: String) {
+    data class ReportItem(val id: String, val content: String, val details: String) {
         override fun toString(): String = content
     }
 }

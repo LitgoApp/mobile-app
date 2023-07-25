@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:id="@+id/full_report_layout"
+        android:id="@+id/litter_site_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
@@ -30,7 +30,6 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <TextView
-                    android:id="@+id/report_status_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/report_status_textview_text"
@@ -38,14 +37,15 @@
                     android:textSize="16dp"/>
 
                 <ImageView
+                    android:id="@+id/litter_site_status_icon_imageview"
                     android:layout_width="@dimen/report_status_icon_size"
                     android:layout_height="@dimen/report_status_icon_size"
                     android:layout_marginStart="@dimen/vertical_spacing"
-                    android:src="@drawable/do_not_disturb_100_black"/>
+                    android:src="@drawable/do_not_disturb_100_black" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/report_description_textview"
+                android:id="@+id/litter_site_description_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/report_min_height"
@@ -65,7 +65,7 @@
                     android:layout_height="@dimen/report_status_icon_size"
                     android:src="@drawable/location_96_black"/>
                 <TextView
-                    android:id="@+id/report_location_textview"
+                    android:id="@+id/litter_site_address_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
@@ -84,6 +84,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/litter_site_last_updated_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="July 18, 2023: 2:48pm"
@@ -97,7 +98,7 @@
                 android:gravity="center_vertical|right">
 
                 <TextView
-                    android:id="@+id/report_points_textview"
+                    android:id="@+id/litter_site_points_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"/>
@@ -111,6 +112,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/litter_site_photo_imageview"
                 android:layout_width="@dimen/report_image_width"
                 android:layout_height="@dimen/report_image_height"
                 android:src="@drawable/rounded_square_100_green"
