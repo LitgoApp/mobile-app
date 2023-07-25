@@ -392,7 +392,7 @@ class LitterSiteViewModel : ViewModel() {
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
             try {
-                val disposalSites = repository.getNearbyDisposalSites(userCoords)
+                val disposalSites = litterSiteRepo.getNearbyDisposalSites(userCoords)
                 nearbyDisposalSites.value = disposalSites
             } catch (e: Exception) {
                 Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
