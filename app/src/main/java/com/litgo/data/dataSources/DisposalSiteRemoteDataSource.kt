@@ -17,6 +17,7 @@ data class DisposalSiteApiModel(
 
 // Makes synchronous requests related to disposal sites to the database
 interface DisposalSiteApi {
+    fun getNearbyDisposalSites(userCoords: Coordinates): List<DisposalSite>
     fun getDisposalSites(): List<DisposalSite>
     fun getDisposalSite(id: String): DisposalSite
     fun createDisposalSite(coords: Coordinates): DisposalSite
@@ -27,6 +28,10 @@ class DisposalSiteRemoteDataSource(
     private val disposalSiteApi: DisposalSiteApi,
     private val ioDispatcher: CoroutineDispatcher
 ) {
+    suspend fun getNearbyDisposalSites(userCoords: Coordinates): List<DisposalSite> =
+        withContext(ioDispatcher) {
+            disposalSiteApi.getNearbyDisposalSites(userCoords)
+        }
     suspend fun getDisposalSites(): List<DisposalSite> =
         withContext(ioDispatcher) {
             disposalSiteApi.getDisposalSites()
