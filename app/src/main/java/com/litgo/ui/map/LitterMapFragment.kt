@@ -124,7 +124,7 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
             marker.tag?.let {
                 val bannerContainer = binding.cardHolder
                 if (it is LitterSiteUiState) {
-                    // viewModel.setSelectedLitterSite(marker.tag) TODO: Fix this call!
+                    viewModel.getLitterSite(it.id, Coordinates(0.0, 0.0)) // fix this!
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
                     bannerContainer.visibility = View.VISIBLE
 

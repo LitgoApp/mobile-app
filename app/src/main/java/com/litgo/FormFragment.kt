@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
@@ -83,14 +84,14 @@ class FormFragment() : Fragment() {
                 viewModel.uiState.collect { uiState ->
                     val images = uiState.cameraUiState.imagesCaptured
                     val userState = uiState.userUiState
-                    // addImageCards(images) TODO: Uncomment when Michael pushes
+                    addImageCards(images)
                     userLocation = LatLng(userState.latitude, userState.longitude)
                 }
             }
         }
 
         pickMultipleMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(1)) { uris ->
                 // Callback is invoked after the user selects media items or closes the
                 // photo picker.
 
@@ -124,15 +125,20 @@ class FormFragment() : Fragment() {
 
 
     private fun submitButtonClicked() {
-        val litterSiteCreation = LitterSiteCreation(
-            userLocation.latitude,
-            userLocation.longitude,
-            if (binding.toggleDanger.isChecked) "Danger" else "Test",
-            binding.descriptionText.text.toString(), /**/
-            1,
-            "dummy"
-        )
-        viewModel.createLitterSite(litterSiteCreation)
+        val imageB64  = uriToBase64(images[0], requireContext())
+        if (imageB64 != null) {
+            val litterSiteCreation = LitterSiteCreation(
+                userLocation.latitude,
+                userLocation.longitude,
+                if (binding.toggleDanger.isChecked) "Danger" else "Test",
+                binding.descriptionText.text.toString(), /* */
+                1,
+                imageB64
+            )
+            viewModel.createLitterSite(litterSiteCreation)
+
+        }
+
 
         // HANDLE SUBMIT BUTTON PRESS
         Log.i("Form Activity", "Clicked")
