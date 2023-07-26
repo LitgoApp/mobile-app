@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.litgo.R
 import com.litgo.viewModel.LitgoViewModel
-import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 /**

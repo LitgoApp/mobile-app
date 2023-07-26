@@ -18,6 +18,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
@@ -83,14 +85,14 @@ class FormFragment() : Fragment() {
                 viewModel.uiState.collect { uiState ->
                     val images = uiState.cameraUiState.imagesCaptured
                     val userState = uiState.userUiState
-                    // addImageCards(images) TODO: Uncomment when Michael pushes
+                    addImageCards(images)
                     userLocation = LatLng(userState.latitude, userState.longitude)
                 }
             }
         }
 
         pickMultipleMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(1)) { uris ->
                 // Callback is invoked after the user selects media items or closes the
                 // photo picker.
 
@@ -98,7 +100,7 @@ class FormFragment() : Fragment() {
                     // This currently only makes the image picker select the images that you want to display
                     // TODO: Make sure this is working when Michael pushes!
                     for (uri in uris) {
-                        // viewModel.addImageUri(uri)
+                        viewModel.takePicture(uri)
                     }
                     addImageCards(uris)
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
@@ -124,17 +126,20 @@ class FormFragment() : Fragment() {
 
 
     private fun submitButtonClicked() {
-        val litterSiteCreation = LitterSiteCreation(
-            userLocation.latitude,
-            userLocation.longitude,
-            if (binding.toggleDanger.isChecked) "Danger" else "Test",
-            binding.descriptionText.text.toString(), /**/
-            1,
-            "dummy"
-        )
-        viewModel.createLitterSite(litterSiteCreation)
+        val imageB64  = uriToBase64(images[0], requireContext())
+        if (imageB64 != null) {
+            val litterSiteCreation = LitterSiteCreation(
+                userLocation.latitude,
+                userLocation.longitude,
+                if (binding.toggleDanger.isChecked) "Danger" else "Test",
+                binding.descriptionText.text.toString(), /* */
+                1,
+                imageB64
+            )
+            viewModel.createLitterSite(litterSiteCreation)
+            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
 
-        // HANDLE SUBMIT BUTTON PRESS
+        }
         Log.i("Form Activity", "Clicked")
     }
 
