@@ -29,7 +29,7 @@ import com.litgo.R
 import com.litgo.data.models.Coordinates
 import com.litgo.data.models.LitterSite
 import com.litgo.databinding.FragmentMapBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import android.Manifest
 import androidx.lifecycle.LiveData
 
@@ -41,7 +41,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
-    private lateinit var litterSiteViewModel: LitterSiteViewModel
+    private lateinit var litterSiteViewModel: LitgoViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private lateinit var userCoords: Coordinates
@@ -108,7 +108,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        litterSiteViewModel = ViewModelProvider(this).get(LitterSiteViewModel::class.java)
+        litterSiteViewModel = ViewModelProvider(this).get(LitgoViewModel::class.java)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
