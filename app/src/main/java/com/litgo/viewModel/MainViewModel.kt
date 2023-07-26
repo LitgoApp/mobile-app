@@ -48,11 +48,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Thread.State
-import java.util.Date
 
 class LitterSiteViewModel : ViewModel() {
     //decide on littercount, latitude, longitude

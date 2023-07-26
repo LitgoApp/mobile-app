@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/LitterSiteReports">
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -33,8 +33,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ReportsFragment"
-        android:name="com.litgo.ui.litterSite.ReportsFragment"
+        android:id="@+id/LitterSiteReports"
+        android:name="com.litgo.ui.litterSite.LitterSiteReportsFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 
@@ -43,6 +43,7 @@
         android:name="com.litgo.ui.RewardsFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
+
     <fragment
         android:id="@+id/formFragment"
         android:name="com.litgo.FormFragment"
@@ -51,6 +52,7 @@
             android:id="@+id/action_formFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.litgo.CameraFragment"

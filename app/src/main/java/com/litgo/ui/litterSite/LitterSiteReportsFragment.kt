@@ -3,13 +3,14 @@ package com.litgo.ui.litterSite
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.litgo.R
+import com.litgo.databinding.FragmentLitterSiteReportsBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.launch
 
@@ -20,47 +21,97 @@ import kotlinx.coroutines.launch
 class LitterSiteReportsFragment : Fragment() {
 
     private val viewModel: LitterSiteViewModel by activityViewModels()
-
-    private var columnCount = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//
-//        arguments?.let {
-//            columnCount = it.getInt(ARG_COLUMN_COUNT)
-//        }
-    }
+    private var _binding: FragmentLitterSiteReportsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_litter_site_reports, container, false)
-        lifecycleScope.launch {
-            viewModel.observeState().collect { // Set the adapter
-                if (view is RecyclerView) {
-                    with(view) {
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports)
-                    }
-                }
-            }
-        }
-        return view
+        _binding = FragmentLitterSiteReportsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
+        val testReports = listOf(
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                37,
+                "",
+                "Hazardous",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                50,
+                "",
+                "",
+                resources.getString(R.string.lorem_ipsum),
+                -6.175110,
+                106.865036
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                50,
+                "",
+                "",
+                resources.getString(R.string.lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                37,
+                "",
+                "Hazardous",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                50,
+                "",
+                "",
+                resources.getString(R.string.lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+        )
 
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            LitterSiteReportsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
+        var reportsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.reports)
+        var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups)
+
+        lifecycleScope.launch {
+            viewModel.observeState().collect {
+                // Default adapter shows the user all reports they've made
+                var litterSiteRecyclerView = binding.litterSiteRecyclerView
+                litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
+                litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports)
+
+//                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports)
+//                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups)
             }
+        }
     }
 }

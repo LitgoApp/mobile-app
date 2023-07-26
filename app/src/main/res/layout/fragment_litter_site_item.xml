@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:layout_marginBottom="@dimen/vertical_spacing"
+    android:elevation="@dimen/elevation"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -32,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_gravity="top">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -63,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/vertical_spacing"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_gravity="bottom">
                 <ImageView
                     android:layout_width="@dimen/report_status_icon_size"
                     android:layout_height="@dimen/report_status_icon_size"
