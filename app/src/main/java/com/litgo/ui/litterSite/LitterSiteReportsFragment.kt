@@ -10,7 +10,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.litgo.R
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
  */
 class LitterSiteReportsFragment : Fragment() {
 
-    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
 
     private var columnCount = 1
 

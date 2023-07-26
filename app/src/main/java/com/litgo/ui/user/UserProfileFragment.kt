@@ -9,11 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.litgo.databinding.FragmentUserProfileBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class UserProfileFragment : Fragment() {
-    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentUserProfileBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!

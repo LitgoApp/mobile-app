@@ -15,13 +15,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.R
 import com.litgo.data.models.UserRegistration
 import com.litgo.databinding.FragmentCreateAccountBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import kotlin.system.exitProcess
 
 class CreateAccountFragment : Fragment() {
-    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
 

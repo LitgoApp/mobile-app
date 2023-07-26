@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.litgo.R
 import com.litgo.databinding.FragmentLitterSiteBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 
 /**
  * Displays the details of a litter site (which may or may not have been cleaned already).
@@ -17,7 +17,7 @@ import com.litgo.viewModel.LitterSiteViewModel
  */
 class LitterSiteFragment : Fragment() {
 
-    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentLitterSiteBinding? = null
     private val binding get() = _binding!!
 
