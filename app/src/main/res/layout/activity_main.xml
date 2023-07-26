@@ -2,47 +2,60 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/white">
 
-        <!-- Action bar element doesn't actually show on any of the screens but is required to be
-        set on the main activity-->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:visibility="gone">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+        </androidx.appcompat.widget.Toolbar>
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <!-- Holds the fragment the user is currently viewing -->
-        <fragment
-            android:id="@+id/nav_host_fragment_content_main"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/fragment_top_margin"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/nav_graph" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <TextView
+                android:id="@+id/app_bar_title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_profile_textview_text"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/header_3_text_size"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Holds the fragment the user is currently viewing -->
+    <fragment
+        android:id="@+id/nav_host_fragment_content_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 
     <!--  Make the bottom navigation bar invisible on the login screen  -->
 
@@ -52,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

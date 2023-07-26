@@ -159,7 +159,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 }
             }
         }
-
     }
 
     override fun onCreateView(
@@ -198,7 +197,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         viewModel.fetchNearbyLitterSites(userCoords)
         viewModel.fetchNearbyDisposalSites(userCoords)
         populateMap()
-
         // Add a marker for the user's current location
         val userPosition = latLng
         mMap.addMarker(MarkerOptions()
