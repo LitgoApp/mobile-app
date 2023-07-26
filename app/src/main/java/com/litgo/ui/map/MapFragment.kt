@@ -111,8 +111,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             viewModel.fetchNearbyLitterSites(it)
             viewModel.fetchNearbyDisposalSites(it)
         }
-
-        populateMap()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -175,7 +173,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         // Fetch nearby litter sites and disposal sites
         viewModel.fetchNearbyLitterSites(userCoords)
         viewModel.fetchNearbyDisposalSites(userCoords)
-        populateMap()
+
         // Add a marker for the user's current location
         val userPosition = latLng
         mMap.addMarker(MarkerOptions()
@@ -183,12 +181,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             .title("Your Location")
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
 
-        mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
+
 
         // Add a new marker for each litter site
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
+                    mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
                     /*
                     val litterSite = uiState.mapUiState.litterSiteSelected
                     _________.forEach { disposalSite ->
