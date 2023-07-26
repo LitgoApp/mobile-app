@@ -124,15 +124,16 @@ class LitterSiteReportsFragment : Fragment() {
         val filterSpinnerAdapter = this.context?.let { ArrayAdapter.createFromResource(it, R.array.litter_site_filter_spinner_array, android.R.layout.simple_spinner_item) }
         filterSpinner.adapter = filterSpinnerAdapter
 
-        var reportsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.reports)
-        var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups)
+        val supportFragmentManager = activity?.supportFragmentManager
+        var reportsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.reports, supportFragmentManager)
+        var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups, supportFragmentManager)
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
                 // Default adapter shows the user all reports they've made
                 var litterSiteRecyclerView = binding.litterSiteRecyclerView
                 litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
-                litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports)
+                litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, supportFragmentManager)
 
 //                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports)
 //                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups)
