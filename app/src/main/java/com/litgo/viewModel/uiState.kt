@@ -17,7 +17,12 @@ data class LitterSiteUiState(
     val description: String = "",
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
+    val createdAt: String = "",
+    val updatedAt: String = "",
 )
+
+val LitterSiteUiState.reportPoints: Int get() = litterCount * 3
+val LitterSiteUiState.collectPoints: Int get() = litterCount * 10
 
 data class RewardUiState(
     val id: String = "",
