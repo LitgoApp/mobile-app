@@ -1,4 +1,4 @@
-package com.litgo.ui
+package com.litgo.ui.reward
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

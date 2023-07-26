@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/RewardsFragment"
-        android:name="com.litgo.ui.RewardsFragment"
+        android:name="com.litgo.ui.reward.RewardsFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 

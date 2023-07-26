@@ -35,6 +35,7 @@ class FormFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Customize your form interactions and logic here
+        images = mutableListOf()
 
         fun onUpdate() {
 
@@ -83,7 +84,7 @@ class FormFragment() : Fragment() {
             }
         }
 
-        return view
+        return viewBinding.root
     }
 
 

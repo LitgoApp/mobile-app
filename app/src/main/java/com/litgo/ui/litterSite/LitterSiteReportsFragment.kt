@@ -28,14 +28,6 @@ class LitterSiteReportsFragment : Fragment() {
     private var _binding: FragmentLitterSiteReportsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//
-//        arguments?.let {
-//            columnCount = it.getInt(ARG_COLUMN_COUNT)
-//        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -209,46 +201,47 @@ class LitterSiteReportsFragment : Fragment() {
         var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups, supportFragmentManager)
 
         var litterSiteRecyclerView = binding.litterSiteRecyclerView
-        litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
+
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
+                litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
 
-                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, supportFragmentManager)
-                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups, supportFragmentManager)
-
-                // Display the reports according to whatever is currently selected on the dropdown menu
-                when (filterSpinner.selectedItem.toString()) {
-                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
-                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
-                    else -> litterSiteRecyclerView.adapter = reportsAdapter
-                }
+//                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, supportFragmentManager)
+//                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups, supportFragmentManager)
+//
+//                // Display the reports according to whatever is currently selected on the dropdown menu
+//                when (filterSpinner.selectedItem) {
+//                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+//                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+//                    else -> litterSiteRecyclerView.adapter = reportsAdapter
+//                }
 
                 // FOR TESTING
-                // litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, supportFragmentManager)
+                 litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, supportFragmentManager)
             }
         }
 
-        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (resources.getStringArray(R.array.litter_site_filter_spinner_array)[position]) {
-                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
-                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
-                    else -> litterSiteRecyclerView.adapter = reportsAdapter
-                }
-            }
-
-            // Display all reports created by the user by default
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                litterSiteRecyclerView.adapter = reportsAdapter
-            }
-
-        }
+//        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                when (resources.getStringArray(R.array.litter_site_filter_spinner_array)[position]) {
+//                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+//                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+//                    else -> litterSiteRecyclerView.adapter = reportsAdapter
+//                }
+//            }
+//
+//            // Display all reports created by the user by default
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                litterSiteRecyclerView.adapter = reportsAdapter
+//            }
+//
+//        }
 
     }
 

@@ -140,27 +140,27 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         mMap = googleMap
 //        mMap.setLocationSource(this)
 
-        // Fetch nearby litter sites and disposal sites
-        litterSiteViewModel.fetchNearbyLitterSites(userCoords)
-//        litterSiteViewModel.fetchNearbyDisposalSites(userCoords)
-
-        // Observe litter sites and add markers to map
-        litterSiteViewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
-            // Clear old markers
-            mMap.clear()
-
-            // Add a new marker for each litter site
-            litterSites.forEach { litterSite ->
-                val position = LatLng(litterSite.latitude, litterSite.longitude)
-                val marker = mMap.addMarker(
-                    MarkerOptions()
-                    .position(position)
-                    .title("Litter Site")
-                    .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                marker?.tag = litterSite
-            }
-        }
+//        // Fetch nearby litter sites and disposal sites
+//        litterSiteViewModel.fetchNearbyLitterSites(userCoords)
+////        litterSiteViewModel.fetchNearbyDisposalSites(userCoords)
+//
+//        // Observe litter sites and add markers to map
+//        litterSiteViewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
+//            // Clear old markers
+//            mMap.clear()
+//
+//            // Add a new marker for each litter site
+//            litterSites.forEach { litterSite ->
+//                val position = LatLng(litterSite.latitude, litterSite.longitude)
+//                val marker = mMap.addMarker(
+//                    MarkerOptions()
+//                    .position(position)
+//                    .title("Litter Site")
+//                    .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+//                marker?.tag = litterSite
+//            }
+//        }
 
         // Observe disposal sites and add markers to map
 //        litterSiteViewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->

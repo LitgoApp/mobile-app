@@ -50,8 +50,8 @@ class LitterSitesRecyclerViewAdapter(
         // TODO: Show the first 1-2 images of the report
         holder.litterSiteItemLayout.setOnClickListener {
             val transaction = supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.nav_host_fragment_content_main, LitterSiteFragment(litterSite))
             transaction?.addToBackStack("litter_sites_fragment")
+            transaction?.replace(R.id.nav_host_fragment_content_main, LitterSiteFragment(litterSite))
             transaction?.commit()
         }
     }

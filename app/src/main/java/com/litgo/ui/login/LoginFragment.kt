@@ -33,12 +33,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        mainActivity.setBackgroundColor(R.color.white)
+        //        mainActivity.setBackgroundColor(R.color.white)
         val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
         mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.white))
         // Ensure the bottom navigation bar and top app bar are not visible
@@ -47,6 +43,12 @@ class LoginFragment : Fragment() {
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
         appBarLayout?.visibility = View.GONE
         navBar?.visibility = View.GONE
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val emailEditText = binding.emailEdittext
         val passwordEditText = binding.passwordEdittext

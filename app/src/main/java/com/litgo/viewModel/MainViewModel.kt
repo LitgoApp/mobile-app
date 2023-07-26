@@ -55,8 +55,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Thread.State
 
 class LitgoViewModel : ViewModel() {
+//    private val retrofit: Retrofit = Retrofit.Builder()
+//        .baseUrl("https://backend-service-v0b8.onrender.com/")
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
+
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://backend-service-v0b8.onrender.com/")
+        .baseUrl("http://172.17.0.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

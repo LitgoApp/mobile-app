@@ -1,21 +1,24 @@
 package com.litgo
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.databinding.ActivityMainBinding
-import com.litgo.ui.RewardsFragment
+import com.litgo.ui.reward.RewardsFragment
 import com.litgo.ui.user.UserProfileFragment
 import com.litgo.ui.litterSite.LitterSiteReportsFragment
+import com.litgo.ui.map.MapFragment
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        hideAppAndNavBars()
 
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -51,10 +56,13 @@ class MainActivity : AppCompatActivity() {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment_content_main, CameraFragment())
             transaction.commit()
+            appBarTitleTextView.text = "Report"
         }
         binding.mapNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment_content_main, MapFragment())
             transaction.commit()
+            appBarTitleTextView.text = "Map"
         }
         binding.userProfileNavBtn.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()

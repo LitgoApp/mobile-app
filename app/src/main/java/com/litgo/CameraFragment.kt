@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.litgo.databinding.FragmentCameraBinding
+import com.litgo.ui.litterSite.LitterSiteFragment
 import com.litgo.viewModel.LitgoViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -70,7 +71,11 @@ class CameraFragment : Fragment() {
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         viewBinding.submitButton.setOnClickListener {
-            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.addToBackStack("camera_fragment")
+            transaction?.replace(R.id.nav_host_fragment_content_main, FormFragment())
+            transaction?.commit()
+//            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
