@@ -35,7 +35,7 @@ class LitterSiteInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.litterSiteCard.setOnClickListener {
-            TODO("Switch to report details page")
+            TODO("Nav to report details page")
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

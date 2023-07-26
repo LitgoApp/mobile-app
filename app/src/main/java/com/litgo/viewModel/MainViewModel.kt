@@ -230,6 +230,8 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    /*
+
     fun setSelectedLitterSite(id: String, location: Coordinates) {
         try {
             val selectedLitterSite = litterSiteRepo.getLitterSiteById(id, location)
@@ -245,6 +247,8 @@ class LitterSiteViewModel : ViewModel() {
             throw error
         }
     }
+
+     */
 
     fun getNearbyLitterSites(userCoords: Coordinates) {
         getNearbyLitterSitesJob?.cancel()
@@ -527,6 +531,8 @@ class LitterSiteViewModel : ViewModel() {
 
     val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
 
+    /*
+
     TODO("Implement this?")
     fun fetchNearbyDisposalSites(userCoords: Coordinates) {
         viewModelScope.launch {
@@ -545,6 +551,8 @@ class LitterSiteViewModel : ViewModel() {
             }
         }
     }
+
+     */
 
 }
 
