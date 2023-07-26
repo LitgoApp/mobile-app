@@ -170,6 +170,17 @@ class LitgoViewModel : ViewModel() {
         }
     }
 
+    fun updateUserPosition(userCoords: Coordinates) {
+        val updatedState = _uiState.value.userUiState.copy(
+            latitude = userCoords.latitude,
+            longitude = userCoords.longitude
+        )
+
+        _uiState.update {
+            it.copy(userUiState = updatedState)
+        }
+    }
+
     fun deleteUser() {
         deleteUserJob?.cancel()
         deleteUserJob = viewModelScope.launch(throwExceptionHandler) {
@@ -246,8 +257,12 @@ class LitgoViewModel : ViewModel() {
                         description = litterSite.description,
                         latitude = litterSite.latitude,
                         longitude = litterSite.longitude,
-                        createdAt = litterSite.createdAt,
-                        updatedAt = litterSite.updatedAt
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
                     )
                 }
             )
@@ -275,8 +290,12 @@ class LitgoViewModel : ViewModel() {
                         description = litterSite.description,
                         latitude = litterSite.latitude,
                         longitude = litterSite.longitude,
-                        createdAt = litterSite.createdAt,
-                        updatedAt = litterSite.updatedAt
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
                     )
                 }
             )
@@ -304,8 +323,12 @@ class LitgoViewModel : ViewModel() {
                         description = litterSite.description,
                         latitude = litterSite.latitude,
                         longitude = litterSite.longitude,
-                        createdAt = litterSite.createdAt,
-                        updatedAt = litterSite.updatedAt
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
                     )
                 }
             )
@@ -332,8 +355,12 @@ class LitgoViewModel : ViewModel() {
                     description = litterSite.description,
                     latitude = litterSite.latitude,
                     longitude = litterSite.longitude,
-                    createdAt = litterSite.createdAt,
-                    updatedAt = litterSite.updatedAt
+                    createdAt = frontendDateFormat.format(
+                        backendDateFormat.parse(litterSite.createdAt)
+                    ),
+                    updatedAt = frontendDateFormat.format(
+                        backendDateFormat.parse(litterSite.updatedAt)
+                    ),
                 )
             )
 
