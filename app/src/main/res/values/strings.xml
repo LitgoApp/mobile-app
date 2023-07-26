@@ -26,9 +26,15 @@
 
     <!-- FOR LITTER SITE (either item and/or full details view) -->
     <string name="litter_site_status_textview_text">Status:</string>
+    <string name="litter_site_harm_textview_text">Harm:</string>
     <string name="litter_site_textview_text">Report Details</string>
     <string name="litter_site_title_textview_text">Details</string>
     <string name="litter_site_points_available_textview_text">Points Available:</string>
+    <string name="litter_site_reported_textview_text">Reported at </string>
+    <string name="litter_site_see_all_photos_textview_text">See All Photos</string>
+    <string name="litter_site_accept_button_text">Accept</string>
+    <string name="litter_site_decline_button_text">Decline</string>
+    <string name="litter_site_in_progress_textview_text">In Progress</string>
 
     <!-- FOR USER PROFILE SCREEN -->
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
@@ -57,42 +63,20 @@
         <item>All</item>
     </string-array>
 
+    <string name="back_textview_text">Back</string>
+
     <string name="welcome">"Welcome! "</string>
 
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    <!-- TEST STRINGS -->
+    <string name="test_litter_site_reported_date">Reported at Month Day, Year: 2:48pm</string>
+    <string name="test_litter_site_harm">Caution</string>
+    <string name="test_litter_site_points">478</string>
+    <string name="test_litter_site_coordinates">31.230391, 121.473701</string>
+    <string name="test_litter_site_distance">2 min</string>
+    <string name="test_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis. Aliquet eget sit amet tellus cras adipiscing. Sed felis eget velit aliquet sagittis id consectetur. Scelerisque viverra mauris in aliquam. Nunc congue nisi vitae suscipit tellus mauris. Enim nunc faucibus a pellentesque sit amet. Egestas erat imperdiet sed euismod. Id velit ut tortor pretium viverra suspendisse potenti. Eu non diam phasellus vestibulum lorem. In dictum non consectetur a erat nam at. Odio ut sem nulla pharetra diam sit amet nisl. Et netus et malesuada fames ac.
+Nullam eget felis eget nunc lobortis mattis. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nulla aliquet porttitor lacus luctus accumsan tortor posuere ac. Urna neque viverra justo nec ultrices dui. Aliquam ut porttitor leo a diam sollicitudin. Facilisis volutpat est velit egestas dui id ornare arcu odio. Vulputate eu scelerisque felis imperdiet proin. Massa sapien faucibus et molestie ac feugiat. Elit sed vulputate mi sit. Tellus at urna condimentum mattis pellentesque id nibh tortor. Consequat interdum varius sit amet. Aliquam sem et tortor consequat. Facilisi nullam vehicula ipsum a arcu cursus vitae congue mauris. Lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis. Accumsan lacus vel facilisis volutpat est velit egestas. Facilisi cras fermentum odio eu feugiat pretium nibh. At lectus urna duis convallis convallis tellus. Aliquam purus sit amet luctus.
+Vitae proin sagittis nisl rhoncus mattis. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat pretium. Sem et tortor consequat id. Imperdiet dui accumsan sit amet nulla facilisi morbi tempus. Magna fringilla urna porttitor rhoncus dolor purus non. Hac habitasse platea dictumst quisque sagittis purus sit. Tristique risus nec feugiat in fermentum. Integer malesuada nunc vel risus. Nec tincidunt praesent semper feugiat nibh sed pulvinar. Libero id faucibus nisl tincidunt eget nullam non nisi. Id cursus metus aliquam eleifend mi in.
+Nullam non nisi est sit amet facilisis magna etiam tempor. Quisque egestas diam in arcu. Sit amet purus gravida quis blandit turpis cursus in hac. Scelerisque felis imperdiet proin fermentum leo vel orci. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Sit amet risus nullam eget felis eget nunc. Fermentum odio eu feugiat pretium. Ornare quam viverra orci sagittis eu volutpat. Leo urna molestie at elementum eu facilisis sed odio morbi. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Diam vel quam elementum pulvinar etiam non.
+Eget magna fermentum iaculis eu non diam. Feugiat in ante metus dictum at tempor commodo. Augue lacus viverra vitae congue. Cursus eget nunc scelerisque viverra. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Ullamcorper malesuada proin libero nunc consequat interdum. Sollicitudin tempor id eu nisl. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus a. Gravida quis blandit turpis cursus in. Dignissim sodales ut eu sem integer vitae justo. Iaculis urna id volutpat lacus laoreet non curabitur gravida. Metus dictum at tempor commodo. Vitae semper quis lectus nulla at. Massa placerat duis ultricies lacus sed turpis tincidunt. Maecenas accumsan lacus vel facilisis volutpat est velit egestas dui. Viverra justo nec ultrices dui. Id venenatis a condimentum vitae.
     </string>
 </resources>

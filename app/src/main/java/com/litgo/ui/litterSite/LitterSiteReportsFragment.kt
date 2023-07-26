@@ -35,6 +35,12 @@ class LitterSiteReportsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLitterSiteReportsBinding.inflate(inflater, container, false)
+
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
+        appBarLayout?.visibility = View.VISIBLE
+        navBar?.visibility = View.VISIBLE
+
         return binding.root
     }
 
@@ -73,7 +79,7 @@ class LitterSiteReportsFragment : Fragment() {
                 50,
                 "",
                 "",
-                resources.getString(R.string.lorem_ipsum),
+                resources.getString(R.string.test_lorem_ipsum),
                 -6.175110,
                 106.865036
             ),
@@ -85,7 +91,7 @@ class LitterSiteReportsFragment : Fragment() {
                 50,
                 "",
                 "",
-                resources.getString(R.string.lorem_ipsum),
+                resources.getString(R.string.test_lorem_ipsum),
                 -33.868820,
                 151.209290
             ),
@@ -109,7 +115,7 @@ class LitterSiteReportsFragment : Fragment() {
                 50,
                 "",
                 "",
-                resources.getString(R.string.lorem_ipsum),
+                resources.getString(R.string.test_lorem_ipsum),
                 -33.868820,
                 151.209290
             ),

@@ -69,4 +69,20 @@
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
     </style>
+
+    <style name="LitGo.Text" parent="LitGo"/>
+    <style name="LitGo.Text.Header1" parent="LitGo.Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/header_1_text_size</item>
+    </style>
+    <style name="LitGo.Text.Header2" parent="LitGo.Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/header_2_text_size</item>
+    </style>
+    <style name="LitGo.Text.Paragraph" parent="LitGo.Text">
+        <item name="android:textSize">@dimen/paragraph_text_size</item>
+    </style>
+    <style name="LitGo.Text.Paragraph.Bold" parent="LitGo.Text.Paragraph">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

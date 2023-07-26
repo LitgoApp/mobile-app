@@ -41,8 +41,7 @@ class LitterSitesRecyclerViewAdapter(
         holder.descriptionTextView.text = litterSite.description
 //        holder.lastUpdatedTextView.text = litterSite.updated
         holder.locationTextView.text = litterSite.longitude.toString() + ", " + litterSite.latitude.toString()
-        holder.cleanupPointsTextView.text = (litterSite.litterCount * 10).toString()
-        holder.reportPointsTextView.text = (litterSite.litterCount * 3).toString()
+        holder.pointsTextView.text = (litterSite.litterCount * 10).toString()
         when (litterSite.isCollected) {
             true -> holder.statusImageView.setImageResource(R.drawable.checkmark_90_green)
             false -> holder.statusImageView.setImageResource(R.drawable.do_not_disturb_100_black)
@@ -52,6 +51,7 @@ class LitterSitesRecyclerViewAdapter(
         holder.litterSiteItemLayout.setOnClickListener {
             val transaction = supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.nav_host_fragment_content_main, LitterSiteFragment(litterSite))
+            transaction?.addToBackStack("litter_sites_fragment")
             transaction?.commit()
         }
     }
@@ -62,8 +62,7 @@ class LitterSitesRecyclerViewAdapter(
         var statusImageView: ImageView = binding.litterSiteStatusIconImageview
         var lastUpdatedTextView: TextView = binding.litterSiteLastUpdatedTextview
         val descriptionTextView: TextView = binding.litterSiteDescriptionTextview
-        val cleanupPointsTextView: TextView = binding.litterSiteCleanupPointsTextview
-        val reportPointsTextView: TextView = binding.litterSiteReportPointsTextview
+        val pointsTextView: TextView = binding.litterSitePointsTextview
         val locationTextView: TextView = binding.litterSiteAddressTextview
         val photoImageView: ImageView = binding.litterSitePhotoImageview
         val litterSiteItemLayout: LinearLayout = binding.litterSiteLayout
