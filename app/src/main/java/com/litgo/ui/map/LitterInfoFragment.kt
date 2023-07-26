@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.litgo.databinding.FragmentLitterSiteInfoBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 
 class LitterSiteInfoFragment : Fragment() {
-    private lateinit var litterSiteViewModel: LitterSiteViewModel
+    private lateinit var litterSiteViewModel: LitgoViewModel
     private var _binding: FragmentLitterSiteInfoBinding? = null
     private val binding get() = _binding!!
 
@@ -25,7 +25,7 @@ class LitterSiteInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        litterSiteViewModel = ViewModelProvider(requireActivity()).get(LitterSiteViewModel::class.java)
+        litterSiteViewModel = ViewModelProvider(requireActivity()).get(LitgoViewModel::class.java)
 
 //        litterSiteViewModel.selectedLitterSite.observe(viewLifecycleOwner) { litterSite ->
 //            // TO BE CHANGED

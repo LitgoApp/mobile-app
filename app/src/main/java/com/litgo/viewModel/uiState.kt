@@ -1,9 +1,9 @@
 package com.example.litgotesting.viewModel
 
-import java.util.Date
+import android.net.Uri
 
 data class CameraUiState(
-    val imagesCaptured: List<String> = listOf(),
+    val imagesCaptured: List<Uri> = listOf(),
 )
 
 data class LitterSiteUiState(
@@ -17,7 +17,19 @@ data class LitterSiteUiState(
     val description: String = "",
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
+    val createdAt: String = "",
+    val updatedAt: String = "",
 )
+
+data class DisposalSiteUiState(
+    val id: String = "",
+    val municipalityId: String = "",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+)
+
+val LitterSiteUiState.reportPoints: Int get() = litterCount * 3
+val LitterSiteUiState.collectPoints: Int get() = litterCount * 10
 
 data class RewardUiState(
     val id: String = "",
@@ -38,7 +50,15 @@ data class UserUiState(
     val eligibleRewards: List<RewardUiState> = listOf(),
 )
 
+data class MapUiState(
+    val nearbyLitterSites: List<LitterSiteUiState> = listOf(),
+    val nearbyDisposalSites: List<DisposalSiteUiState> = listOf(),
+    val currentlySelectedLitterSite: LitterSiteUiState = LitterSiteUiState(),
+    val currentlySelectedDisposalSite: DisposalSiteUiState = DisposalSiteUiState()
+)
+
 data class LitgoUiState(
     val cameraUiState: CameraUiState = CameraUiState(),
     val userUiState: UserUiState = UserUiState(),
+    val mapUiState: MapUiState = MapUiState(),
 )

@@ -15,15 +15,14 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.MainActivity
 import com.litgo.databinding.FragmentLoginBinding
-
 import com.litgo.R
 import com.litgo.data.models.Login
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class LoginFragment : Fragment() {
-    private val viewModel: LitterSiteViewModel by activityViewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentLoginBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!

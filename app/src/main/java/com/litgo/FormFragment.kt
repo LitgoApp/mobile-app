@@ -18,13 +18,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.litgo.databinding.FragmentFormBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class FormFragment() : Fragment() {
 
     private lateinit var images: MutableList<Uri>
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
 
     private fun Int.dpToPx(context: Context): Int {
         val density = context.resources.displayMetrics.density

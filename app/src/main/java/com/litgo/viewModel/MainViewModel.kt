@@ -2,12 +2,12 @@ package com.litgo.viewModel
 
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litgotesting.data.models.backendDateFormat
 import com.example.litgotesting.data.models.frontendDateFormat
+import com.example.litgotesting.viewModel.DisposalSiteUiState
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.example.litgotesting.viewModel.RewardUiState
@@ -32,6 +32,8 @@ import com.litgo.data.models.Login
 import com.litgo.data.models.Municipality
 import com.litgo.data.models.MunicipalityRegistration
 import com.litgo.data.models.MunicipalityUpdate
+import com.litgo.data.models.RewardCreation
+import com.litgo.data.models.RewardUpdate
 import com.litgo.data.models.UserRegistration
 import com.litgo.data.models.UserUpdate
 import com.litgo.data.repositories.DisposalSiteRepository
@@ -50,16 +52,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Thread.State
 
-class LitterSiteViewModel : ViewModel() {
-    //decide on littercount, latitude, longitude
-
-//    private val retrofit: Retrofit = Retrofit.Builder()
-//        .baseUrl("https://backend-service-v0b8.onrender.com/")
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .build()
+class LitgoViewModel : ViewModel() {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.17.0.1:3001/")
+        .baseUrl("https://backend-service-v0b8.onrender.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -104,10 +101,32 @@ class LitterSiteViewModel : ViewModel() {
     private var updateMunicipalityJob: Job? = null
     private var deleteMunicipalityJob: Job? = null
 
+    private var getNearbyLitterSitesJob: Job? = null
     private var getLitterSitesCreatedByUserJob: Job? = null
     private var getLitterSitesCleanedByUserJob: Job? = null
+    private var getLitterSiteJob: Job? = null
+    private var createLitterSiteJob: Job? = null
+    private var cleanLitterSiteJob: Job? = null
+    private var deleteLitterSiteJob: Job? = null
+
+    private var getRegionsCreatedByMunicipalityJob: Job? = null
+    private var getRegionJob: Job? = null
+    private var createRegionJob: Job? = null
+    private var updateRegionJob: Job? = null
+    private var deleteRegionJob: Job? = null
 
     private var getEligibleRewardsJob: Job? = null
+    private var getRewardJob: Job? = null
+    private var createRewardJob: Job? = null
+    private var redeemRewardJob: Job? = null
+    private var updateRewardJob: Job? = null
+    private var deleteRewardJob: Job? = null
+
+    private var getNearbyDisposalSitesJob: Job? = null
+    private var getDisposalSitesJob: Job? = null
+    private var getDisposalSiteJob: Job? = null
+    private var createDisposalSiteJob: Job? = null
+    private var deleteDisposalSiteJob: Job? = null
 
     fun observeState(): StateFlow<LitgoUiState> {
         return _uiState
@@ -150,6 +169,17 @@ class LitterSiteViewModel : ViewModel() {
             _uiState.update {
                 it.copy(userUiState = updatedState)
             }
+        }
+    }
+
+    fun updateUserPosition(userCoords: Coordinates) {
+        val updatedState = _uiState.value.userUiState.copy(
+            latitude = userCoords.latitude,
+            longitude = userCoords.longitude
+        )
+
+        _uiState.update {
+            it.copy(userUiState = updatedState)
         }
     }
 
@@ -212,6 +242,39 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    fun getNearbyLitterSites(userCoords: Coordinates) {
+        getNearbyLitterSitesJob?.cancel()
+        getNearbyLitterSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
+            val updatedState = _uiState.value.mapUiState.copy(
+                nearbyLitterSites = litterSites.map { litterSite ->
+                    LitterSiteUiState(
+                        id = litterSite.id,
+                        reportingUserId = litterSite.reportingUserId,
+                        collectingUserId = litterSite.collectingUserId,
+                        isCollected = litterSite.isCollected,
+                        litterCount = litterSite.litterCount,
+                        image = "",
+                        harm = litterSite.harm,
+                        description = litterSite.description,
+                        latitude = litterSite.latitude,
+                        longitude = litterSite.longitude,
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
+                    )
+                }
+            )
+
+            _uiState.update {
+                it.copy(mapUiState = updatedState)
+            }
+        }
+    }
+
     fun getLitterSitesCreatedByUser() {
         getLitterSitesCreatedByUserJob?.cancel()
         getLitterSitesCreatedByUserJob = viewModelScope.launch(throwExceptionHandler) {
@@ -228,7 +291,13 @@ class LitterSiteViewModel : ViewModel() {
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
+                        longitude = litterSite.longitude,
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
                     )
                 }
             )
@@ -255,7 +324,13 @@ class LitterSiteViewModel : ViewModel() {
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
+                        longitude = litterSite.longitude,
+                        createdAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.createdAt)
+                        ),
+                        updatedAt = frontendDateFormat.format(
+                            backendDateFormat.parse(litterSite.updatedAt)
+                        ),
                     )
                 }
             )
@@ -263,6 +338,58 @@ class LitterSiteViewModel : ViewModel() {
             _uiState.update {
                 it.copy(userUiState = updatedState)
             }
+        }
+    }
+
+    fun getLitterSite(id: String, userCoords: Coordinates) {
+        getLitterSiteJob?.cancel()
+        getLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            val litterSite = litterSiteRepo.getLitterSite(id, userCoords)
+            val updatedState = _uiState.value.mapUiState.copy(
+                currentlySelectedLitterSite = LitterSiteUiState(
+                    id = litterSite.id,
+                    reportingUserId = litterSite.reportingUserId,
+                    collectingUserId = litterSite.collectingUserId,
+                    isCollected = litterSite.isCollected,
+                    litterCount = litterSite.litterCount,
+                    image = litterSite.image ?: "",
+                    harm = litterSite.harm,
+                    description = litterSite.description,
+                    latitude = litterSite.latitude,
+                    longitude = litterSite.longitude,
+                    createdAt = frontendDateFormat.format(
+                        backendDateFormat.parse(litterSite.createdAt)
+                    ),
+                    updatedAt = frontendDateFormat.format(
+                        backendDateFormat.parse(litterSite.updatedAt)
+                    ),
+                )
+            )
+
+            _uiState.update {
+                it.copy(mapUiState = updatedState)
+            }
+        }
+    }
+
+    fun createLitterSite(data: LitterSiteCreation) {
+        createLitterSiteJob?.cancel()
+        createLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            litterSiteRepo.createLitterSite(data)
+        }
+    }
+
+    fun cleanLitterSite(id: String, userCoords: Coordinates) {
+        cleanLitterSiteJob?.cancel()
+        cleanLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteLitterSite(id: String) {
+        deleteLitterSiteJob?.cancel()
+        deleteLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
         }
     }
 
@@ -289,117 +416,110 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
-    val imageUris = MutableLiveData<List<Uri>>(emptyList())
+    fun getReward(id: String) {
+        getRewardJob?.cancel()
+        getRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
 
-    fun addImageUri(uri: Uri) {
-        val currentUiState = _uiState.value
-        val newCameraUiState = currentUiState.cameraUiState.copy(
-            imagesCaptured = currentUiState.cameraUiState.imagesCaptured + uri.toString()
+    fun createReward(data: RewardCreation) {
+        createRewardJob?.cancel()
+        createRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun redeemReward(id: String) {
+        redeemRewardJob?.cancel()
+        redeemRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun updateReward(id: String, data: RewardUpdate) {
+        updateRewardJob?.cancel()
+        updateRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteReward(id: String) {
+        deleteRewardJob?.cancel()
+        deleteRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun getNearbyDisposalSites(userCoords: Coordinates) {
+        getNearbyDisposalSitesJob?.cancel()
+        getNearbyDisposalSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
+            val updatedState = _uiState.value.mapUiState.copy(
+                nearbyDisposalSites = disposalSites.map { disposalSite ->
+                    DisposalSiteUiState(
+                        id = disposalSite.id,
+                        municipalityId = disposalSite.municipalityId,
+                        latitude = disposalSite.latitude,
+                        longitude = disposalSite.longitude
+                    )
+                }
+            )
+
+            _uiState.update {
+                it.copy(mapUiState = updatedState)
+            }
+        }
+    }
+
+    fun getDisposalSites() {
+        getDisposalSitesJob?.cancel()
+        getDisposalSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun getDisposalSite(id: String) {
+        getDisposalSiteJob?.cancel()
+        getDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun createDisposalSite(coords: Coordinates) {
+        createDisposalSiteJob?.cancel()
+        createDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteDisposalSite(id: String) {
+        deleteDisposalSiteJob?.cancel()
+        deleteDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun takePicture(uri: Uri) {
+        val currState = _uiState.value.cameraUiState
+        val updatedState = currState.copy(
+            imagesCaptured = currState.imagesCaptured.toMutableList().apply {
+                add(uri)
+            }
         )
-        _uiState.value = currentUiState.copy(cameraUiState = newCameraUiState)
-    }
 
-
-
-    /*
-    fun createLitterSite(imageUri: Uri, harm: String, description: String, latitude: Double, longitude: Double) {
-        val imageUriString = imageUri.toString()
-
-        // assume there is a function getLitterCount that calls the AI detector service
-        val litterCountDeferred = getLitterCount(imageUri)
-
-        viewModelScope.launch {
-            try {
-                val litterCount = litterCountDeferred.await()
-
-                val litterSiteCreation = LitterSiteCreation(
-                    latitude = latitude,
-                    longitude = longitude,
-                    harm = harm,
-                    description = description,
-                    litterCount = litterCount,
-                    image = imageUriString
-                )
-
-                litterSiteRepo.createLitterSite(litterSiteCreation)
-            } catch (e: Exception) {
-                Log.e("LitterSiteViewModel", "Error creating litter site", e)
-            }
-        }
-    }
-     */
-
-    val nearbyLitterSites = MutableLiveData<List<LitterSite>>()
-    fun fetchNearbyLitterSites(userCoords: Coordinates) {
-        viewModelScope.launch {
-            try {
-                val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
-                val updatedState = _uiState.value.copy(
-//                    nearbyLitterSites = litterSites.map { litterSite ->
-//                        LitterSiteUiState(
-//                            id = litterSite.id,
-//                            reportingUserId = litterSite.reportingUserId,
-//                            collectingUserId = litterSite.collectingUserId,
-//                            isCollected = litterSite.isCollected,
-//                            litterCount = litterSite.litterCount,
-//                            image = "",
-//                            harm = litterSite.harm,
-//                            description = litterSite.description,
-//                            latitude = litterSite.latitude,
-//                            longitude = litterSite.longitude
-//                        )
-//                    }
-                )
-                _uiState.value = updatedState
-            } catch (e: Exception) {
-                Log.e("LitterSiteViewModel", "Error fetching nearby litter sites", e)
-            }
+        _uiState.update {
+            it.copy(cameraUiState = updatedState)
         }
     }
 
-//    fun fetchLitterSiteById(id: String, userCoords: Coordinates) {
-//        viewModelScope.launch {
-//            try {
-//                val litterSite = litterSiteRepo.getLitterSiteById(id, userCoords)
-//                val updatedState = _uiState.value.copy(
-//                    litterSiteUiState = LitterSiteUiState(
-//                        id = litterSite.id,
-//                        reportingUserId = litterSite.reportingUserId,
-//                        collectingUserId = litterSite.collectingUserId,
-//                        isCollected = litterSite.isCollected,
-//                        litterCount = litterSite.litterCount,
-//                        image = "",
-//                        harm = litterSite.harm,
-//                        description = litterSite.description,
-//                        latitude = litterSite.latitude,
-//                        longitude = litterSite.longitude
-//                    )
-//                )
-//                _uiState.value = updatedState
-//            } catch (e: Exception) {
-//                Log.e("LitterSiteViewModel", "Error fetching litter site by id", e)
-//            }
-//        }
-//    }
+    fun clearPictures() {
+        val updatedState = _uiState.value.cameraUiState.copy(
+            imagesCaptured = emptyList()
+        )
 
-    val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
-//    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
-//        viewModelScope.launch {
-//            try {
-//                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
-//                val updatedState = _uiState.value.copy(
-//                    nearbyDisposalSites = disposalSites.map { disposalSite ->
-//                        DisposalSiteUiState(
-//                            // TODO
-//                        )
-//                    }
-//                )
-//                _uiState.value = updatedState
-//            } catch (e: Exception) {
-//                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
-//            }
-//        }
-//    }
-
+        _uiState.update {
+            it.copy(cameraUiState = updatedState)
+        }
+    }
 }
-

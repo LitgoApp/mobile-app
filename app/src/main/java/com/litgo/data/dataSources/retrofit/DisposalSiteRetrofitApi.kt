@@ -14,8 +14,16 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface DisposalSiteRetrofitApiService {
+    @GET("api/disposal-site")
+    fun getNearbyDisposalSites(
+        @Header("Authorization") token: String,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Call<List<DisposalSiteApiModel>>
+
     @GET("api/disposal-site")
     fun getDisposalSites(
         @Header("Authorization") token: String
@@ -42,8 +50,35 @@ interface DisposalSiteRetrofitApiService {
 
 class DisposalSiteRetrofitApi(private val retrofit: Retrofit) : DisposalSiteApi {
     private val service = retrofit.create(DisposalSiteRetrofitApiService::class.java)
+
     override fun getNearbyDisposalSites(userCoords: Coordinates): List<DisposalSite> {
-        TODO("Not yet implemented")
+        try {
+            val token = authToken ?: throw Exception("No auth token")
+            val response = service.getNearbyDisposalSites(
+                token,
+                userCoords.latitude,
+                userCoords.longitude
+            ).execute()
+
+            val body = response.body()
+
+            if (!response.isSuccessful || body == null) {
+                throw HttpException(response)
+            }
+
+            return body.map { disposalSite ->
+                DisposalSite(
+                    disposalSite.id,
+                    disposalSite.municipalityId,
+                    disposalSite.latitude,
+                    disposalSite.longitude,
+                    disposalSite.createdAt,
+                    disposalSite.updatedAt
+                )
+            }
+        } catch (error: Throwable) {
+            throw error
+        }
     }
 
     override fun getDisposalSites(): List<DisposalSite> {

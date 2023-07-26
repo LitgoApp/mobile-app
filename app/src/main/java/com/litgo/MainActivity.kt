@@ -16,14 +16,14 @@ import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
 import com.litgo.ui.user.UserProfileFragment
 import com.litgo.ui.litterSite.LitterSiteReportsFragment
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

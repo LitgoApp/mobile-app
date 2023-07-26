@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.R
 import com.litgo.databinding.FragmentLitterSiteBinding
+import com.litgo.viewModel.LitgoViewModel
 
 /**
  * Displays the full details of a litter site (which may or may not have been cleaned already).
@@ -19,6 +21,8 @@ import com.litgo.databinding.FragmentLitterSiteBinding
 class LitterSiteFragment(
     private val litterSiteUiState: LitterSiteUiState
 ) : Fragment() {
+
+    private val viewModel: LitgoViewModel by activityViewModels()
 
     private var _binding: FragmentLitterSiteBinding? = null
     private val binding get() = _binding!!

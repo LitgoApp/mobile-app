@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.litgo.databinding.FragmentCameraBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -38,7 +38,7 @@ class CameraFragment : Fragment() {
 
     private var imageCapture: ImageCapture? = null
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
 
     private fun addImageView(uri: Uri) {
         // add logic to add image list to URI
@@ -111,7 +111,7 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
 
                     output.savedUri?.let { addImageView(it) }
-                    output.savedUri?.let { viewModel.addImageUri(it) }
+//                    output.savedUri?.let { viewModel.addImageUri(it) }
 
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
