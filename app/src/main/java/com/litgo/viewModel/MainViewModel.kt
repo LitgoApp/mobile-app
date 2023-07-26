@@ -12,7 +12,6 @@ import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.example.litgotesting.viewModel.RewardUiState
 import com.example.litgotesting.viewModel.UserUiState
-import com.example.litgotesting.viewModel.MapUiState
 import com.litgo.data.dataSources.DisposalSiteRemoteDataSource
 import com.litgo.data.dataSources.LitterSiteRemoteDataSource
 import com.litgo.data.dataSources.MunicipalityRemoteDataSource
@@ -138,6 +137,10 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    fun observeState(): StateFlow<LitgoUiState> {
+        return _uiState
+    }
+
     fun loginUser(data: Login) {
         loginUserJob?.cancel()
         loginUserJob = viewModelScope.launch(throwExceptionHandler) {
@@ -229,26 +232,6 @@ class LitterSiteViewModel : ViewModel() {
             }
         }
     }
-
-    /*
-
-    fun setSelectedLitterSite(id: String, location: Coordinates) {
-        try {
-            val selectedLitterSite = litterSiteRepo.getLitterSiteById(id, location)
-            val updatedState = _uiState.value.mapUiState.copy(
-                litterSiteSelected = selectedLitterSite
-            )
-
-            _uiState.update {
-                it.copy(mapUiState = updatedState)
-            }
-
-        } catch (error: Throwable) {
-            throw error
-        }
-    }
-
-     */
 
     fun getNearbyLitterSites(userCoords: Coordinates) {
         getNearbyLitterSitesJob?.cancel()
@@ -530,29 +513,23 @@ class LitterSiteViewModel : ViewModel() {
 //    }
 
     val nearbyDisposalSites = MutableLiveData<List<DisposalSite>>()
-
-    /*
-
-    TODO("Implement this?")
-    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
-        viewModelScope.launch {
-            try {
-                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
-                val updatedState = _uiState.value.copy(
-                    nearbyDisposalSites = disposalSites.map { disposalSite ->
-                        DisposalSiteUiState(
-                            // TODO
-                        )
-                    }
-                )
-                _uiState.value = updatedState
-            } catch (e: Exception) {
-                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
-            }
-        }
-    }
-
-     */
+//    fun fetchNearbyDisposalSites(userCoords: Coordinates) {
+//        viewModelScope.launch {
+//            try {
+//                val disposalSites = disposalSiteRepo.getNearbyDisposalSites(userCoords)
+//                val updatedState = _uiState.value.copy(
+//                    nearbyDisposalSites = disposalSites.map { disposalSite ->
+//                        DisposalSiteUiState(
+//                            // TODO
+//                        )
+//                    }
+//                )
+//                _uiState.value = updatedState
+//            } catch (e: Exception) {
+//                Log.e("LitterSiteViewModel", "Error fetching nearby disposal sites", e)
+//            }
+//        }
+//    }
 
 }
 

@@ -190,6 +190,7 @@ class CameraFragment : Fragment() {
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
             ).apply {
             }.toTypedArray()
     }

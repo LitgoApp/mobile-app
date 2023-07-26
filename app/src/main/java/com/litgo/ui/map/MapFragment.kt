@@ -1,5 +1,5 @@
 package com.litgo.ui.map
-
+/*
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -33,7 +33,6 @@ import com.litgo.viewModel.LitterSiteViewModel
 import android.Manifest
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.location.Priority
@@ -44,19 +43,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
     private val viewModel: LitterSiteViewModel by viewModels()
 
     private var _binding: FragmentMapBinding? = null
-
-    private lateinit var latLng: LatLng
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
-    private lateinit var userCoords: Coordinates
     private lateinit var locationCallback : LocationCallback
     private lateinit var locationRequest : LocationRequest
     private var locationPermissionGranted = false
-
 
 
     private fun startLocationUpdates() {
@@ -70,12 +65,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             fusedLocationClient.requestLocationUpdates(locationRequest,
@@ -87,32 +76,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
-
     }
 
 
 
-    private fun closeBannerContainer() {
-        val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
-        if (bannerContainer != null) {
-            childFragmentManager.beginTransaction()
-                .hide(bannerContainer)
-                .commit()
-        }
-    }
 
 
-    override fun onLocationChanged(location: Location) {
-        // Update the map with the new location
-        latLng = LatLng(location.latitude, location.longitude)
 
-        val userCoords = Coordinates(location.latitude, location.longitude)
-        userCoords.let {
-            viewModel.fetchNearbyLitterSites(it)
-            viewModel.fetchNearbyDisposalSites(it)
-        }
-    }
-
+    /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -138,6 +109,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         }
     }
 
+     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -145,13 +118,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
+        // val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
+
+        /*
 
         if (bannerContainer != null) {
             childFragmentManager.beginTransaction()
                 .hide(bannerContainer)
                 .commit()
         }
+
+         */
 
         _binding!!.centerCurrentLocationButton.setOnClickListener {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
@@ -171,10 +148,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
 
         // Fetch nearby litter sites and disposal sites
-        viewModel.fetchNearbyLitterSites(userCoords)
-        viewModel.fetchNearbyDisposalSites(userCoords)
+        // viewModel.fetchNearbyLitterSites(userCoords)
+        // viewModel.fetchNearbyDisposalSites(userCoords)
 
         // Add a marker for the user's current location
+
+        /*
         val userPosition = latLng
         mMap.addMarker(MarkerOptions()
             .position(userPosition)
@@ -203,12 +182,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             }
         }
 
+
         mMap.setOnMarkerClickListener { marker ->
             marker.tag?.let {
                 if (it is LitterSite) {
                     // get the id of it as littersite
                     // query the data layer and return the specific litter based on ID
-                    viewModel.setSelectedLitterSite(it.id, userCoords)
+                    // viewModel.setSelectedLitterSite(it.id, userCoords)
 
                     val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
 
@@ -229,25 +209,30 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             }
             true
         }
+
+         */
     }
 
 
     override fun onPause() {
         super.onPause()
-        mMap.clear()
-        stopLocationUpdates()
+        // mMap.clear()
+        // stopLocationUpdates()
 
     }
 
     override fun onResume() {
         super.onResume()
-        startLocationUpdates()
+        // startLocationUpdates()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mMap.clear()
-        stopLocationUpdates()
+        // mMap.clear()
+        // stopLocationUpdates()
         _binding = null
     }
 }
+
+
+ */
