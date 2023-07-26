@@ -1,47 +1,69 @@
 package com.litgo.ui.map
 
-import android.location.Location
-import android.location.LocationListener
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.litgotesting.viewModel.LitterSiteUiState
+import com.example.litgotesting.viewModel.UserUiState
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.litgo.R
 import com.litgo.data.models.Coordinates
 import com.litgo.databinding.FragmentMapBinding
 import com.litgo.viewModel.LitterSiteViewModel
+import kotlinx.coroutines.launch
 
-class LitterMapFragment: Fragment(), OnMapReadyCallback, LocationListener {
+class LitterMapFragment: Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
     private lateinit var mapFragment: SupportMapFragment
-    private lateinit var latLng: LatLng
+    private lateinit var litterInfoFragment: LitterSiteInfoFragment
+    private var userLocation = LatLng(0.0, 0.0)
 
     private val viewModel: LitterSiteViewModel by viewModels()
-
-    private fun closeBannerContainer() {
-        val bannerContainer = binding.cardHolder
-        bannerContainer.visibility = View.INVISIBLE
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { uiState ->
+                viewModel.getNearbyLitterSites(
+                    Coordinates(uiState.userUiState.latitude, uiState.userUiState.longitude)
+                )
+            }
+        }
+
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.bannerCloseButton.setOnClickListener {
+            binding.cardHolder.visibility = View.INVISIBLE
+        }
+
+        litterInfoFragment = childFragmentManager.findFragmentById(R.id.fragmentContainer) as LitterSiteInfoFragment
+
+
 
         val mapContainer = binding.mapContainer
         if (childFragmentManager.findFragmentById(mapContainer.id) == null) {
@@ -55,22 +77,71 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback, LocationListener {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        googleMap.addMarker(MarkerOptions()
-            .position(LatLng(0.0, 0.0))
-            .title("Marker"))
-        closeBannerContainer()
-    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    // val litterSites = uiState.mapUiState.nearbyLitterSites
+                    // val disposalSites = uiState.mapUiState.nearbyDisposalSites
+                    userLocation = LatLng(uiState.userUiState.latitude, uiState.userUiState.longitude)
 
-    override fun onLocationChanged(location: Location) {
-        // Update the map with the new location
-        latLng = LatLng(location.latitude, location.longitude)
+                    litterInfoFragment.updateFromUiState(uiState.mapUiState)
 
-        val userCoordinates = Coordinates(location.latitude, location.longitude)
-        userCoordinates.let {
-            // TODO: Change these to the new viewModel functions
-            // viewModel.fetchNearbyLitterSites(it)
-            // viewModel.fetchNearbyDisposalSites(it)
+                    val userMarker = googleMap.addMarker(MarkerOptions()
+                        .position(userLocation)
+                        .title("My Location")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    )
+
+                    userMarker?.tag = uiState.userUiState
+
+                    /*
+                    for (site in litterSites) {
+                        val litterMarker = googleMap.addMarker(MarkerOptions()
+                            .position(LatLng(site.latitude, site.longitude))
+                            .title("Litter Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        )
+
+                        litterMarker?.tag = site
+                    }
+
+                    for (site in disposalSites) {
+                        val disposalMarker = googleMap.addMarker(MarkerOptions()
+                            .position(LatLng(site.latitude, site.longitude))
+                            .title("Litter Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        )
+
+                        disposalMarker?.tag = site
+                    }
+
+                     */
+
+                }
+            }
+        }
+
+        googleMap.setOnMarkerClickListener { marker ->
+            marker.tag?.let {
+                val bannerContainer = binding.cardHolder
+                if (it is LitterSiteUiState) {
+                    // viewModel.setSelectedLitterSite(marker.tag) TODO: Fix this call!
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
+                    bannerContainer.visibility = View.VISIBLE
+
+                } else if (it is UserUiState) {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
+                    bannerContainer.visibility = View.INVISIBLE
+                } // else if (it is DisposalSiteUiState){
+//                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
+//                    bannerContainer.visibility = View.INVISIBLE
+//                }
+            }
+            true
+        }
+
+        binding.centerCurrentLocationButton.setOnClickListener {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f))
         }
     }
-
 }

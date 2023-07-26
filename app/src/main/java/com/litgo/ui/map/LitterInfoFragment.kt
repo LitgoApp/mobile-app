@@ -9,12 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.litgotesting.viewModel.MapUiState
 import com.litgo.databinding.FragmentLitterSiteInfoBinding
 import com.litgo.viewModel.LitterSiteViewModel
 import kotlinx.coroutines.launch
 
 class LitterSiteInfoFragment : Fragment() {
-    private val viewModel: LitterSiteViewModel by viewModels()
     private lateinit var binding: FragmentLitterSiteInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,24 +29,14 @@ class LitterSiteInfoFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.litterSiteCard.setOnClickListener {
-            TODO("Nav to report details page")
+    fun updateFromUiState(state: MapUiState) {
+        val litterSite = state.litterSiteSelected
+        if (litterSite != null) {
+            binding.harmTextView.text = litterSite?.harm
+            binding.descriptionTextView.text = litterSite.description
+            binding.dateTimeTextView.text = litterSite.createdAt
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    val litterSite = uiState.mapUiState.litterSiteSelected
-                    if (litterSite != null) {
-                        binding.harmTextView.text = litterSite?.harm
-                        binding.descriptionTextView.text = litterSite.description
-                        binding.dateTimeTextView.text = litterSite.createdAt
-                    }
-                }
-            }
-        }
     }
+
 }
