@@ -18,20 +18,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.gms.maps.model.LatLng
+import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
-import com.litgo.databinding.FragmentLitterSiteInfoBinding
-import com.litgo.databinding.FragmentLoginBinding
-import com.litgo.viewModel.LitterSiteViewModel
+
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class FormFragment() : Fragment() {
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
     private var _binding: FragmentFormBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private lateinit var pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>
+    private lateinit var userLocation: LatLng
     private var newImageUris: List<Uri> = emptyList()
+
+    private lateinit var images: MutableList<Uri>
 
 
     private fun Int.dpToPx(context: Context): Int {
@@ -78,7 +82,9 @@ class FormFragment() : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     val images = uiState.cameraUiState.imagesCaptured
+                    val userState = uiState.userUiState
                     // addImageCards(images) TODO: Uncomment when Michael pushes
+                    userLocation = LatLng(userState.latitude, userState.longitude)
                 }
             }
         }
@@ -118,6 +124,16 @@ class FormFragment() : Fragment() {
 
 
     private fun submitButtonClicked() {
+        val litterSiteCreation = LitterSiteCreation(
+            userLocation.latitude,
+            userLocation.longitude,
+            if (binding.toggleDanger.isChecked) "Danger" else "Test",
+            binding.descriptionText.text.toString(), /**/
+            1,
+            "dummy"
+        )
+        viewModel.createLitterSite(litterSiteCreation)
+
         // HANDLE SUBMIT BUTTON PRESS
         Log.i("Form Activity", "Clicked")
     }

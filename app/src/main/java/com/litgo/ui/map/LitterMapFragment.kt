@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.litgo.R
 import com.litgo.data.models.Coordinates
 import com.litgo.databinding.FragmentMapBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class LitterMapFragment: Fragment(), OnMapReadyCallback {
@@ -35,7 +35,7 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private var userLocation = LatLng(0.0, 0.0)
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,8 +80,8 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    // val litterSites = uiState.mapUiState.nearbyLitterSites
-                    // val disposalSites = uiState.mapUiState.nearbyDisposalSites
+                    val litterSites = uiState.mapUiState.nearbyLitterSites
+                    val disposalSites = uiState.mapUiState.nearbyDisposalSites
                     userLocation = LatLng(uiState.userUiState.latitude, uiState.userUiState.longitude)
 
                     litterInfoFragment.updateFromUiState(uiState.mapUiState)
@@ -94,7 +94,7 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
 
                     userMarker?.tag = uiState.userUiState
 
-                    /*
+
                     for (site in litterSites) {
                         val litterMarker = googleMap.addMarker(MarkerOptions()
                             .position(LatLng(site.latitude, site.longitude))
@@ -106,16 +106,15 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
                     }
 
                     for (site in disposalSites) {
-                        val disposalMarker = googleMap.addMarker(MarkerOptions()
-                            .position(LatLng(site.latitude, site.longitude))
-                            .title("Litter Site")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        val disposalMarker = googleMap.addMarker(
+                            MarkerOptions()
+                                .position(LatLng(site.latitude, site.longitude))
+                                .title("Litter Site")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                         )
 
                         disposalMarker?.tag = site
                     }
-
-                     */
 
                 }
             }

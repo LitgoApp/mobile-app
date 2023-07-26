@@ -29,14 +29,14 @@ import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
 import com.litgo.ui.user.UserProfileFragment
 import com.litgo.ui.litterSite.LitterSiteReportsFragment
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModel: LitgoViewModel by viewModels()
     private lateinit var locationCallback: LocationCallback
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest : LocationRequest
@@ -68,8 +68,7 @@ class MainActivity : AppCompatActivity() {
     private fun onLocationChanged(location: Location) {
         // Update the map with the new location
         mCurrentLocation = location
-        // TODO: Some ViewModel call here
-
+        viewModel.updateUserPosition(Coordinates(location.latitude, location.longitude))
 
     }
 

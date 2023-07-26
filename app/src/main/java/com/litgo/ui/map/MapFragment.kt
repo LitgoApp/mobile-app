@@ -29,7 +29,7 @@ import com.litgo.R
 import com.litgo.data.models.Coordinates
 import com.litgo.data.models.LitterSite
 import com.litgo.databinding.FragmentMapBinding
-import com.litgo.viewModel.LitterSiteViewModel
+import com.litgo.viewModel.LitgoViewModel
 import android.Manifest
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -40,13 +40,13 @@ import kotlinx.coroutines.launch
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
-    private val viewModel: LitterSiteViewModel by viewModels()
+    private val viewModeLitterSiteViewModel by viewModels()l:
 
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
-
+    private lateinit var litterSiteViewModel: LitgoViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
     private lateinit var locationCallback : LocationCallback
@@ -116,6 +116,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
+<<<<<<< HEAD
+=======
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        litterSiteViewModel = ViewModelProvider(this).get(LitgoViewModel::class.java)
+>>>>>>> ff8b48119384cd3412b669de3a1636e1f1dd78be
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         // val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment

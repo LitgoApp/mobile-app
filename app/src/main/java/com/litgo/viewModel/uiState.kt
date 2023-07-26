@@ -1,15 +1,12 @@
 package com.example.litgotesting.viewModel
 
 import com.litgo.data.models.LitterSite
-import java.util.Date
+import android.net.Uri
 
 data class CameraUiState(
-    val imagesCaptured: List<String> = listOf(),
+    val imagesCaptured: List<Uri> = listOf(),
 )
 
-data class MapUiState(
-    val litterSiteSelected: LitterSite? = null
-)
 
 data class LitterSiteUiState(
     val id: String = "",
@@ -24,6 +21,13 @@ data class LitterSiteUiState(
     val longitude: Double = 0.0,
     val createdAt: String = "",
     val updatedAt: String = "",
+)
+
+data class DisposalSiteUiState(
+    val id: String = "",
+    val municipalityId: String = "",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
 )
 
 val LitterSiteUiState.reportPoints: Int get() = litterCount * 3
@@ -46,6 +50,13 @@ data class UserUiState(
     val reports: List<LitterSiteUiState> = listOf(),
     val cleanups: List<LitterSiteUiState> = listOf(),
     val eligibleRewards: List<RewardUiState> = listOf(),
+)
+
+data class MapUiState(
+    val nearbyLitterSites: List<LitterSiteUiState> = listOf(),
+    val nearbyDisposalSites: List<DisposalSiteUiState> = listOf(),
+    val currentlySelectedLitterSite: LitterSiteUiState = LitterSiteUiState(),
+    val currentlySelectedDisposalSite: DisposalSiteUiState = DisposalSiteUiState()
 )
 
 data class LitgoUiState(

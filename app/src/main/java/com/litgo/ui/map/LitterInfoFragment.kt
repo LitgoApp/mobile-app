@@ -11,32 +11,24 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.litgotesting.viewModel.MapUiState
 import com.litgo.databinding.FragmentLitterSiteInfoBinding
-import com.litgo.viewModel.LitterSiteViewModel
-import kotlinx.coroutines.launch
+import com.litgo.viewModel.LitgoViewModel
 
 class LitterSiteInfoFragment : Fragment() {
     private lateinit var binding: FragmentLitterSiteInfoBinding
+    private lateinit var litterSiteViewModel: LitgoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentLitterSiteInfoBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return binding.root
-    }
 
     fun updateFromUiState(state: MapUiState) {
-        val litterSite = state.litterSiteSelected
+        val litterSite = state.currentlySelectedLitterSite
         if (litterSite != null) {
             binding.harmTextView.text = litterSite?.harm
             binding.descriptionTextView.text = litterSite.description
             binding.dateTimeTextView.text = litterSite.createdAt
         }
-
     }
-
 }
