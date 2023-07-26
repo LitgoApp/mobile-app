@@ -10,8 +10,8 @@ import kotlinx.coroutines.withContext
 
 data class LitterSiteApiModel(
     @SerializedName("id")               val id: String,
-    @SerializedName("reportingUserId")  val reportingUserId: String,
-    @SerializedName("collectingUserId") val collectingUserId: String?,
+    @SerializedName("reporterUserId")  val reportingUserId: String,
+    @SerializedName("collectorUserId") val collectingUserId: String?,
     @SerializedName("isCollected")      val isCollected: Boolean,
     @SerializedName("litterCount")      val litterCount: Int,
     @SerializedName("image")            val image: String?,

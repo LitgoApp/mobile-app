@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lightest_gray"
     android:padding="32dp"
     android:paddingVertical="50dp"
     tools:context=".MainActivity">
@@ -57,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:checked="false"
+        android:theme="@style/LitGo.Button.Green"
         android:text="@string/REPORT_FORM_TOGGLE_ALERT" />
 
     <Button

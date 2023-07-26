@@ -29,7 +29,7 @@ import com.litgo.data.models.DisposalSite
 import com.litgo.data.models.LitterSite
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.data.models.Login
-import com.example.conversion
+//import com.example.conversion
 import com.litgo.data.models.Municipality
 import com.litgo.data.models.MunicipalityRegistration
 import com.litgo.data.models.MunicipalityUpdate
@@ -281,71 +281,71 @@ class LitgoViewModel : ViewModel() {
         }
     }
 
-    fun getLitterSitesCreatedByUser() {
-        getLitterSitesCreatedByUserJob?.cancel()
-        getLitterSitesCreatedByUserJob = viewModelScope.launch(throwExceptionHandler) {
-            val litterSites = litterSiteRepo.getLitterSitesCreatedByUser()
-            val updatedState = _uiState.value.userUiState.copy(
-                reports = litterSites.map { litterSite ->
-                    LitterSiteUiState(
-                        id = litterSite.id,
-                        reportingUserId = litterSite.reportingUserId,
-                        collectingUserId = litterSite.collectingUserId,
-                        isCollected = litterSite.isCollected,
-                        litterCount = litterSite.litterCount,
-                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
-                        harm = litterSite.harm,
-                        description = litterSite.description,
-                        latitude = litterSite.latitude,
-                        longitude = litterSite.longitude,
-                        createdAt = frontendDateFormat.format(
-                            backendDateFormat.parse(litterSite.createdAt)
-                        ),
-                        updatedAt = frontendDateFormat.format(
-                            backendDateFormat.parse(litterSite.updatedAt)
-                        ),
-                    )
-                }
-            )
+//    fun getLitterSitesCreatedByUser() {
+//        getLitterSitesCreatedByUserJob?.cancel()
+//        getLitterSitesCreatedByUserJob = viewModelScope.launch(throwExceptionHandler) {
+//            val litterSites = litterSiteRepo.getLitterSitesCreatedByUser()
+//            val updatedState = _uiState.value.userUiState.copy(
+//                reports = litterSites.map { litterSite ->
+//                    LitterSiteUiState(
+//                        id = litterSite.id,
+//                        reportingUserId = litterSite.reportingUserId,
+//                        collectingUserId = litterSite.collectingUserId,
+//                        isCollected = litterSite.isCollected,
+//                        litterCount = litterSite.litterCount,
+//                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
+//                        harm = litterSite.harm,
+//                        description = litterSite.description,
+//                        latitude = litterSite.latitude,
+//                        longitude = litterSite.longitude,
+//                        createdAt = frontendDateFormat.format(
+//                            backendDateFormat.parse(litterSite.createdAt)
+//                        ),
+//                        updatedAt = frontendDateFormat.format(
+//                            backendDateFormat.parse(litterSite.updatedAt)
+//                        ),
+//                    )
+//                }
+//            )
+//
+//            _uiState.update {
+//                it.copy(userUiState = updatedState)
+//            }
+//        }
+//    }
 
-            _uiState.update {
-                it.copy(userUiState = updatedState)
-            }
-        }
-    }
-
-    fun getLitterSitesCleanedByUser() {
-        getLitterSitesCleanedByUserJob?.cancel()
-        getLitterSitesCleanedByUserJob = viewModelScope.launch(throwExceptionHandler) {
-            val litterSites = litterSiteRepo.getLitterSitesCleanedByUser()
-            val updatedState = _uiState.value.userUiState.copy(
-                cleanups = litterSites.map { litterSite ->
-                    LitterSiteUiState(
-                        id = litterSite.id,
-                        reportingUserId = litterSite.reportingUserId,
-                        collectingUserId = litterSite.collectingUserId,
-                        isCollected = litterSite.isCollected,
-                        litterCount = litterSite.litterCount,
-                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
-                        harm = litterSite.harm,
-                        description = litterSite.description,
-                        latitude = litterSite.latitude,
-                        longitude = litterSite.longitude,
-                        createdAt = frontendDateFormat.format(
-                            backendDateFormat.parse(litterSite.createdAt)
-                        ),
-                        updatedAt = frontendDateFormat.format(
-                            backendDateFormat.parse(litterSite.updatedAt)
-                        ),
-                    )
-                }
-            )
-
-            _uiState.update {
-                it.copy(userUiState = updatedState)
-            }
-        }
-    }
+//    fun getLitterSitesCleanedByUser() {
+//        getLitterSitesCleanedByUserJob?.cancel()
+//        getLitterSitesCleanedByUserJob = viewModelScope.launch(throwExceptionHandler) {
+//            val litterSites = litterSiteRepo.getLitterSitesCleanedByUser()
+//            val updatedState = _uiState.value.userUiState.copy(
+//                cleanups = litterSites.map { litterSite ->
+//                    LitterSiteUiState(
+//                        id = litterSite.id,
+//                        reportingUserId = litterSite.reportingUserId,
+//                        collectingUserId = litterSite.collectingUserId,
+//                        isCollected = litterSite.isCollected,
+//                        litterCount = litterSite.litterCount,
+//                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
+//                        harm = litterSite.harm,
+//                        description = litterSite.description,
+//                        latitude = litterSite.latitude,
+//                        longitude = litterSite.longitude,
+//                        createdAt = frontendDateFormat.format(
+//                            backendDateFormat.parse(litterSite.createdAt)
+//                        ),
+//                        updatedAt = frontendDateFormat.format(
+//                            backendDateFormat.parse(litterSite.updatedAt)
+//                        ),
+//                    )
+//                }
+//            )
+//
+//            _uiState.update {
+//                it.copy(userUiState = updatedState)
+//            }
+//        }
+//    }
 
     fun getLitterSite(id: String, userCoords: Coordinates) {
         getLitterSiteJob?.cancel()
