@@ -29,6 +29,7 @@ import com.litgo.data.models.DisposalSite
 import com.litgo.data.models.LitterSite
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.data.models.Login
+import com.example.conversion
 import com.litgo.data.models.Municipality
 import com.litgo.data.models.MunicipalityRegistration
 import com.litgo.data.models.MunicipalityUpdate
@@ -292,7 +293,7 @@ class LitgoViewModel : ViewModel() {
                         collectingUserId = litterSite.collectingUserId,
                         isCollected = litterSite.isCollected,
                         litterCount = litterSite.litterCount,
-                        image = "",
+                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
@@ -325,7 +326,7 @@ class LitgoViewModel : ViewModel() {
                         collectingUserId = litterSite.collectingUserId,
                         isCollected = litterSite.isCollected,
                         litterCount = litterSite.litterCount,
-                        image = "",
+                        image = withContext(Dispatchers.IO) { ImageConversion.uriToBase64(Uri.parse(litterSite.image), context) },
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,

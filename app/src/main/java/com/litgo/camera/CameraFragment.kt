@@ -1,4 +1,4 @@
-package com.litgo
+package com.litgo.camera
 
 import android.Manifest
 import android.content.ContentValues
@@ -27,6 +27,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.litgo.FormFragment
+import com.litgo.R
 import com.litgo.databinding.FragmentCameraBinding
 import com.litgo.ui.litterSite.LitterSiteFragment
 import com.litgo.viewModel.LitgoViewModel
@@ -44,11 +46,6 @@ class CameraFragment : Fragment() {
     private fun addImageView(uri: Uri) {
         // add logic to add image list to URI
         // ie. model.imageListAdd(uri)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        viewModel.uiState.collectAsState()
     }
 
     override fun onCreateView(
@@ -116,7 +113,7 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
 
                     output.savedUri?.let { addImageView(it) }
-//                    output.savedUri?.let { viewModel.addImageUri(it) }
+                    output.savedUri?.let { viewModel.takePicture(it) }
 
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
@@ -199,6 +196,7 @@ class CameraFragment : Fragment() {
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION
             ).apply {
             }.toTypedArray()
     }
