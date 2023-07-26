@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
@@ -122,6 +123,73 @@ class LitterSiteReportsFragment : Fragment() {
 //            ),
 //        )
 
+        val testReports = listOf(
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                37,
+                "",
+                "Hazardous",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                50,
+                "",
+                "",
+                resources.getString(R.string.test_lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+        )
+
+        val testCleanups = listOf(
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                50,
+                "",
+                "",
+                resources.getString(R.string.test_lorem_ipsum),
+                -6.175110,
+                106.865036
+            ),
+
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                37,
+                "",
+                "Hazardous",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                50,
+                "",
+                "",
+                resources.getString(R.string.test_lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+        )
+
         // Set up sort and filter spinners
         val sortSpinner = binding.litterSiteSortSpinner
         val sortSpinnerAdapter = this.context?.let { ArrayAdapter.createFromResource(it, R.array.litter_site_sort_spinner_array, android.R.layout.simple_spinner_item) }
@@ -132,8 +200,11 @@ class LitterSiteReportsFragment : Fragment() {
         filterSpinner.adapter = filterSpinnerAdapter
 
         val supportFragmentManager = activity?.supportFragmentManager
-        var reportsAdapter: LitterSitesRecyclerViewAdapter
-        var cleanupsAdapter: LitterSitesRecyclerViewAdapter
+        var reportsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.reports, supportFragmentManager)
+        var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups, supportFragmentManager)
+
+        var litterSiteRecyclerView = binding.litterSiteRecyclerView
+        litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
@@ -141,11 +212,8 @@ class LitterSiteReportsFragment : Fragment() {
                 reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, supportFragmentManager)
                 cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups, supportFragmentManager)
 
-                var litterSiteRecyclerView = binding.litterSiteRecyclerView
-                litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
-
                 // Display the reports according to whatever is currently selected on the dropdown menu
-                when (sortSpinner.selectedItem.toString()) {
+                when (filterSpinner.selectedItem.toString()) {
                     "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
                     "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
                     else -> litterSiteRecyclerView.adapter = reportsAdapter
@@ -156,7 +224,26 @@ class LitterSiteReportsFragment : Fragment() {
             }
         }
 
+        sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (resources.getStringArray(R.array.litter_site_filter_spinner_array)[position]) {
+                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+                    else -> litterSiteRecyclerView.adapter = reportsAdapter
+                }
+            }
 
+            // Display all reports created by the user by default
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                litterSiteRecyclerView.adapter = reportsAdapter
+            }
+
+        }
 
     }
 
