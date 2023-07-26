@@ -45,7 +45,7 @@ class LitterSiteInfoFragment : Fragment() {
                     if (litterSite != null) {
                         binding.harmTextView.text = litterSite?.harm
                         binding.descriptionTextView.text = litterSite.description
-                        binding.dateTimeTextView.text = TODO("Format date")
+                        binding.dateTimeTextView.text = litterSite.createdAt
                     }
                 }
             }

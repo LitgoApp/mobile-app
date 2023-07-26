@@ -32,6 +32,7 @@ class DisposalSiteRemoteDataSource(
         withContext(ioDispatcher) {
             disposalSiteApi.getNearbyDisposalSites(userCoords)
         }
+
     suspend fun getDisposalSites(): List<DisposalSite> =
         withContext(ioDispatcher) {
             disposalSiteApi.getDisposalSites()

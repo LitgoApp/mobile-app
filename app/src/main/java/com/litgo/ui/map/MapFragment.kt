@@ -90,28 +90,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     }
 
-    private fun populateMap() {
-        mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
 
-        // Add a new marker for each litter site
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    /*
-                    val litterSite = uiState.mapUiState.litterSiteSelected
-                    _________.forEach { disposalSite ->
-                        val position = LatLng(disposalSite.latitude, disposalSite.longitude)
-                        mMap.addMarker(MarkerOptions()
-                            .position(position)
-                            .title("Disposal Site")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
-                    }
-                     */
-
-                }
-            }
-        }
-    }
 
     private fun closeBannerContainer() {
         val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
@@ -203,6 +182,27 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
             .position(userPosition)
             .title("Your Location")
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+
+        mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
+
+        // Add a new marker for each litter site
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    /*
+                    val litterSite = uiState.mapUiState.litterSiteSelected
+                    _________.forEach { disposalSite ->
+                        val position = LatLng(disposalSite.latitude, disposalSite.longitude)
+                        mMap.addMarker(MarkerOptions()
+                            .position(position)
+                            .title("Disposal Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                    }
+                     */
+
+                }
+            }
+        }
 
         mMap.setOnMarkerClickListener { marker ->
             marker.tag?.let {
