@@ -2,11 +2,10 @@ package com.example.conversion
 
 import android.content.Context
 import android.net.Uri
-import java.io.File
-import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import android.util.Base64
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
 object ImageConversion {
