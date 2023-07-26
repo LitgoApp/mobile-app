@@ -1,5 +1,5 @@
 package com.example.conversion
-/*
+
 import android.content.Context
 import android.net.Uri
 import java.io.File
@@ -38,5 +38,3 @@ object ImageConversion {
         return bytesResult
     }
 }
-
- */
