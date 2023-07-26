@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/report_details_title_textview_text"
+                android:text="@string/litter_site_title_textview_text"
                 android:textStyle="bold"
                 android:textSize="@dimen/header_2_text_size"/>
 
@@ -43,16 +43,16 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <TextView
-                    android:id="@+id/report_details_status"
+                    android:id="@+id/litter_site_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report_status_textview_text"
+                    android:text="@string/litter_site_status_textview_text"
                     android:textStyle="bold"
                     android:textSize="@dimen/paragraph_text_size"/>
 
                 <ImageView
-                    android:layout_width="@dimen/report_status_icon_size"
-                    android:layout_height="@dimen/report_status_icon_size"
+                    android:layout_width="@dimen/litter_site_status_icon_size"
+                    android:layout_height="@dimen/litter_site_status_icon_size"
                     android:layout_marginStart="5dp"
                     android:src="@drawable/do_not_disturb_100_black"/>
             </LinearLayout>
@@ -71,11 +71,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report_details_points_available_textview_text"
+                    android:text="@string/litter_site_points_available_textview_text"
                     android:textStyle="bold"
                     android:textSize="@dimen/paragraph_text_size"/>
                 <TextView
-                    android:id="@+id/report_details_points_textview"
+                    android:id="@+id/litter_site_points_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -83,8 +83,8 @@
                     android:textSize="@dimen/paragraph_text_size"/>
 
                 <ImageView
-                    android:layout_width="@dimen/report_status_icon_size"
-                    android:layout_height="@dimen/report_status_icon_size"
+                    android:layout_width="@dimen/litter_site_status_icon_size"
+                    android:layout_height="@dimen/litter_site_status_icon_size"
                     android:layout_marginStart="5dp"
                     android:src="@drawable/leaf_96_green"/>
             </LinearLayout>
@@ -103,6 +103,7 @@
                         android:layout_height="17dp"
                         android:src="@drawable/location_96_black"/>
                     <TextView
+                        android:id="@+id/litter_site_address_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="200 Ring Rd, Waterloo"
@@ -119,6 +120,7 @@
                         android:layout_height="17dp"
                         android:src="@drawable/walking_96_black"/>
                     <TextView
+                        android:id="@+id/litter_site_distance_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2 min."
@@ -137,7 +139,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/report_details_reported_date_textview"
+                android:id="@+id/litter_site_reported_date_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reported 05/23/2023: 2:48pm"

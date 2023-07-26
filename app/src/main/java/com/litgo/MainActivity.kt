@@ -1,6 +1,8 @@
 package com.litgo
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,11 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: LitterSiteViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -32,13 +39,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -102,6 +102,20 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp()
                 || super.onSupportNavigateUp()
+    }
+
+    fun setBackgroundColor(color: Int) {
+        binding.mainActivityLayout.setBackgroundColor(resources.getColor(color))
+    }
+
+    fun showAppAndNavBars() {
+        binding.appBarLayout.visibility = View.VISIBLE
+        binding.navBottom.visibility = View.VISIBLE
+    }
+
+    fun hideAppAndNavBars() {
+        binding.appBarLayout.visibility = View.GONE
+        binding.navBottom.visibility = View.GONE
     }
 
 }

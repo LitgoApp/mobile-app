@@ -10,21 +10,45 @@
     android:background="@color/lightest_gray"
     tools:context=".ui.litterSite.LitterSiteReportsFragment">
 
+    <LinearLayout
+        android:id="@+id/spinners_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/litter_site_filter_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:textAlignment="textStart"
+            android:gravity="start"/>
+        <Spinner
+            android:id="@+id/litter_site_sort_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:textAlignment="textEnd"
+            android:gravity="end"/>
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/litter_site_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        app:layout_constraintTop_toBottomOf="@id/spinners_layout"
         tools:listitem="@layout/fragment_litter_site_item"
         android:clipChildren="false"
         android:clipToPadding="false"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-// SOME
     <!--    &lt;!&ndash; Switch bar for toggling between the different kind of-->
     <!--    reports a user can see &ndash;&gt;-->
     <!--    <View-->

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.litgo.MainActivity
 import com.litgo.databinding.FragmentLoginBinding
 
 import com.litgo.R
@@ -38,9 +39,11 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        mainActivity.setBackgroundColor(R.color.white)
         val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
         mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.white))
         // Ensure the bottom navigation bar and top app bar are not visible
+//        mainActivity.hideAppAndNavBars()
         val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
         appBarLayout?.visibility = View.GONE
@@ -56,7 +59,7 @@ class LoginFragment : Fragment() {
             try {
                 viewModel.loginUser(login)
             } catch (e: HttpException) {
-                showLoginFailed()
+                showLoginFailure()
             }
         }
 
@@ -78,7 +81,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun showLoginFailed() {
+    private fun showLoginFailure() {
         val loginErrorTextView = binding.loginErrorTextview
         loginErrorTextView.visibility = View.VISIBLE
     }
@@ -89,10 +92,10 @@ class LoginFragment : Fragment() {
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_LoginFragment_to_UserProfileFragment)
         // Show the app bar and navbar on successful login
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
-        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-        appBarLayout?.visibility = View.VISIBLE
-        navBar?.visibility = View.VISIBLE
+//        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+//        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
+//        appBarLayout?.visibility = View.VISIBLE
+//        navBar?.visibility = View.VISIBLE
     }
 
     private fun showCreateAccount() {

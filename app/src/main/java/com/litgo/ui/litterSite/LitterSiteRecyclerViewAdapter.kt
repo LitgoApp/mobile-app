@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.litgo.R
@@ -55,10 +56,7 @@ class LitterSitesRecyclerViewAdapter(
         val reportPointsTextView: TextView = binding.litterSiteReportPointsTextview
         val locationTextView: TextView = binding.litterSiteAddressTextview
         val photoImageView: ImageView = binding.litterSitePhotoImageview
-
-        override fun toString(): String {
-            return super.toString()
-        }
+        val litterSiteItemLayout: LinearLayout = binding.litterSiteLayout
     }
 
 }

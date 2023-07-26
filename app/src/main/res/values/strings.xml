@@ -24,11 +24,11 @@
 
     <string name="take_photo">Take Photo</string>
 
-
-    <string name="report_status_textview_text">Status:</string>
-    <string name="report_details_textview_text">Report Details</string>
-    <string name="report_details_title_textview_text">Details</string>
-    <string name="report_details_points_available_textview_text">Points Available:</string>
+    <!-- FOR LITTER SITE (either item and/or full details view) -->
+    <string name="litter_site_status_textview_text">Status:</string>
+    <string name="litter_site_textview_text">Report Details</string>
+    <string name="litter_site_title_textview_text">Details</string>
+    <string name="litter_site_points_available_textview_text">Points Available:</string>
 
     <!-- FOR USER PROFILE SCREEN -->
     <string name="user_profile_lifetime_achievements_textview_text">Lifetime Achievements</string>
@@ -39,24 +39,25 @@
     <string name="see_more_textview_text">See more</string>
 
 
-    <string name="user_reports_textview_text">My Reports</string>
+    <string name="user_litter_sites_textview_text">My Reports</string>
     <string name="user_cleanups_textview_text">My Cleanups</string>
     <string name="user_all_textview_text">All</string>
-    <string name="user_all_reports_and_cleanups_textview_text">All My Reports and Cleanups</string>
+    <string name="user_all_litter_sites_and_cleanups_textview_text">All My Reports and Cleanups</string>
 
-    <string name="sort_text">Sort</string>
+    <string-array name="litter_site_sort_spinner_array">
+        <item>Today</item>
+        <item>Past Week</item>
+        <item>Past Month</item>
+        <item>All</item>
+    </string-array>
 
+    <string-array name="litter_site_filter_spinner_array">
+        <item>My Reports</item>
+        <item>My Cleanups</item>
+        <item>All</item>
+    </string-array>
 
     <string name="welcome">"Welcome! "</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -94,6 +95,4 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
