@@ -234,7 +234,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/litter_site_accept_button_text"
+            android:text="@string/litter_site_completed_button_text"
             android:theme="@style/LitGo.Button.Green"/>
         <androidx.appcompat.widget.AppCompatButton
             android:layout_marginStart="@dimen/vertical_spacing"

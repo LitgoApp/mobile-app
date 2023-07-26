@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -58,68 +59,68 @@ class LitterSiteReportsFragment : Fragment() {
 //        (activity as MainActivity).setBackgroundColor(R.color.lightest_gray)
 //        (activity as MainActivity).showAppAndNavBars()
 
-        val testReports = listOf(
-            LitterSiteUiState(
-                "",
-                "",
-                "",
-                false,
-                37,
-                "",
-                "Hazardous",
-                "This is a description of the litter found at the site.",
-                13.756331,
-                100.501762
-            ),
-            LitterSiteUiState(
-                "",
-                "",
-                "",
-                true,
-                50,
-                "",
-                "",
-                resources.getString(R.string.test_lorem_ipsum),
-                -6.175110,
-                106.865036
-            ),
-            LitterSiteUiState(
-                "",
-                "",
-                "",
-                false,
-                50,
-                "",
-                "",
-                resources.getString(R.string.test_lorem_ipsum),
-                -33.868820,
-                151.209290
-            ),
-            LitterSiteUiState(
-                "",
-                "",
-                "",
-                true,
-                37,
-                "",
-                "Hazardous",
-                "This is a description of the litter found at the site.",
-                13.756331,
-                100.501762
-            ),
-            LitterSiteUiState(
-                "",
-                "",
-                "",
-                true,
-                50,
-                "",
-                "",
-                resources.getString(R.string.test_lorem_ipsum),
-                -33.868820,
-                151.209290
-            ),
-        )
+//        val testReports = listOf(
+//            LitterSiteUiState(
+//                "",
+//                "",
+//                "",
+//                false,
+//                37,
+//                "",
+//                "Hazardous",
+//                "This is a description of the litter found at the site.",
+//                13.756331,
+//                100.501762
+//            ),
+//            LitterSiteUiState(
+//                "",
+//                "",
+//                "",
+//                true,
+//                50,
+//                "",
+//                "",
+//                resources.getString(R.string.test_lorem_ipsum),
+//                -6.175110,
+//                106.865036
+//            ),
+//            LitterSiteUiState(
+//                "",
+//                "",
+//                "",
+//                false,
+//                50,
+//                "",
+//                "",
+//                resources.getString(R.string.test_lorem_ipsum),
+//                -33.868820,
+//                151.209290
+//            ),
+//            LitterSiteUiState(
+//                "",
+//                "",
+//                "",
+//                true,
+//                37,
+//                "",
+//                "Hazardous",
+//                "This is a description of the litter found at the site.",
+//                13.756331,
+//                100.501762
+//            ),
+//            LitterSiteUiState(
+//                "",
+//                "",
+//                "",
+//                true,
+//                50,
+//                "",
+//                "",
+//                resources.getString(R.string.test_lorem_ipsum),
+//                -33.868820,
+//                151.209290
+//            ),
+//        )
 
         // Set up sort and filter spinners
         val sortSpinner = binding.litterSiteSortSpinner
@@ -131,19 +132,32 @@ class LitterSiteReportsFragment : Fragment() {
         filterSpinner.adapter = filterSpinnerAdapter
 
         val supportFragmentManager = activity?.supportFragmentManager
-        var reportsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.reports, supportFragmentManager)
-        var cleanupsAdapter = LitterSitesRecyclerViewAdapter(viewModel.uiState.value.userUiState.cleanups, supportFragmentManager)
+        var reportsAdapter: LitterSitesRecyclerViewAdapter
+        var cleanupsAdapter: LitterSitesRecyclerViewAdapter
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
-                // Default adapter shows the user all reports they've made
+
+                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, supportFragmentManager)
+                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups, supportFragmentManager)
+
                 var litterSiteRecyclerView = binding.litterSiteRecyclerView
                 litterSiteRecyclerView.layoutManager = LinearLayoutManager(context)
-                litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, supportFragmentManager)
 
-//                reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports)
-//                cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups)
+                // Display the reports according to whatever is currently selected on the dropdown menu
+                when (sortSpinner.selectedItem.toString()) {
+                    "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+                    "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+                    else -> litterSiteRecyclerView.adapter = reportsAdapter
+                }
+
+                // FOR TESTING
+                // litterSiteRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, supportFragmentManager)
             }
         }
+
+
+
     }
+
 }

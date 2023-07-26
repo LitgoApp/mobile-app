@@ -34,6 +34,7 @@
     <string name="litter_site_see_all_photos_textview_text">See All Photos</string>
     <string name="litter_site_accept_button_text">Accept</string>
     <string name="litter_site_decline_button_text">Decline</string>
+    <string name="litter_site_completed_button_text">Completed</string>
     <string name="litter_site_in_progress_textview_text">In Progress</string>
 
     <!-- FOR USER PROFILE SCREEN -->
