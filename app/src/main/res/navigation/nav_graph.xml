@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/litterMapFragment">
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -59,6 +59,10 @@
             android:id="@+id/action_cameraFragment_to_formFragment"
             app:destination="@id/formFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/litterMapFragment"
+        android:name="com.litgo.ui.map.LitterMapFragment"
+        android:label="LitterMapFragment" />
 
 </navigation>
 

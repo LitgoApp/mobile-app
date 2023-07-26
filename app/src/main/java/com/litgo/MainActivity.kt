@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.litgo.camera.CameraFragment
 import com.litgo.databinding.ActivityMainBinding
 import com.litgo.ui.RewardsFragment
 import com.litgo.ui.user.UserProfileFragment

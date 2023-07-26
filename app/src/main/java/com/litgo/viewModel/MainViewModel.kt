@@ -138,6 +138,10 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    fun observeState(): StateFlow<LitgoUiState> {
+        return _uiState
+    }
+
     fun loginUser(data: Login) {
         loginUserJob?.cancel()
         loginUserJob = viewModelScope.launch(throwExceptionHandler) {

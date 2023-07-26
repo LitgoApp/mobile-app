@@ -20,8 +20,6 @@ class LitterSiteInfoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentLitterSiteInfoBinding.inflate(layoutInflater)
-        val view = binding.root
-
     }
 
     override fun onCreateView(
