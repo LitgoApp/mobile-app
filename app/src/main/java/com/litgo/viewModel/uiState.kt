@@ -1,10 +1,12 @@
 package com.example.litgotesting.viewModel
 
+import com.litgo.data.models.LitterSite
 import android.net.Uri
 
 data class CameraUiState(
     val imagesCaptured: List<Uri> = listOf(),
 )
+
 
 data class LitterSiteUiState(
     val id: String = "",
@@ -60,5 +62,5 @@ data class MapUiState(
 data class LitgoUiState(
     val cameraUiState: CameraUiState = CameraUiState(),
     val userUiState: UserUiState = UserUiState(),
-    val mapUiState: MapUiState = MapUiState(),
+    val mapUiState: MapUiState = MapUiState()
 )

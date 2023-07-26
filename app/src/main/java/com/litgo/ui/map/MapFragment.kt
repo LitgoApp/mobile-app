@@ -1,5 +1,5 @@
 package com.litgo.ui.map
-
+/*
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -31,77 +31,93 @@ import com.litgo.data.models.LitterSite
 import com.litgo.databinding.FragmentMapBinding
 import com.litgo.viewModel.LitgoViewModel
 import android.Manifest
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.gms.location.Priority
+import kotlinx.coroutines.launch
 
 class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
-    private var _binding: FragmentMapBinding? = null
+    private val viewModeLitterSiteViewModel by viewModels()l:
 
-    private lateinit var latLng: LatLng
+    private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
     private lateinit var litterSiteViewModel: LitgoViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var litterInfoFragment: LitterSiteInfoFragment
-    private lateinit var userCoords: Coordinates
+    private lateinit var locationCallback : LocationCallback
+    private lateinit var locationRequest : LocationRequest
+    private var locationPermissionGranted = false
 
-    private fun openBannerContainer(litterSite: LiveData<LitterSite>) {
-        TODO("Make this so that you can pass it a litterSite and it will create the banner")
-    }
 
-    private fun closeBannerContainer() {
-        val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
-        if (bannerContainer != null) {
-            childFragmentManager.beginTransaction()
-                .hide(bannerContainer)
-                .commit()
+    private fun startLocationUpdates() {
+        if (locationPermissionGranted) {
+
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
         }
     }
 
-
-
-    override fun onLocationChanged(location: Location) {
-        // Update the map with the new location
-        latLng = LatLng(location.latitude, location.longitude)
-
-        val userCoords = Coordinates(location.latitude, location.longitude)
-//        userCoords?.let {
-//            litterSiteViewModel.fetchNearbyLitterSites(it)
-//            litterSiteViewModel.fetchNearbyDisposalSites(it)
-//        }
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
+
+
+
+
+
+    /*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        val locationRequest = LocationRequest.create().apply {
-            interval = 10000 // Update location every 10 seconds
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
 
-//        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-//            == PackageManager.PERMISSION_GRANTED) {
-//            TODO("Overrides nothing")
-//            fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
-//                override fun onLocationResult(locationResult: LocationResult?) {
-//                    locationResult ?: return
-//                    for (location in locationResult.locations){
-//                        // Update UI with location data
-//                        onLocationChanged(locationResult.location)
-//                    }
-//                }
-//            }, Looper.getMainLooper())
-//        }
+        val locationRequestBuilder = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
+        // The map will update whenever users move 30m (30.0F)
+        locationRequestBuilder.setMinUpdateDistanceMeters(30.0F)
+
+        locationRequest = locationRequestBuilder.build()
+
+        startLocationUpdates()
+
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult
+                for (location in locationResult.locations) {
+                    // update UI through the onLocationChanged method
+                    onLocationChanged(location)
+                }
+            }
+        }
     }
+
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
+<<<<<<< HEAD
+=======
         return binding.root
     }
 
@@ -109,9 +125,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
         super.onViewCreated(view, savedInstanceState)
 
         litterSiteViewModel = ViewModelProvider(this).get(LitgoViewModel::class.java)
+>>>>>>> ff8b48119384cd3412b669de3a1636e1f1dd78be
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
+        // val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
+
+        /*
 
         if (bannerContainer != null) {
             childFragmentManager.beginTransaction()
@@ -119,75 +138,67 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                 .commit()
         }
 
+         */
+
         _binding!!.centerCurrentLocationButton.setOnClickListener {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
 
         }
 
         _binding!!.bannerCloseButton.setOnClickListener {
-            if (bannerContainer != null) {
-                childFragmentManager.beginTransaction()
-                    .hide(bannerContainer)
-                    .commit()
-            }
+            closeBannerContainer()
         }
 
         mapFragment.getMapAsync(this)
+        return binding.root
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-//        mMap.setLocationSource(this)
+
 
         // Fetch nearby litter sites and disposal sites
-        litterSiteViewModel.fetchNearbyLitterSites(userCoords)
-//        litterSiteViewModel.fetchNearbyDisposalSites(userCoords)
-
-        // Observe litter sites and add markers to map
-        litterSiteViewModel.nearbyLitterSites.observe(viewLifecycleOwner) { litterSites ->
-            // Clear old markers
-            mMap.clear()
-
-            // Add a new marker for each litter site
-            litterSites.forEach { litterSite ->
-                val position = LatLng(litterSite.latitude, litterSite.longitude)
-                val marker = mMap.addMarker(
-                    MarkerOptions()
-                    .position(position)
-                    .title("Litter Site")
-                    .snippet("Harm: ${litterSite.harm}, Description: ${litterSite.description}")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-                marker?.tag = litterSite
-            }
-        }
-
-        // Observe disposal sites and add markers to map
-//        litterSiteViewModel.nearbyDisposalSites.observe(viewLifecycleOwner) { disposalSites ->
-//            // Add a new marker for each disposal site
-//            disposalSites.forEach { disposalSite ->
-//                val position = LatLng(disposalSite.latitude, disposalSite.longitude)
-//                mMap.addMarker(MarkerOptions()
-//                    .position(position)
-//                    .title("Disposal Site")
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
-//            }
-//        }
+        // viewModel.fetchNearbyLitterSites(userCoords)
+        // viewModel.fetchNearbyDisposalSites(userCoords)
 
         // Add a marker for the user's current location
+
+        /*
         val userPosition = latLng
         mMap.addMarker(MarkerOptions()
             .position(userPosition)
             .title("Your Location")
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
 
+
+
+        // Add a new marker for each litter site
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    mMap.clear() // TODO: Test if this will cause "flickering", otherwise another method is necessary
+                    /*
+                    val litterSite = uiState.mapUiState.litterSiteSelected
+                    _________.forEach { disposalSite ->
+                        val position = LatLng(disposalSite.latitude, disposalSite.longitude)
+                        mMap.addMarker(MarkerOptions()
+                            .position(position)
+                            .title("Disposal Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                    }
+                     */
+
+                }
+            }
+        }
+
+
         mMap.setOnMarkerClickListener { marker ->
             marker.tag?.let {
                 if (it is LitterSite) {
                     // get the id of it as littersite
-                    // query the datalyer and return the specific litter based on ID
-//                    litterSiteViewModel.selectLitterSite(it)
-
+                    // query the data layer and return the specific litter based on ID
+                    // viewModel.setSelectedLitterSite(it.id, userCoords)
 
                     val bannerContainer = childFragmentManager.findFragmentById(R.id.cardHolder) as SupportMapFragment
 
@@ -204,28 +215,34 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
                     fragmentTransaction.replace(R.id.fragmentContainer, litterInfoFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
-
-                    // Fetch the specific litter site based on ID
-//                    litterSiteViewModel.fetchLitterSiteById(it.id, userCoords).observe(viewLifecycleOwner) { litterSite: LiveData<LitterSite> ->
-//                        // Pass the litter site to the info fragment
-//                        TODO("Fix the following line, newInstance is not a method of LitterSiteInfoFragment")
-//                        litterInfoFragment = LitterSiteInfoFragment.newInstance(litterSite)
-//                        val fragmentManager = requireActivity().supportFragmentManager
-//                        val fragmentTransaction: FragmentTransaction =
-//                            fragmentManager.beginTransaction()
-//                        fragmentTransaction.replace(R.id.fragmentContainer, litterInfoFragment)
-//                        fragmentTransaction.addToBackStack(null)
-//                        fragmentTransaction.commit()
-//                    }
                 }
             }
             true
         }
+
+         */
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        // mMap.clear()
+        // stopLocationUpdates()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // startLocationUpdates()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // mMap.clear()
+        // stopLocationUpdates()
         _binding = null
     }
 }
+
+
+ */

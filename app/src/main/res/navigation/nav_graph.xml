@@ -53,12 +53,16 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.litgo.CameraFragment"
+        android:name="com.litgo.camera.CameraFragment"
         android:label="CameraFragment">
         <action
             android:id="@+id/action_cameraFragment_to_formFragment"
             app:destination="@id/formFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/litterMapFragment"
+        android:name="com.litgo.ui.map.LitterMapFragment"
+        android:label="LitterMapFragment" />
 
 </navigation>
 
