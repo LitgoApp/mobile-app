@@ -32,6 +32,8 @@ import com.litgo.data.models.Login
 import com.litgo.data.models.Municipality
 import com.litgo.data.models.MunicipalityRegistration
 import com.litgo.data.models.MunicipalityUpdate
+import com.litgo.data.models.RewardCreation
+import com.litgo.data.models.RewardUpdate
 import com.litgo.data.models.UserRegistration
 import com.litgo.data.models.UserUpdate
 import com.litgo.data.repositories.DisposalSiteRepository
@@ -55,14 +57,8 @@ import java.lang.Thread.State
 import java.util.Date
 
 class LitterSiteViewModel : ViewModel() {
-    //decide on littercount, latitude, longitude
-
-//    private val retrofit: Retrofit = Retrofit.Builder()
-//        .baseUrl("https://backend-service-v0b8.onrender.com/")
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .build()
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.17.0.1:3001/")
+        .baseUrl("https://backend-service-v0b8.onrender.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -107,14 +103,32 @@ class LitterSiteViewModel : ViewModel() {
     private var updateMunicipalityJob: Job? = null
     private var deleteMunicipalityJob: Job? = null
 
+    private var getNearbyLitterSitesJob: Job? = null
     private var getLitterSitesCreatedByUserJob: Job? = null
     private var getLitterSitesCleanedByUserJob: Job? = null
+    private var getLitterSiteJob: Job? = null
+    private var createLitterSiteJob: Job? = null
+    private var cleanLitterSiteJob: Job? = null
+    private var deleteLitterSiteJob: Job? = null
+
+    private var getRegionsCreatedByMunicipalityJob: Job? = null
+    private var getRegionJob: Job? = null
+    private var createRegionJob: Job? = null
+    private var updateRegionJob: Job? = null
+    private var deleteRegionJob: Job? = null
 
     private var getEligibleRewardsJob: Job? = null
+    private var getRewardJob: Job? = null
+    private var createRewardJob: Job? = null
+    private var redeemRewardJob: Job? = null
+    private var updateRewardJob: Job? = null
+    private var deleteRewardJob: Job? = null
 
-    fun observeState(): StateFlow<LitgoUiState> {
-        return _uiState
-    }
+    private var getNearbyDisposalSitesJob: Job? = null
+    private var getDisposalSitesJob: Job? = null
+    private var getDisposalSiteJob: Job? = null
+    private var createDisposalSiteJob: Job? = null
+    private var deleteDisposalSiteJob: Job? = null
 
     fun registerUser(data: UserRegistration) {
         registerUserJob?.cancel()
@@ -215,6 +229,13 @@ class LitterSiteViewModel : ViewModel() {
         }
     }
 
+    fun getNearbyLitterSites(userCoords: Coordinates) {
+        getNearbyLitterSitesJob?.cancel()
+        getNearbyLitterSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
     fun getLitterSitesCreatedByUser() {
         getLitterSitesCreatedByUserJob?.cancel()
         getLitterSitesCreatedByUserJob = viewModelScope.launch(throwExceptionHandler) {
@@ -231,7 +252,9 @@ class LitterSiteViewModel : ViewModel() {
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
+                        longitude = litterSite.longitude,
+                        createdAt = litterSite.createdAt,
+                        updatedAt = litterSite.updatedAt
                     )
                 }
             )
@@ -258,7 +281,9 @@ class LitterSiteViewModel : ViewModel() {
                         harm = litterSite.harm,
                         description = litterSite.description,
                         latitude = litterSite.latitude,
-                        longitude = litterSite.longitude
+                        longitude = litterSite.longitude,
+                        createdAt = litterSite.createdAt,
+                        updatedAt = litterSite.updatedAt
                     )
                 }
             )
@@ -266,6 +291,34 @@ class LitterSiteViewModel : ViewModel() {
             _uiState.update {
                 it.copy(userUiState = updatedState)
             }
+        }
+    }
+
+    fun getLitterSite(id: String, userCoords: Coordinates) {
+        getLitterSiteJob?.cancel()
+        getLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun createLitterSite(data: LitterSiteCreation) {
+        createLitterSiteJob?.cancel()
+        createLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun cleanLitterSite(id: String, userCoords: Coordinates) {
+        cleanLitterSiteJob?.cancel()
+        cleanLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteLitterSite(id: String) {
+        deleteLitterSiteJob?.cancel()
+        deleteLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
         }
     }
 
@@ -289,6 +342,76 @@ class LitterSiteViewModel : ViewModel() {
             _uiState.update {
                 it.copy(userUiState = updatedState)
             }
+        }
+    }
+
+    fun getReward(id: String) {
+        getRewardJob?.cancel()
+        getRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun createReward(data: RewardCreation) {
+        createRewardJob?.cancel()
+        createRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun redeemReward(id: String) {
+        redeemRewardJob?.cancel()
+        redeemRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun updateReward(id: String, data: RewardUpdate) {
+        updateRewardJob?.cancel()
+        updateRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteReward(id: String) {
+        deleteRewardJob?.cancel()
+        deleteRewardJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun getNearbyDisposalSites(userCoords: Coordinates) {
+        getNearbyDisposalSitesJob?.cancel()
+        getNearbyDisposalSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun getDisposalSites() {
+        getDisposalSitesJob?.cancel()
+        getDisposalSitesJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun getDisposalSite(id: String) {
+        getDisposalSiteJob?.cancel()
+        getDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun createDisposalSite(coords: Coordinates) {
+        createDisposalSiteJob?.cancel()
+        createDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
+        }
+    }
+
+    fun deleteDisposalSite(id: String) {
+        deleteDisposalSiteJob?.cancel()
+        deleteDisposalSiteJob = viewModelScope.launch(throwExceptionHandler) {
+            // TODO: Populate viewmodel and update
         }
     }
 

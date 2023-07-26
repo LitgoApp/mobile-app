@@ -9,6 +9,7 @@ class DisposalSiteRepository(
 ) {
     suspend fun getNearbyDisposalSites(userCoords: Coordinates): List<DisposalSite> =
         disposalSiteRemoteDataSource.getNearbyDisposalSites(userCoords)
+
     suspend fun getDisposalSites(): List<DisposalSite> =
         disposalSiteRemoteDataSource.getDisposalSites()
 
