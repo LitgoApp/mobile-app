@@ -192,7 +192,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.setLocationSource(this)  // Fix this?
 
         // Fetch nearby litter sites and disposal sites
         viewModel.fetchNearbyLitterSites(userCoords)
