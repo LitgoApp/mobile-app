@@ -19,7 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.conversion.ImageConversion.uriToBase64
+// import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
@@ -92,7 +92,7 @@ class FormFragment() : Fragment() {
         }
 
         pickMultipleMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(1)) { uris ->
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(2)) { uris ->
                 // Callback is invoked after the user selects media items or closes the
                 // photo picker.
 
@@ -126,20 +126,20 @@ class FormFragment() : Fragment() {
 
 
     private fun submitButtonClicked() {
-        val imageB64  = uriToBase64(images[0], requireContext())
-        if (imageB64 != null) {
+        // val imageB64  = uriToBase64(images[0], requireContext())
+        // if (imageB64 != null) {
             val litterSiteCreation = LitterSiteCreation(
                 userLocation.latitude,
                 userLocation.longitude,
                 if (binding.toggleDanger.isChecked) "Danger" else "Test",
                 binding.descriptionText.text.toString(), /* */
                 1,
-                imageB64
+                /* imageB64 */ ""
             )
             viewModel.createLitterSite(litterSiteCreation)
-            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
+            findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
 
-        }
+        // }
         Log.i("Form Activity", "Clicked")
     }
 
