@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
 import com.litgo.data.models.LitterSiteCreation
@@ -99,7 +100,7 @@ class FormFragment() : Fragment() {
                     // This currently only makes the image picker select the images that you want to display
                     // TODO: Make sure this is working when Michael pushes!
                     for (uri in uris) {
-                        // viewModel.addImageUri(uri)
+                        viewModel.takePicture(uri)
                     }
                     addImageCards(uris)
                     Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
@@ -136,11 +137,9 @@ class FormFragment() : Fragment() {
                 imageB64
             )
             viewModel.createLitterSite(litterSiteCreation)
+            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
 
         }
-
-
-        // HANDLE SUBMIT BUTTON PRESS
         Log.i("Form Activity", "Clicked")
     }
 

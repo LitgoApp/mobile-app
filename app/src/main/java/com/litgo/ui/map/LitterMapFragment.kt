@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.litgotesting.viewModel.DisposalSiteUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.example.litgotesting.viewModel.UserUiState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -131,10 +132,10 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
                 } else if (it is UserUiState) {
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
                     bannerContainer.visibility = View.INVISIBLE
-                } // else if (it is DisposalSiteUiState){
-//                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
-//                    bannerContainer.visibility = View.INVISIBLE
-//                }
+                }  else if (it is DisposalSiteUiState){
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
+                    bannerContainer.visibility = View.INVISIBLE
+                }
             }
             true
         }
