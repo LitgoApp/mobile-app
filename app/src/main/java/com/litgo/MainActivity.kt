@@ -7,10 +7,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -26,9 +27,9 @@ import com.google.android.gms.location.Priority
 import com.litgo.camera.CameraFragment
 import com.litgo.data.models.Coordinates
 import com.litgo.databinding.ActivityMainBinding
-import com.litgo.ui.reward.RewardsFragment
+import com.litgo.ui.reward.RewardListFragment
 import com.litgo.ui.user.UserProfileFragment
-import com.litgo.ui.litterSite.LitterSiteReportsFragment
+import com.litgo.ui.litterSite.LitterSiteListFragment
 import com.litgo.ui.map.LitterMapFragment
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
@@ -77,8 +78,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        hideAppAndNavBars()
-
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
@@ -95,8 +94,6 @@ class MainActivity : AppCompatActivity() {
         ) {
             return
         }
-
-
 
         // updates mCurrentLocation to the "Last Known Location"
         fusedLocationClient.lastLocation
@@ -126,73 +123,51 @@ class MainActivity : AppCompatActivity() {
 
         startLocationUpdates()
 
+        setAppAndNavBar()
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {
-
+                    if (!it.userUiState.name.isNullOrEmpty()) {
+                        showAppAndNavBars()
+                    } else {
+                        hideAppAndNavBars()
+                    }
                 }
             }
         }
+    }
 
+    private fun setAppAndNavBar() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val appBarTitleTextView = findViewById<TextView>(R.id.app_bar_title_textview)
-
         // Add actions to navbar icons
         binding.cameraNavBtn.setOnClickListener {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, CameraFragment())
-            transaction.commit()
-            appBarTitleTextView.text = "Report"
+            navigateToFragment(CameraFragment(), "")
         }
         binding.mapNavBtn.setOnClickListener {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, LitterMapFragment())
-            transaction.commit()
-            appBarTitleTextView.text = "Map"
+            navigateToFragment(LitterMapFragment(), "Map")
         }
         binding.userProfileNavBtn.setOnClickListener {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, UserProfileFragment())
-            transaction.commit()
-            appBarTitleTextView.text = "My Profile"
+            navigateToFragment(UserProfileFragment(), "My Profile")
         }
         binding.userReportsNavBtn.setOnClickListener {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, LitterSiteReportsFragment())
-            transaction.commit()
-            appBarTitleTextView.text = "My Reports and Cleanups"
+            navigateToFragment(LitterSiteListFragment(), "My Reports and Cleanups")
         }
         binding.rewardsNavBtn.setOnClickListener {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_content_main, RewardsFragment())
-            transaction.commit()
-            appBarTitleTextView.text = "My Rewards"
+            navigateToFragment(RewardListFragment(), "My Rewards")
         }
     }
 
-
-
-    /**
-     * DO NOT REMOVE BLOCK BELOW FOR NOW; May be required later
-     */
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+    private fun navigateToFragment(fragment: Fragment, title: String) {
+        supportFragmentManager.commit {
+            replace(R.id.nav_host_fragment_content_main, fragment)
+            binding.appBarTitleTextview.text = title
+            addToBackStack(title)
+        }
+    }
 
     /**
      * Handle scrolling up and down navigation
@@ -207,12 +182,12 @@ class MainActivity : AppCompatActivity() {
         binding.mainActivityLayout.setBackgroundColor(resources.getColor(color))
     }
 
-    fun showAppAndNavBars() {
+    private fun showAppAndNavBars() {
         binding.appBarLayout.visibility = View.VISIBLE
         binding.navBottom.visibility = View.VISIBLE
     }
 
-    fun hideAppAndNavBars() {
+    private fun hideAppAndNavBars() {
         binding.appBarLayout.visibility = View.GONE
         binding.navBottom.visibility = View.GONE
     }

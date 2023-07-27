@@ -25,7 +25,6 @@ class CreateAccountFragment : Fragment() {
     private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
-    private val mainActivity = activity as MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,17 +37,6 @@ class CreateAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mainActivity.setBackgroundColor(R.color.green)
-//        val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
-//        mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.green))
-
-        // Ensure the bottom navigation bar and top app bar are not visible
-        mainActivity.hideAppAndNavBars()
-//        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
-//        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-//        appBarLayout?.visibility = View.GONE
-//        navBar?.visibility = View.GONE
 
         val fullNameEditText = binding.fullNameEdittext
         val addressEditText = binding.addressEdittext

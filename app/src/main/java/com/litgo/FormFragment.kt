@@ -18,13 +18,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 //import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.camera.CameraFragment
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
-import com.litgo.ui.reward.RewardsFragment
 
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
@@ -81,6 +81,11 @@ class FormFragment() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
+        appBarLayout?.visibility = View.GONE
+        navBar?.visibility = View.GONE
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

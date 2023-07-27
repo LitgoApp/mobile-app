@@ -1,6 +1,5 @@
 package com.litgo.ui.reward
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.litgo.R
 import com.litgo.viewModel.LitgoViewModel
 
-class RewardsFragment : Fragment() {
+class RewardListFragment : Fragment() {
 
     private val viewModel: LitgoViewModel by activityViewModels()
 

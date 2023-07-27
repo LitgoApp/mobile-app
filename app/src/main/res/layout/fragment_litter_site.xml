@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/litter_site_title_textview_text"
-                android:theme="@style/LitGo.Text.Header1" />
+                android:theme="@style/LitGo.TextView.Header1" />
             <TextView
                 android:id="@+id/litter_site_report_date_textview"
                 android:layout_width="match_parent"
@@ -65,11 +65,15 @@
                 android:gravity="end|top"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
             <LinearLayout
+                android:id="@+id/litter_site_status_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -77,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/litter_site_status_textview_text"
-                    android:theme="@style/LitGo.Text.Header2"/>
+                    android:theme="@style/LitGo.TextView.Header2"/>
                 <ImageView
                     android:id="@+id/litter_site_status_icon_imageview"
                     android:layout_width="@dimen/litter_site_icon_size"
@@ -86,24 +90,15 @@
                     android:src="@drawable/do_not_disturb_100_black" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/litter_site_harm_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/litter_site_label_spacing">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/litter_site_harm_textview_text"
-                    android:theme="@style/LitGo.Text.Header2"/>
-                <TextView
-                    android:id="@+id/litter_site_harm_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/test_litter_site_harm"
-                    android:theme="@style/LitGo.Text.Header2"
-                    android:layout_marginStart="@dimen/litter_site_text_icon_spacing" />
-            </LinearLayout>
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:theme="@style/LitGo.TextView.Label"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/litter_site_description_textview"
@@ -123,13 +118,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/litter_site_points_available_textview_text"
-                android:theme="@style/LitGo.Text.Paragraph.Bold"/>
+                android:theme="@style/LitGo.TextView.Paragraph.Bold"/>
             <TextView
                 android:id="@+id/litter_site_points_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/test_litter_site_points"
-                android:theme="@style/LitGo.Text.Paragraph"
+                android:theme="@style/LitGo.TextView.Paragraph"
                 android:layout_marginStart="@dimen/litter_site_text_icon_spacing"/>
             <ImageView
                 android:layout_width="@dimen/litter_site_icon_size"
@@ -216,10 +211,6 @@
 <!--            android:gravity="end"-->
 <!--            android:textSize="@dimen/subtitle_text_size"/>-->
 
-
-
-
-
     </LinearLayout>
     <!-- END FULL CONTAINER -->
 
@@ -232,11 +223,13 @@
         android:layout_marginTop="@dimen/vertical_spacing"
         android:gravity="center">
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/litter_site_completed_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/litter_site_completed_button_text"
             android:theme="@style/LitGo.Button.Green"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/litter_site_decline_button"
             android:layout_marginStart="@dimen/vertical_spacing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

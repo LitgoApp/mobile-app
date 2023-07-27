@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/litter_site_status_textview_text"
-                    android:theme="@style/LitGo.Text.Header2"/>
+                    android:theme="@style/LitGo.TextView.Header2"/>
 
                 <ImageView
                     android:id="@+id/litter_site_status_icon_imageview"
@@ -68,24 +68,11 @@
                 android:orientation="vertical">
 
                 <!-- HARM SECTIONAL -->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/litter_site_harm_textview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/litter_site_harm_textview_text"
-                        android:theme="@style/LitGo.Text.Header2"/>
-                    <TextView
-                        android:id="@+id/litter_site_harm_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/test_litter_site_harm"
-                        android:theme="@style/LitGo.Text.Header2"
-                        android:layout_marginStart="@dimen/litter_site_text_icon_spacing" />
-                </LinearLayout>
+                    android:theme="@style/LitGo.TextView.Label"/>
 
                 <TextView
                     android:id="@+id/litter_site_description_textview"
@@ -115,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/test_litter_site_points"
-                        android:theme="@style/LitGo.Text.Header2"/>
+                        android:theme="@style/LitGo.TextView.Header2"/>
 
                     <ImageView
                         android:layout_width="@dimen/litter_site_icon_size"
@@ -164,7 +151,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="end"
                 android:text="@string/litter_site_see_all_photos_textview_text"
-                android:theme="@style/LitGo.Text.Paragraph"/>
+                android:theme="@style/LitGo.TextView.Paragraph"/>
         </LinearLayout>
         <!-- END Location and see more photos sectional -->
 

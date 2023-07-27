@@ -34,13 +34,13 @@
 
     <fragment
         android:id="@+id/LitterSiteReports"
-        android:name="com.litgo.ui.litterSite.LitterSiteReportsFragment"
+        android:name="com.litgo.ui.litterSite.LitterSiteListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 
     <fragment
         android:id="@+id/RewardsFragment"
-        android:name="com.litgo.ui.reward.RewardsFragment"
+        android:name="com.litgo.ui.reward.RewardListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 

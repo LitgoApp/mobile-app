@@ -32,16 +32,6 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-        val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
-
-        mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.white))
-        // Ensure the bottom navigation bar and top app bar are not visible
-//        mainActivity.hideAppAndNavBars()
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
-        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-        appBarLayout?.visibility = View.VISIBLE
-        navBar?.visibility = View.VISIBLE
-
         return binding.root
     }
 
@@ -56,7 +46,22 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun renderState(it: LitgoUiState) {
-        val testReports = listOf(
+        binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports()[0], activity?.supportFragmentManager)
+//        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
+        binding.userNameTextview.text = it.userUiState.name
+        binding.userPointsTextview.text = it.userUiState.points.toString()
+        binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()
+        binding.userJoinedDateTextview.text = it.userUiState.joinDate
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun testReports() : List<List<LitterSiteUiState>> {
+        val testAll = listOf(
             LitterSiteUiState(
                 "",
                 "",
@@ -64,7 +69,7 @@ class UserProfileFragment : Fragment() {
                 false,
                 37,
                 "",
-                "Hazardous",
+                "HAZARDOUS",
                 "This is a description of the litter found at the site.",
                 13.756331,
                 100.501762
@@ -76,7 +81,7 @@ class UserProfileFragment : Fragment() {
                 true,
                 50,
                 "",
-                "",
+                "NONE",
                 resources.getString(R.string.test_lorem_ipsum),
                 -6.175110,
                 106.865036
@@ -88,7 +93,7 @@ class UserProfileFragment : Fragment() {
                 false,
                 50,
                 "",
-                "",
+                "CAUTION",
                 resources.getString(R.string.test_lorem_ipsum),
                 -33.868820,
                 151.209290
@@ -100,7 +105,7 @@ class UserProfileFragment : Fragment() {
                 true,
                 37,
                 "",
-                "Hazardous",
+                "CAUTION",
                 "This is a description of the litter found at the site.",
                 13.756331,
                 100.501762
@@ -118,17 +123,74 @@ class UserProfileFragment : Fragment() {
                 151.209290
             ),
         )
-        binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports, activity?.supportFragmentManager)
-//        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
-        binding.userNameTextview.text = it.userUiState.name
-        binding.userPointsTextview.text = it.userUiState.points.toString()
-        binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()
-        binding.userJoinedDateTextview.text = it.userUiState.joinDate
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        val testReports = listOf(
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                37,
+                "",
+                "HAZARDOUS",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                false,
+                50,
+                "",
+                "CAUTION",
+                resources.getString(R.string.test_lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+        )
+
+        val testCleanups = listOf(
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                97,
+                "",
+                "CAUTION",
+                resources.getString(R.string.test_lorem_ipsum),
+                -6.175110,
+                106.865036
+            ),
+
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                37,
+                "",
+                "HAZARDOUS",
+                "This is a description of the litter found at the site.",
+                13.756331,
+                100.501762
+            ),
+            LitterSiteUiState(
+                "",
+                "",
+                "",
+                true,
+                3,
+                "",
+                "NONE",
+                resources.getString(R.string.test_lorem_ipsum),
+                -33.868820,
+                151.209290
+            ),
+        )
+
+        return listOf(testAll, testReports, testCleanups)
     }
 }

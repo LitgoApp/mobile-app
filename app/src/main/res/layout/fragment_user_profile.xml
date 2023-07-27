@@ -38,10 +38,12 @@
             <TextView
                 android:id="@+id/user_name_textview"
                 android:layout_width="wrap_content"
+                android:maxLines="3"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:textSize="@dimen/title_text_size"
                 android:textStyle="bold"
+
                 android:text="Jane Doe" />
             <TextView
                 android:id="@+id/user_location_textview"
@@ -108,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:textStyle="bold"
-                            android:text="476"/>
+                            android:text="@string/test_litter_site_points"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -124,8 +126,6 @@
             </LinearLayout>
         </LinearLayout>
 
-
-
     </LinearLayout>
 
     <!-- "Recent Activity" SECTIONAL -->
@@ -137,7 +137,9 @@
         app:layout_constraintTop_toBottomOf="@id/user_profile_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:clipChildren="false">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,7 +159,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/vertical_spacing"
-            tools:itemCount="3"
+            tools:itemCount="2"
+            android:clipToPadding="false"
+            android:clipChildren="false"
             tools:listitem="@layout/fragment_litter_site_item"/>
     </LinearLayout>
 
