@@ -13,7 +13,7 @@ class LitterSiteRepository(private val litterSiteRemoteDataSource: LitterSiteRem
         litterSiteRemoteDataSource.getLitterSitesCreatedByUser()
 
     suspend fun getLitterSitesCleanedByUser(): List<LitterSite> =
-        litterSiteRemoteDataSource.getLitterSitesCreatedByUser()
+        litterSiteRemoteDataSource.getLitterSitesCleanedByUser()
 
     suspend fun getLitterSite(id: String, userCoords: Coordinates): LitterSite =
         litterSiteRemoteDataSource.getLitterSite(id, userCoords)

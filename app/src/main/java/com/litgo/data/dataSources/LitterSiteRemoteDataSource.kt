@@ -10,8 +10,8 @@ import kotlinx.coroutines.withContext
 
 data class LitterSiteApiModel(
     @SerializedName("id")               val id: String,
-    @SerializedName("reporterUserId")  val reportingUserId: String,
-    @SerializedName("collectorUserId") val collectingUserId: String?,
+    @SerializedName("reporterUserId")   val reportingUserId: String,
+    @SerializedName("collectorUserId")  val collectingUserId: String?,
     @SerializedName("isCollected")      val isCollected: Boolean,
     @SerializedName("litterCount")      val litterCount: Int,
     @SerializedName("image")            val image: String?,
@@ -51,7 +51,7 @@ class LitterSiteRemoteDataSource(
 
     suspend fun getLitterSitesCleanedByUser(): List<LitterSite> =
         withContext(ioDispatcher) {
-            litterSiteApi.getLitterSitesCreatedByUser()
+            litterSiteApi.getLitterSitesCleanedByUser()
         }
 
     suspend fun getLitterSite(id: String, userCoords: Coordinates): LitterSite =
