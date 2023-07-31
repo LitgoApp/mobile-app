@@ -22,6 +22,7 @@ import com.litgo.data.models.Login
 import com.litgo.ui.user.UserProfileFragment
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
 
 class LoginFragment : Fragment() {
@@ -48,7 +49,9 @@ class LoginFragment : Fragment() {
             setOnClickListener {
                 var login = Login(emailEditText.text.toString(), passwordEditText.text.toString())
                 try {
-                    viewModel.loginUser(login)
+                    runBlocking {
+                        viewModel.loginUser(login)
+                    }
                     showLoginSuccess(viewModel.uiState.value)
                 } catch (e: HttpException) {
                     showLoginFailure()
@@ -70,6 +73,7 @@ class LoginFragment : Fragment() {
         val welcome = getString(R.string.welcome) + it.userUiState.name
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
+
         activity?.supportFragmentManager?.commit {
             replace(R.id.nav_host_fragment_content_main, UserProfileFragment())
             activity?.findViewById<TextView>(R.id.app_bar_title_textview)?.text = "My Profile"
@@ -79,10 +83,5 @@ class LoginFragment : Fragment() {
 
     private fun showCreateAccount() {
         findNavController().navigate(R.id.action_LoginFragment_to_CreateAccountFragment)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

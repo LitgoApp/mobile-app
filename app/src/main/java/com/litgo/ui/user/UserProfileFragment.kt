@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.litgo.data.models.authToken
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
@@ -37,6 +38,8 @@ class UserProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Ensure we are fetching all relevant information to the user
+        viewModel.getLitterSitesCreatedByUser()
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
@@ -47,8 +50,7 @@ class UserProfileFragment : Fragment() {
 
     private fun renderState(it: LitgoUiState) {
         binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(testReports()[0], activity?.supportFragmentManager)
-//        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
+        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
         binding.userNameTextview.text = it.userUiState.name
         binding.userPointsTextview.text = it.userUiState.points.toString()
         binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()
@@ -60,6 +62,10 @@ class UserProfileFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * THIS IS A METHOD FOR TESTING PURPOSES
+     * Generates a list of reports and cleanups
+     */
     private fun testReports() : List<List<LitterSiteUiState>> {
         val testAll = listOf(
             LitterSiteUiState(
