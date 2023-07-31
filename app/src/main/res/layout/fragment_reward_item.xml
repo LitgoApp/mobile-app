@@ -1,20 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:background="@drawable/rectangle_container"
+    android:padding="@dimen/screen_margin"
+    android:elevation="@dimen/elevation"
+    android:clipToPadding="false"
+    android:clipToOutline="false"
+    android:layout_marginBottom="@dimen/vertical_spacing"
+    android:orientation="vertical"
+    android:id="@+id/reward_layout">
 
-    <TextView
-        android:id="@+id/item_number"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/reward_photo_imageview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle_container"
+            android:backgroundTint="@color/green"
+            android:layout_marginEnd="@dimen/fragment_horizontal_margin"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reward_name_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test_reward_name"
+                android:theme="@style/LitGo.TextView.Header1"/>
+
+            <TextView
+                android:id="@+id/reward_description_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:text="@string/test_reward_description"
+                android:textSize="@dimen/header_3_text_size" />
+
+            <TextView
+                android:id="@+id/reward_expiry_date_textview"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/subtitle_text_size"
+                android:text="@string/test_reward_expiry_date"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
+                android:paddingVertical="2dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/rectangle_container"
+                android:backgroundTint="@color/green">
+                <TextView
+                    android:id="@+id/reward_points_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test_reward_points"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:theme="@style/LitGo.TextView.Header3" />
+                <ImageView
+                    android:layout_width="@dimen/reward_icon_size"
+                    android:layout_height="@dimen/reward_icon_size"
+                    android:layout_marginStart="@dimen/litter_site_text_icon_spacing"
+                    android:src="@drawable/leaf_96_white"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reward_actions_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_marginTop="@dimen/fragment_vertical_margin"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reward_redeem_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/reward_redeem_button_text"
+            android:theme="@style/LitGo.Button.Green"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reward_decline_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/vertical_spacing"
+            android:background="@drawable/x_90_dark_red"/>
+
+    </LinearLayout>
+
 </LinearLayout>

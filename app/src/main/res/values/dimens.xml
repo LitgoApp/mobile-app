@@ -36,6 +36,8 @@
     <dimen name="litter_site_text_icon_spacing">5dp</dimen>
     <dimen name="litter_site_label_spacing">20dp</dimen>
 
+    <dimen name="reward_icon_size">20dp</dimen>
+
     <!-- Dimensions for 3-way switch bar -->
     <dimen name="switch_radius">20dp</dimen>
     <dimen name="switch_height">30dp</dimen>

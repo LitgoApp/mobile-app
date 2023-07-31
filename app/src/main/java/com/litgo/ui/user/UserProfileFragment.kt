@@ -5,19 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.litgo.data.models.authToken
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.R
 import com.litgo.databinding.FragmentUserProfileBinding
-import com.litgo.ui.litterSite.LitterSitesRecyclerViewAdapter
+import com.litgo.ui.litterSite.LitterSiteRecyclerViewAdapter
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
@@ -50,7 +45,7 @@ class UserProfileFragment : Fragment() {
 
     private fun renderState(it: LitgoUiState) {
         binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.userRecentActivityRecyclerView.adapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
+        binding.userRecentActivityRecyclerView.adapter = LitterSiteRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
         binding.userNameTextview.text = it.userUiState.name
         binding.userPointsTextview.text = it.userUiState.points.toString()
         binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()

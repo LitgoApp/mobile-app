@@ -1,6 +1,5 @@
 package com.litgo.ui.litterSite
 
-import android.content.Intent
 import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,9 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
 import com.example.litgotesting.viewModel.LitterSiteUiState
-import com.litgo.MainActivity
 import com.litgo.R
 import com.litgo.databinding.FragmentLitterSiteItemBinding
 
@@ -20,10 +17,10 @@ import com.litgo.databinding.FragmentLitterSiteItemBinding
  * [RecyclerView.Adapter] that can display a [LitterSiteFragment] that the user has reported
  * (that may or may not have been cleaned by them)
  */
-class LitterSitesRecyclerViewAdapter(
+class LitterSiteRecyclerViewAdapter(
     private val values: List<LitterSiteUiState>,
     private val supportFragmentManager: FragmentManager?
-) : RecyclerView.Adapter<LitterSitesRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<LitterSiteRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 

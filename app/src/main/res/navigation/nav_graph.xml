@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    app:startDestination="@id/RewardListFragment">
 
     <fragment
         android:id="@+id/LoginFragment"
@@ -33,13 +33,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/LitterSiteReports"
+        android:id="@+id/LitterSiteListFragment"
         android:name="com.litgo.ui.litterSite.LitterSiteListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 
     <fragment
-        android:id="@+id/RewardsFragment"
+        android:id="@+id/RewardListFragment"
         android:name="com.litgo.ui.reward.RewardListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>

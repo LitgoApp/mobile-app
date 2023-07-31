@@ -86,8 +86,13 @@ class LitterSiteFragment(
             setOnClickListener {
                 viewModel.cleanLitterSite(litterSiteUiState.id, Coordinates(0.0, 0.0))
                 viewModel.deleteLitterSite(litterSiteUiState.id)
-                activity?.supportFragmentManager?.popBackStack()
-                showAppAndNavBar()
+                navigateBack()
+            }
+        }
+
+        binding.litterSiteDeclineButton.apply {
+            setOnClickListener {
+                navigateBack()
             }
         }
 
@@ -109,5 +114,10 @@ class LitterSiteFragment(
         activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)?.apply {
             visibility = View.GONE
         }
+    }
+
+    private fun navigateBack() {
+        activity?.supportFragmentManager?.popBackStack()
+        showAppAndNavBar()
     }
 }

@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.litgo.ui.reward.RewardFragment"
+    android:name="com.litgo.ui.reward.RewardListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.reward.RewardFragment"
-    tools:listitem="@layout/fragment_reward_item" />
+    android:clipChildren="false"
+    android:clipToOutline="false"
+    android:clipToPadding="false"
+    android:backgroundTint="@color/lightest_gray"
+    tools:context=".ui.reward.RewardListFragment">
+
+    <LinearLayout
+        android:id="@+id/user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/screen_margin"
+        android:orientation="vertical"
+        android:background="@color/green"
+        android:gravity="end">
+
+        <LinearLayout
+            android:id="@+id/user_points_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/user_points_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500"
+                android:theme="@style/LitGo.TextView.Title.White"/>
+            <ImageView
+                android:layout_marginStart="@dimen/litter_site_text_icon_spacing"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/leaf_96_white"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="50dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/paragraph_text_size"
+            android:text="@string/reward_points_imageview_caption"/>
+
+    </LinearLayout>
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reward_recycler_view"
+        android:padding="@dimen/screen_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/user_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/fragment_reward_item"
+        app:layoutManager="LinearLayoutManager"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:clipToOutline="false"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

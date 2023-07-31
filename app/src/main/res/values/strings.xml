@@ -45,7 +45,6 @@
     <string name="user_recent_activity_textview_text">Recent Activity</string>
     <string name="see_more_textview_text">See more</string>
 
-
     <string name="user_litter_sites_textview_text">My Reports</string>
     <string name="user_cleanups_textview_text">My Cleanups</string>
     <string name="user_all_textview_text">All</string>
@@ -64,6 +63,10 @@
         <item>All</item>
     </string-array>
 
+    <string name="reward_offer_validity_textview_text">Offer valid through </string>
+    <string name="reward_redeem_button_text">Redeem</string>
+    <string name="reward_points_imageview_caption">Points</string>
+
     <string name="back_textview_text">Back</string>
 
     <string name="welcome">"Welcome! "</string>
@@ -80,6 +83,10 @@ Vitae proin sagittis nisl rhoncus mattis. Tortor aliquam nulla facilisi cras fer
 Nullam non nisi est sit amet facilisis magna etiam tempor. Quisque egestas diam in arcu. Sit amet purus gravida quis blandit turpis cursus in hac. Scelerisque felis imperdiet proin fermentum leo vel orci. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Sit amet risus nullam eget felis eget nunc. Fermentum odio eu feugiat pretium. Ornare quam viverra orci sagittis eu volutpat. Leo urna molestie at elementum eu facilisis sed odio morbi. Integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Vestibulum sed arcu non odio euismod. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Diam vel quam elementum pulvinar etiam non.
 Eget magna fermentum iaculis eu non diam. Feugiat in ante metus dictum at tempor commodo. Augue lacus viverra vitae congue. Cursus eget nunc scelerisque viverra. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Ullamcorper malesuada proin libero nunc consequat interdum. Sollicitudin tempor id eu nisl. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus a. Gravida quis blandit turpis cursus in. Dignissim sodales ut eu sem integer vitae justo. Iaculis urna id volutpat lacus laoreet non curabitur gravida. Metus dictum at tempor commodo. Vitae semper quis lectus nulla at. Massa placerat duis ultricies lacus sed turpis tincidunt. Maecenas accumsan lacus vel facilisis volutpat est velit egestas dui. Viverra justo nec ultrices dui. Id venenatis a condimentum vitae.
     </string>
+    <string name="test_reward_name">$10 Starbucks Gift Card</string>
+    <string name="test_reward_description">Enjoy a beverage of your choice, on us!</string>
+    <string name="test_reward_expiry_date">September 1st, 2023</string>
+    <string name="test_reward_points">250</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -10,7 +10,6 @@
     android:background="@color/lightest_gray"
     tools:context=".ui.litterSite.LitterSiteFragment">
 
-
     <LinearLayout
         android:id="@+id/back_textview"
         android:layout_width="wrap_content"
@@ -18,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical">
+        android:gravity="center">
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -26,6 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/LitGo.TextView.Header3"
             android:text="@string/back_textview_text"/>
     </LinearLayout>
 

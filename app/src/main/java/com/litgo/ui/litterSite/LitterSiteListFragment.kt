@@ -67,25 +67,25 @@ class LitterSiteListFragment : Fragment() {
                 /* FOR TESTING
                 val testLitterSites = testReports()
 
-                val reportsAdapter = LitterSitesRecyclerViewAdapter(
+                val reportsAdapter = LitterSiteRecyclerViewAdapter(
                     testLitterSites[1],
                     supportFragmentManager
                 )
-                val cleanupsAdapter = LitterSitesRecyclerViewAdapter(
+                val cleanupsAdapter = LitterSiteRecyclerViewAdapter(
                     testLitterSites[2],
                     supportFragmentManager
                 )
-                val allAdapter = LitterSitesRecyclerViewAdapter(
+                val allAdapter = LitterSiteRecyclerViewAdapter(
                     testLitterSites[0],
                     supportFragmentManager
                 )
                  */
 
-                val reportsAdapter = LitterSitesRecyclerViewAdapter(
+                val reportsAdapter = LitterSiteRecyclerViewAdapter(
                     viewModel.uiState.value.userUiState.reports,
                     supportFragmentManager
                 )
-                val cleanupsAdapter = LitterSitesRecyclerViewAdapter(
+                val cleanupsAdapter = LitterSiteRecyclerViewAdapter(
                     viewModel.uiState.value.userUiState.cleanups,
                     supportFragmentManager
                 )
@@ -111,7 +111,7 @@ class LitterSiteListFragment : Fragment() {
             }
         }
 
-        binding.litterSiteRecyclerView.apply {
+        litterSiteRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
         }
         // Ensure we are fetching all relevant information to the user
@@ -131,13 +131,13 @@ class LitterSiteListFragment : Fragment() {
 
         /* FOR TESTING
         val testLitterSites = testReports()
-        val allAdapter = LitterSitesRecyclerViewAdapter(testLitterSites[0], activity?.supportFragmentManager)
-        val reportsAdapter = LitterSitesRecyclerViewAdapter(testLitterSites[1], activity?.supportFragmentManager)
-        val cleanupsAdapter = LitterSitesRecyclerViewAdapter(testLitterSites[2], activity?.supportFragmentManager)
+        val allAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[0], activity?.supportFragmentManager)
+        val reportsAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[1], activity?.supportFragmentManager)
+        val cleanupsAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[2], activity?.supportFragmentManager)
          */
 
-        val reportsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
-        val cleanupsAdapter = LitterSitesRecyclerViewAdapter(it.userUiState.cleanups, activity?.supportFragmentManager)
+        val reportsAdapter = LitterSiteRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
+        val cleanupsAdapter = LitterSiteRecyclerViewAdapter(it.userUiState.cleanups, activity?.supportFragmentManager)
 
         // Display the reports according to whatever is currently selected on the dropdown menu
         when (binding.litterSiteFilterSpinner.selectedItem) {
