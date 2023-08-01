@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.litgo.MainActivity
 import com.litgo.R
 import com.litgo.data.models.UserRegistration
 import com.litgo.databinding.FragmentCreateAccountBinding
@@ -36,14 +37,6 @@ class CreateAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainActivityLayout = activity?.findViewById<ConstraintLayout>(R.id.main_activity_layout)
-        mainActivityLayout?.setBackgroundColor(resources.getColor(R.color.green))
-
-        // Ensure the bottom navigation bar and top app bar are not visible
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
-        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-        appBarLayout?.visibility = View.GONE
-        navBar?.visibility = View.GONE
 
         val fullNameEditText = binding.fullNameEdittext
         val addressEditText = binding.addressEdittext

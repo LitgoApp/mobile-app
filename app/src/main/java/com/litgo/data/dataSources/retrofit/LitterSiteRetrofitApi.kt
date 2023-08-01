@@ -140,7 +140,7 @@ class LitterSiteRetrofitApi(private val retrofit: Retrofit) : LitterSiteApi {
     override fun getLitterSitesCleanedByUser(): List<LitterSite> {
         try {
             val token = authToken ?: throw Exception("No auth token")
-            val response = service.getLitterSitesCreatedByUser(token).execute()
+            val response = service.getLitterSitesCleanedByUser(token).execute()
             val body = response.body()
 
             if (!response.isSuccessful || body == null) {
