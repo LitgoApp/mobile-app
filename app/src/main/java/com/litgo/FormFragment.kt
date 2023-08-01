@@ -131,7 +131,7 @@ class FormFragment() : Fragment() {
             val litterSiteCreation = LitterSiteCreation(
                 userLocation.latitude,
                 userLocation.longitude,
-                if (binding.toggleDanger.isChecked) "CAUTION" else "",
+                if (binding.toggleDanger.isChecked) "CAUTION" else "NONE",
                 binding.descriptionText.text.toString(), /* */
                 1,
                 /* imageB64 */ ""

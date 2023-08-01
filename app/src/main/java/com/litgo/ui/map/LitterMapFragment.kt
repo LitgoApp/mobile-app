@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.litgotesting.viewModel.DisposalSiteUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.example.litgotesting.viewModel.UserUiState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -81,8 +80,8 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    val litterSites = uiState.mapUiState.nearbyLitterSites
-                    val disposalSites = uiState.mapUiState.nearbyDisposalSites
+                    // val litterSites = uiState.mapUiState.nearbyLitterSites
+                    // val disposalSites = uiState.mapUiState.nearbyDisposalSites
                     userLocation = LatLng(uiState.userUiState.latitude, uiState.userUiState.longitude)
 
                     litterInfoFragment.updateFromUiState(uiState.mapUiState)
@@ -95,7 +94,7 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
 
                     userMarker?.tag = uiState.userUiState
 
-
+                    /*
                     for (site in litterSites) {
                         val litterMarker = googleMap.addMarker(MarkerOptions()
                             .position(LatLng(site.latitude, site.longitude))
@@ -107,15 +106,16 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
                     }
 
                     for (site in disposalSites) {
-                        val disposalMarker = googleMap.addMarker(
-                            MarkerOptions()
-                                .position(LatLng(site.latitude, site.longitude))
-                                .title("Litter Site")
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        val disposalMarker = googleMap.addMarker(MarkerOptions()
+                            .position(LatLng(site.latitude, site.longitude))
+                            .title("Litter Site")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
                         )
 
                         disposalMarker?.tag = site
                     }
+
+                     */
 
                 }
             }
@@ -125,17 +125,17 @@ class LitterMapFragment: Fragment(), OnMapReadyCallback {
             marker.tag?.let {
                 val bannerContainer = binding.cardHolder
                 if (it is LitterSiteUiState) {
-                    viewModel.getLitterSite(it.id, Coordinates(0.0, 0.0)) // fix this!
+                    // viewModel.setSelectedLitterSite(marker.tag) TODO: Fix this call!
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
                     bannerContainer.visibility = View.VISIBLE
 
                 } else if (it is UserUiState) {
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
                     bannerContainer.visibility = View.INVISIBLE
-                }  else if (it is DisposalSiteUiState){
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
-                    bannerContainer.visibility = View.INVISIBLE
-                }
+                } // else if (it is DisposalSiteUiState){
+//                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 15f))
+//                    bannerContainer.visibility = View.INVISIBLE
+//                }
             }
             true
         }
