@@ -71,13 +71,14 @@ class MainActivity : AppCompatActivity() {
         // Update the map with the new location
         mCurrentLocation = location
         viewModel.updateUserPosition(Coordinates(location.latitude, location.longitude))
+        Log.d("Location Services", "Updated viewModel to ${location.latitude}, ${location.longitude}")
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 

@@ -2,6 +2,7 @@ package com.litgo.viewModel
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litgotesting.data.models.backendDateFormat
@@ -53,7 +54,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LitgoViewModel(application: Application) : AndroidViewModel(application) {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://172.17.0.1:3001/")
+        .baseUrl("http://192.168.224.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -241,10 +242,12 @@ class LitgoViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getNearbyLitterSites(userCoords: Coordinates) {
         getNearbyLitterSitesJob?.cancel()
+        var numberOfSites = 0
         getNearbyLitterSitesJob = viewModelScope.launch(throwExceptionHandler) {
             val litterSites = litterSiteRepo.getNearbyLitterSites(userCoords)
             val updatedState = _uiState.value.mapUiState.copy(
                 nearbyLitterSites = litterSites.map { litterSite ->
+                    numberOfSites++
                     LitterSiteUiState(
                         id = litterSite.id,
                         reportingUserId = litterSite.reportingUserId,
@@ -265,6 +268,8 @@ class LitgoViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             )
+
+            Log.d("Main View Model", "${numberOfSites} at ${userCoords.latitude}, ${userCoords.longitude}")
 
             _uiState.update {
                 it.copy(mapUiState = updatedState)
