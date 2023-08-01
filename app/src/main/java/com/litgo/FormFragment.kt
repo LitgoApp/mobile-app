@@ -18,11 +18,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-//import com.example.conversion.ImageConversion.uriToBase64
+import androidx.navigation.fragment.findNavController
+// import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.litgo.camera.CameraFragment
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
 
@@ -82,11 +80,6 @@ class FormFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
-        val navBar = activity?.findViewById<BottomNavigationView>(R.id.nav_bottom)
-        appBarLayout?.visibility = View.GONE
-        navBar?.visibility = View.GONE
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -99,7 +92,7 @@ class FormFragment() : Fragment() {
         }
 
         pickMultipleMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(10)) { uris ->
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(2)) { uris ->
                 // Callback is invoked after the user selects media items or closes the
                 // photo picker.
 
@@ -133,33 +126,20 @@ class FormFragment() : Fragment() {
 
 
     private fun submitButtonClicked() {
-//        val imageB64  = uriToBase64(images[0], requireContext())
-//        if (imageB64 != null) {
+        // val imageB64  = uriToBase64(images[0], requireContext())
+        // if (imageB64 != null) {
+        val litterSiteCreation = LitterSiteCreation(
+            userLocation.latitude,
+            userLocation.longitude,
+            if (binding.toggleDanger.isChecked) "Danger" else "Test",
+            binding.descriptionText.text.toString(), /* */
+            1,
+            /* imageB64 */ ""
+        )
+        viewModel.createLitterSite(litterSiteCreation)
+        findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
 
-        try {
-            val litterSiteCreation = LitterSiteCreation(
-                userLocation.latitude,
-                userLocation.longitude,
-                if (binding.toggleDanger.isChecked) "CAUTION" else "NONE",
-                binding.descriptionText.text.toString(), /* */
-                1,
-                ""
-//                imageB64
-            )
-            viewModel.createLitterSite(litterSiteCreation)
-        } catch (e: Exception) {
-
-        } finally {
-            // Navigate back to the camera fragment
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.nav_host_fragment_content_main, CameraFragment())
-            transaction?.commit()
-//            findNavController().navigate(R.id.action_cameraFragment_to_formFragment)
-        }
-
-
-//
-//        }
+        // }
         Log.i("Form Activity", "Clicked")
     }
 

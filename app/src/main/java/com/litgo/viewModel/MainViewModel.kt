@@ -1,9 +1,8 @@
 package com.litgo.viewModel
 
+import android.app.Application
 import android.net.Uri
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litgotesting.data.models.backendDateFormat
 import com.example.litgotesting.data.models.frontendDateFormat
@@ -25,12 +24,9 @@ import com.litgo.data.dataSources.retrofit.RegionRetrofitApi
 import com.litgo.data.dataSources.retrofit.RewardRetrofitApi
 import com.litgo.data.dataSources.retrofit.UserRetrofitApi
 import com.litgo.data.models.Coordinates
-import com.litgo.data.models.DisposalSite
-import com.litgo.data.models.LitterSite
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.data.models.Login
-//import com.example.conversion
-import com.litgo.data.models.Municipality
+import com.example.conversion.ImageConversion
 import com.litgo.data.models.MunicipalityRegistration
 import com.litgo.data.models.MunicipalityUpdate
 import com.litgo.data.models.RewardCreation
@@ -51,16 +47,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Thread.State
 
-class LitgoViewModel : ViewModel() {
-//    private val retrofit: Retrofit = Retrofit.Builder()
-//        .baseUrl("https://backend-service-v0b8.onrender.com/")
-//        .addConverterFactory(GsonConverterFactory.create())
-//        .build()
-
+class LitgoViewModel(application: Application) : AndroidViewModel(application) {
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("http://172.17.0.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -381,7 +372,14 @@ class LitgoViewModel : ViewModel() {
     fun createLitterSite(data: LitterSiteCreation) {
         createLitterSiteJob?.cancel()
         createLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
-            litterSiteRepo.createLitterSite(data)
+            litterSiteRepo.createLitterSite(data.copy(
+                image = withContext(Dispatchers.IO) {
+                    ImageConversion.uriToBase64(
+                        Uri.parse(data.image),
+                        getApplication<Application>().applicationContext
+                    ) ?: ""
+                }
+            ))
         }
     }
 
