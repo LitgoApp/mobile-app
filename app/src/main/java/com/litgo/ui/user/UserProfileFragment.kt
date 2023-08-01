@@ -34,7 +34,7 @@ class UserProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Ensure we are fetching all relevant information to the user
-        viewModel.getLitterSitesCreatedByUser()
+//        viewModel.getLitterSitesCreatedByUser()
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
@@ -44,17 +44,16 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun renderState(it: LitgoUiState) {
+        // Ensure we are fetching all relevant information to the user
+        viewModel.getLitterSitesCreatedByUser()
+        viewModel.getLitterSitesCleanedByUser()
+
         binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.userRecentActivityRecyclerView.adapter = LitterSiteRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
         binding.userNameTextview.text = it.userUiState.name
         binding.userPointsTextview.text = it.userUiState.points.toString()
         binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()
         binding.userJoinedDateTextview.text = it.userUiState.joinDate
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     /**

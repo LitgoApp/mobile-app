@@ -55,15 +55,17 @@ class LitterSiteFragment(
                 "CAUTION" -> {
                     visibility = View.VISIBLE
                     setTextColor(resources.getColor(R.color.darker_yellow))
-                    background =  resources.getDrawable(R.drawable.label_yellow)
+                    background = resources.getDrawable(R.drawable.label_yellow)
 //                    setBackgroundColor(resources.getColor(R.color.lightest_yellow))
                 }
+
                 "HAZARDOUS" -> {
                     visibility = View.VISIBLE
                     setTextColor(resources.getColor(R.color.dark_red))
                     background = resources.getDrawable(R.drawable.label_red)
 //                    setBackgroundColor(resources.getColor(R.color.lighter_red))
                 }
+
                 else -> visibility = View.GONE
             }
         }
@@ -72,7 +74,8 @@ class LitterSiteFragment(
         binding.litterSitePointsTextview.text = (litterSiteUiState.litterCount * 10).toString()
         binding.litterSiteCoordinatesTextview.text =
             litterSiteUiState.longitude.toString() + ", " + litterSiteUiState.latitude.toString()
-        binding.litterSiteReportDateTextview.text = resources.getString(R.string.litter_site_reported_textview_text) + resources.getString(R.string.test_litter_site_reported_date)
+        binding.litterSiteReportDateTextview.text =
+            resources.getString(R.string.litter_site_reported_textview_text) + resources.getString(R.string.test_litter_site_reported_date)
 
         binding.backTextview.setOnClickListener {
             // Pop the current view off the stack to the previous view
@@ -94,6 +97,17 @@ class LitterSiteFragment(
             setOnClickListener {
                 navigateBack()
             }
+        }
+
+        binding.litterSiteActionsLayout.apply {
+            visibility =
+                if (litterSiteUiState.reportingUserId == viewModel.uiState.value.userUiState.id
+                    || litterSiteUiState.collectingUserId == viewModel.uiState.value.userUiState.id
+                ) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
         }
 
     }

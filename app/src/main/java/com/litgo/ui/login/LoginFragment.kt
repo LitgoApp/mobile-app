@@ -18,7 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.litgo.MainActivity
 import com.litgo.databinding.FragmentLoginBinding
 import com.litgo.R
+import com.litgo.camera.CameraFragment
 import com.litgo.data.models.Login
+import com.litgo.data.models.authToken
 import com.litgo.ui.user.UserProfileFragment
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
@@ -75,10 +77,15 @@ class LoginFragment : Fragment() {
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
 
         activity?.supportFragmentManager?.commit {
-            replace(R.id.nav_host_fragment_content_main, UserProfileFragment())
-            activity?.findViewById<TextView>(R.id.app_bar_title_textview)?.text = "My Profile"
-            addToBackStack("My Profile")
+            replace(R.id.nav_host_fragment_content_main, CameraFragment())
+            activity?.findViewById<TextView>(R.id.app_bar_title_textview)?.text = ""
+            addToBackStack("Camera")
         }
+//        activity?.supportFragmentManager?.commit {
+//            replace(R.id.nav_host_fragment_content_main, UserProfileFragment())
+//            activity?.findViewById<TextView>(R.id.app_bar_title_textview)?.text = "My Profile"
+//            addToBackStack("My Profile")
+//        }
     }
 
     private fun showCreateAccount() {

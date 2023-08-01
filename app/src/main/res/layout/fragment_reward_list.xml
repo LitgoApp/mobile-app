@@ -8,7 +8,7 @@
     android:clipChildren="false"
     android:clipToOutline="false"
     android:clipToPadding="false"
-    android:backgroundTint="@color/lightest_gray"
+    android:background="@color/lightest_gray"
     tools:context=".ui.reward.RewardListFragment">
 
     <LinearLayout

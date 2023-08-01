@@ -38,13 +38,18 @@ class RewardListFragment : Fragment() {
     }
 
     private fun renderState(it: LitgoUiState) {
+        viewModel.getEligibleRewards()
+
         binding.userPointsTextview.text = it.userUiState.points.toString()
         // TESTING
-        binding.rewardRecyclerView.adapter = RewardRecyclerViewAdapter(viewModel, testRewards(), activity?.supportFragmentManager)
-//        binding.rewardRecyclerView.adapter = RewardRecyclerViewAdapter(viewModel, it.userUiState.eligibleRewards, activity?.supportFragmentManager)
+//        binding.rewardRecyclerView.adapter = RewardRecyclerViewAdapter(viewModel, testRewards(), activity?.supportFragmentManager)
+        binding.rewardRecyclerView.adapter = RewardRecyclerViewAdapter(viewModel, it.userUiState.eligibleRewards, activity?.supportFragmentManager)
     }
 
-
+    /**
+     * THIS IS A METHOD FOR TESTING PURPOSES
+     * Generates a list of eligible rewards
+     */
     private fun testRewards(): List<RewardUiState> {
         return listOf(
             RewardUiState(

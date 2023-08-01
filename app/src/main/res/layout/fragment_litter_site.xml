@@ -215,6 +215,7 @@
     <!-- END FULL CONTAINER -->
 
     <LinearLayout
+        android:id="@+id/litter_site_actions_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

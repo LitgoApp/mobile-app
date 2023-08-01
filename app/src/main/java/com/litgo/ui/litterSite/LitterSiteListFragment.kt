@@ -114,9 +114,6 @@ class LitterSiteListFragment : Fragment() {
         litterSiteRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
         }
-        // Ensure we are fetching all relevant information to the user
-//        viewModel.getLitterSitesCreatedByUser()
-//        viewModel.getLitterSitesCleanedByUser()
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
@@ -127,6 +124,10 @@ class LitterSiteListFragment : Fragment() {
     }
 
     private fun renderState(it: LitgoUiState) {
+        // Ensure we are fetching all relevant information to the user
+        viewModel.getLitterSitesCreatedByUser()
+        viewModel.getLitterSitesCleanedByUser()
+
         var litterSiteRecyclerView = binding.litterSiteRecyclerView
 
         /* FOR TESTING
