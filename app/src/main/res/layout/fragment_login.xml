@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/login_error_textview_text"
-        android:theme="@style/LitGo.TextView.LoginErrorTextView"/>
+        android:theme="@style/LitGo.TextView.Error"/>
 
     <!--    EditText for if we want the user to login using username -->
 <!--    <EditText-->

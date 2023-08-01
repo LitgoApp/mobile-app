@@ -33,16 +33,17 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ReportsFragment"
-        android:name="com.litgo.ui.litterSite.ReportsFragment"
+        android:id="@+id/LitterSiteListFragment"
+        android:name="com.litgo.ui.litterSite.LitterSiteListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
 
     <fragment
-        android:id="@+id/RewardsFragment"
-        android:name="com.litgo.ui.RewardsFragment"
+        android:id="@+id/RewardListFragment"
+        android:name="com.litgo.ui.reward.RewardListFragment"
         tools:layout="@layout/fragment_rewards">
     </fragment>
+
     <fragment
         android:id="@+id/formFragment"
         android:name="com.litgo.FormFragment"
@@ -51,6 +52,7 @@
             android:id="@+id/action_formFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.litgo.camera.CameraFragment"

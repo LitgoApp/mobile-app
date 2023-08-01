@@ -53,7 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LitgoViewModel(application: Application) : AndroidViewModel(application) {
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://backend-service-v0b8.onrender.com/")
+        .baseUrl("http://172.17.0.1:3001/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -125,15 +125,15 @@ class LitgoViewModel(application: Application) : AndroidViewModel(application) {
     private var createDisposalSiteJob: Job? = null
     private var deleteDisposalSiteJob: Job? = null
 
+    fun observeState(): StateFlow<LitgoUiState> {
+        return _uiState
+    }
+
     fun registerUser(data: UserRegistration) {
         registerUserJob?.cancel()
         registerUserJob = viewModelScope.launch(throwExceptionHandler) {
             userRepo.registerUser(data)
         }
-    }
-
-    fun observeState(): StateFlow<LitgoUiState> {
-        return _uiState
     }
 
     fun loginUser(data: Login) {

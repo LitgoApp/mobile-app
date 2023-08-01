@@ -19,4 +19,10 @@
     <color name="gray">#909090</color>
     <color name="lighter_gray">#c0c0c0</color>
     <color name="lightest_gray">#f0f0f0</color>
+
+    <color name="darker_yellow">#997500</color>
+    <color name="dark_yellow">#cc9c00</color>
+    <color name="yellow">#ffc300</color>
+    <color name="lighter_yellow">#ffd54d</color>
+    <color name="lightest_yellow">#ffe799</color>
 </resources>

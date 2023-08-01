@@ -1,25 +1,30 @@
-package com.litgo.ui.user
+package com.litgo.ui.litterSite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litgotesting.viewModel.LitgoUiState
 import com.example.litgotesting.viewModel.LitterSiteUiState
 import com.litgo.R
-import com.litgo.databinding.FragmentUserProfileBinding
-import com.litgo.ui.litterSite.LitterSiteRecyclerViewAdapter
+import com.litgo.databinding.FragmentLitterSiteListBinding
 import com.litgo.viewModel.LitgoViewModel
 import kotlinx.coroutines.launch
 
-class UserProfileFragment : Fragment() {
+/**
+ * A fragment representing a list of LitterSite reports
+ * (that may or may not have been cleaned up by the user)
+ */
+class LitterSiteListFragment : Fragment() {
+
     private val viewModel: LitgoViewModel by activityViewModels()
-    private var _binding: FragmentUserProfileBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
+    private var _binding: FragmentLitterSiteListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,20 +32,95 @@ class UserProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentLitterSiteListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Ensure we are fetching all relevant information to the user
-//        viewModel.getLitterSitesCreatedByUser()
+
+        val supportFragmentManager = activity?.supportFragmentManager
+        var litterSiteRecyclerView = binding.litterSiteRecyclerView
+
+        // Set up sort and filter spinners
+        val sortSpinner = binding.litterSiteSortSpinner.apply {
+            adapter = this.context?.let {
+                ArrayAdapter.createFromResource(
+                    it,
+                    R.array.litter_site_sort_spinner_array,
+                    android.R.layout.simple_spinner_item
+                )
+            }
+        }
+
+        // Set spinners for sorting and filtering reports/cleanups
+        val filterSpinner = binding.litterSiteFilterSpinner.apply {
+            adapter = this.context?.let {
+                ArrayAdapter.createFromResource(
+                    it,
+                    R.array.litter_site_filter_spinner_array,
+                    android.R.layout.simple_spinner_item
+                )
+            }
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                /* FOR TESTING
+                val testLitterSites = testReports()
+
+                val reportsAdapter = LitterSiteRecyclerViewAdapter(
+                    testLitterSites[1],
+                    supportFragmentManager
+                )
+                val cleanupsAdapter = LitterSiteRecyclerViewAdapter(
+                    testLitterSites[2],
+                    supportFragmentManager
+                )
+                val allAdapter = LitterSiteRecyclerViewAdapter(
+                    testLitterSites[0],
+                    supportFragmentManager
+                )
+                 */
+
+                val reportsAdapter = LitterSiteRecyclerViewAdapter(
+                    viewModel.uiState.value.userUiState.reports,
+                    supportFragmentManager
+                )
+                val cleanupsAdapter = LitterSiteRecyclerViewAdapter(
+                    viewModel.uiState.value.userUiState.cleanups,
+                    supportFragmentManager
+                )
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    when (resources.getStringArray(R.array.litter_site_filter_spinner_array)[position]) {
+                        "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+                        "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+                        else -> litterSiteRecyclerView.adapter = reportsAdapter
+                    }
+                }
+
+                // Display all reports created by the user by default
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    litterSiteRecyclerView.adapter = reportsAdapter
+                }
+
+            }
+        }
+
+        litterSiteRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+        }
 
         lifecycleScope.launch {
             viewModel.observeState().collect {
                 renderState(it)
             }
         }
+
     }
 
     private fun renderState(it: LitgoUiState) {
@@ -48,12 +128,24 @@ class UserProfileFragment : Fragment() {
         viewModel.getLitterSitesCreatedByUser()
         viewModel.getLitterSitesCleanedByUser()
 
-        binding.userRecentActivityRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.userRecentActivityRecyclerView.adapter = LitterSiteRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
-        binding.userNameTextview.text = it.userUiState.name
-        binding.userPointsTextview.text = it.userUiState.points.toString()
-        binding.userReportsCountTextview.text = it.userUiState.cleanups.size.toString()
-        binding.userJoinedDateTextview.text = it.userUiState.joinDate
+        var litterSiteRecyclerView = binding.litterSiteRecyclerView
+
+        /* FOR TESTING
+        val testLitterSites = testReports()
+        val allAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[0], activity?.supportFragmentManager)
+        val reportsAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[1], activity?.supportFragmentManager)
+        val cleanupsAdapter = LitterSiteRecyclerViewAdapter(testLitterSites[2], activity?.supportFragmentManager)
+         */
+
+        val reportsAdapter = LitterSiteRecyclerViewAdapter(it.userUiState.reports, activity?.supportFragmentManager)
+        val cleanupsAdapter = LitterSiteRecyclerViewAdapter(it.userUiState.cleanups, activity?.supportFragmentManager)
+
+        // Display the reports according to whatever is currently selected on the dropdown menu
+        when (binding.litterSiteFilterSpinner.selectedItem) {
+            "My Reports" -> litterSiteRecyclerView.adapter = reportsAdapter
+            "My Cleanups" -> litterSiteRecyclerView.adapter = cleanupsAdapter
+            else -> litterSiteRecyclerView.adapter = reportsAdapter
+        }
     }
 
     /**
@@ -193,4 +285,5 @@ class UserProfileFragment : Fragment() {
 
         return listOf(testAll, testReports, testCleanups)
     }
+
 }

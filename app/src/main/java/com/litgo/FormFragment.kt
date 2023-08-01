@@ -128,16 +128,16 @@ class FormFragment() : Fragment() {
     private fun submitButtonClicked() {
         // val imageB64  = uriToBase64(images[0], requireContext())
         // if (imageB64 != null) {
-            val litterSiteCreation = LitterSiteCreation(
-                userLocation.latitude,
-                userLocation.longitude,
-                if (binding.toggleDanger.isChecked) "Danger" else "Test",
-                binding.descriptionText.text.toString(), /* */
-                1,
-                /* imageB64 */ ""
-            )
-            viewModel.createLitterSite(litterSiteCreation)
-            findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
+        val litterSiteCreation = LitterSiteCreation(
+            userLocation.latitude,
+            userLocation.longitude,
+            if (binding.toggleDanger.isChecked) "Danger" else "Test",
+            binding.descriptionText.text.toString(), /* */
+            1,
+            /* imageB64 */ ""
+        )
+        viewModel.createLitterSite(litterSiteCreation)
+        findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
 
         // }
         Log.i("Form Activity", "Clicked")

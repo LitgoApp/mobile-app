@@ -4,69 +4,139 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:layout_marginBottom="@dimen/vertical_spacing"
+    android:elevation="@dimen/elevation"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/litter_site_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="15dp"
+        android:padding="@dimen/screen_margin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/rectangle_container"
         android:elevation="@dimen/elevation"
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <!-- Report info first column -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.75"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!-- Report status section -->
+            <!-- STATUS SECTIONAL -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report_status_textview_text"
-                    android:textStyle="bold"
-                    android:textSize="16dp"/>
+                    android:text="@string/litter_site_status_textview_text"
+                    android:theme="@style/LitGo.TextView.Header2"/>
 
                 <ImageView
                     android:id="@+id/litter_site_status_icon_imageview"
-                    android:layout_width="@dimen/report_status_icon_size"
-                    android:layout_height="@dimen/report_status_icon_size"
-                    android:layout_marginStart="@dimen/vertical_spacing"
+                    android:layout_width="@dimen/litter_site_icon_size"
+                    android:layout_height="@dimen/litter_site_icon_size"
+                    android:layout_marginStart="@dimen/litter_site_text_icon_spacing"
                     android:src="@drawable/do_not_disturb_100_black" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/litter_site_description_textview"
+                android:id="@+id/litter_site_last_updated_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/report_min_height"
-                android:maxHeight="@dimen/report_max_height"
-                android:overScrollMode="never"
-                android:text="Placeholder description of the garbage reporting in question."/>
+                android:text="@string/test_litter_site_reported_date"
+                android:textSize="@dimen/subtitle_text_size"
+                android:gravity="right"
+                android:layout_gravity="bottom"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- FIRST COLUMN -->
+            <!-- Harm, description, location -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- HARM SECTIONAL -->
+                <TextView
+                    android:id="@+id/litter_site_harm_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/LitGo.TextView.Label"/>
+
+                <TextView
+                    android:id="@+id/litter_site_description_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/litter_site_min_height"
+                    android:maxHeight="@dimen/litter_site_max_height"
+                    android:overScrollMode="never"
+                    android:text="@string/test_lorem_ipsum"/>
+
+            </LinearLayout>
+
+            <!-- SECOND COLUMN -->
+            <!-- Points, photo -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
+                    <TextView
+                        android:id="@+id/litter_site_points_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_litter_site_points"
+                        android:theme="@style/LitGo.TextView.Header2"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/litter_site_icon_size"
+                        android:layout_height="@dimen/litter_site_icon_size"
+                        android:layout_marginStart="@dimen/litter_site_text_icon_spacing"
+                        android:src="@drawable/leaf_96_green"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/litter_site_photo_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/rounded_square_100_green"
+                    android:layout_gravity="right"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <!-- END OF SECOND COLUMN -->
+
+        <!-- Location and see more photos sectional -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom">
             <!-- Report location section -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/vertical_spacing"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_gravity="bottom">
                 <ImageView
-                    android:layout_width="@dimen/report_status_icon_size"
-                    android:layout_height="@dimen/report_status_icon_size"
+                    android:layout_width="@dimen/litter_site_icon_size"
+                    android:layout_height="@dimen/litter_site_icon_size"
                     android:src="@drawable/location_96_black"/>
                 <TextView
                     android:id="@+id/litter_site_address_textview"
@@ -75,78 +145,17 @@
                     android:textSize="12dp"
                     android:text="200 Ring Rd, Waterloo"/>
             </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Report info second column -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:layout_marginTop="@dimen/vertical_spacing"
-            android:layout_marginStart="@dimen/vertical_spacing"
-            android:orientation="vertical">
-
             <TextView
-                android:id="@+id/litter_site_last_updated_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="July 18, 2023: 2:48pm"
-                android:textSize="12dp"
-                android:gravity="right"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical|right">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/litter_site_report_points_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20"/>
-
-                    <ImageView
-                        android:layout_width="@dimen/report_status_icon_size"
-                        android:layout_height="@dimen/report_status_icon_size"
-                        android:layout_marginStart="5dp"
-                        android:src="@drawable/report_96_green"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp">
-                    <TextView
-                        android:id="@+id/litter_site_cleanup_points_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20"/>
-
-                    <ImageView
-                        android:layout_width="@dimen/report_status_icon_size"
-                        android:layout_height="@dimen/report_status_icon_size"
-                        android:layout_marginStart="5dp"
-                        android:src="@drawable/leaf_96_green"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/litter_site_photo_imageview"
-                android:layout_width="@dimen/report_image_width"
-                android:layout_height="@dimen/report_image_height"
-                android:src="@drawable/rounded_square_100_green"
-                android:layout_gravity="right"/>
-
+                android:layout_gravity="bottom"
+                android:gravity="end"
+                android:text="@string/litter_site_see_all_photos_textview_text"
+                android:theme="@style/LitGo.TextView.Paragraph"/>
         </LinearLayout>
+        <!-- END Location and see more photos sectional -->
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -161,16 +170,16 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:orientation="horizontal">-->
 <!--        <TextView-->
-<!--            android:id="@+id/report_status_textview"-->
+<!--            android:id="@+id/litter_site_status_textview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/report_status_textview_text"/>-->
+<!--            android:text="@string/litter_site_status_textview_text"/>-->
 <!--        <ImageView-->
-<!--            android:id="@+id/report_status_imageview_icon"-->
+<!--            android:id="@+id/litter_site_status_imageview_icon"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content" />-->
 <!--        <TextView-->
-<!--            android:id="@+id/report_date_created_textview"-->
+<!--            android:id="@+id/litter_site_date_created_textview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content" />-->
 <!--    </LinearLayout>-->
@@ -180,11 +189,11 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:orientation="horizontal">-->
 <!--        <TextView-->
-<!--            android:id="@+id/report_description_textview"-->
+<!--            android:id="@+id/litter_site_description_textview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content" />-->
 <!--        <ImageView-->
-<!--            android:id="@+id/report_points_imageview"-->
+<!--            android:id="@+id/litter_site_points_imageview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"/>-->
 <!--    </LinearLayout>-->
@@ -194,15 +203,15 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:orientation="horizontal">-->
 <!--        <TextView-->
-<!--            android:id="@+id/report_location_imageview"-->
+<!--            android:id="@+id/litter_site_location_imageview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"/>-->
 <!--        <TextView-->
-<!--            android:id="@+id/report_location_textview"-->
+<!--            android:id="@+id/litter_site_location_textview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"/>-->
 <!--        <ImageView-->
-<!--            android:id="@+id/report_imageview"-->
+<!--            android:id="@+id/litter_site_imageview"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"/>-->
 <!--    </LinearLayout>-->
