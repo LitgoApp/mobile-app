@@ -61,11 +61,12 @@
                             android:scaleType="centerCrop"
                             android:src="@drawable/material_cancel_button" />
 
-                        <fragment
+                        <androidx.fragment.app.FragmentContainerView
                             android:id="@+id/fragmentContainer"
                             android:name="com.litgo.ui.map.LitterSiteInfoFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>

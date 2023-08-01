@@ -136,7 +136,7 @@ class FormFragment() : Fragment() {
                 1,
                 /* imageB64 */ ""
             )
-            viewModel.createLitterSite(litterSiteCreation)
+            //viewModel.createLitterSite(litterSiteCreation)
             findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
 
         // }
