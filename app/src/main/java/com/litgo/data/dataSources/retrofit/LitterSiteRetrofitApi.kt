@@ -74,7 +74,7 @@ class LitterSiteRetrofitApi(private val retrofit: Retrofit) : LitterSiteApi {
             val response = service.getNearbyLitterSites(
                 token,
                 userCoords.latitude,
-                userCoords.latitude
+                userCoords.longitude
             ).execute()
 
             val body = response.body()
