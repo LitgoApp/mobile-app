@@ -373,7 +373,7 @@ class LitgoViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    /*
+
     fun createLitterSite(data: LitterSiteCreation) {
         createLitterSiteJob?.cancel()
         createLitterSiteJob = viewModelScope.launch(throwExceptionHandler) {
@@ -388,7 +388,7 @@ class LitgoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-     */
+
 
     fun cleanLitterSite(id: String, userCoords: Coordinates) {
         cleanLitterSiteJob?.cancel()

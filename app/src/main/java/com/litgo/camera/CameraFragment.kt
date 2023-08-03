@@ -68,6 +68,7 @@ class CameraFragment : Fragment() {
 
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
         viewBinding.submitButton.setOnClickListener {
+
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.addToBackStack("camera_fragment")
             transaction?.replace(R.id.nav_host_fragment_content_main, FormFragment())

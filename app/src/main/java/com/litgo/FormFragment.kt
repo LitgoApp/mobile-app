@@ -3,17 +3,21 @@ package com.litgo
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +25,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 // import com.example.conversion.ImageConversion.uriToBase64
 import com.google.android.gms.maps.model.LatLng
+import com.litgo.camera.CameraFragment
 import com.litgo.data.models.LitterSiteCreation
 import com.litgo.databinding.FragmentFormBinding
 
@@ -29,15 +34,16 @@ import kotlinx.coroutines.launch
 
 class FormFragment() : Fragment() {
 
-    private val viewModel: LitgoViewModel by viewModels()
+    private val viewModel: LitgoViewModel by activityViewModels()
     private var _binding: FragmentFormBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>
-    private lateinit var userLocation: LatLng
-    private var newImageUris: List<Uri> = emptyList()
 
-    private lateinit var images: MutableList<Uri>
+    private lateinit var userLocation: LatLng
+
+    private lateinit var images: List<Uri>
+
+    private lateinit var pickImage: ActivityResultLauncher<PickVisualMediaRequest>
 
 
     private fun Int.dpToPx(context: Context): Int {
@@ -45,7 +51,7 @@ class FormFragment() : Fragment() {
         return (this * density + 0.5f).toInt()
     }
 
-    private fun addImageCards(images: List<Uri>) {
+    private fun addImageCards() {
         val parentLayout = binding.cardHolder
         parentLayout.removeAllViews()
 
@@ -80,36 +86,30 @@ class FormFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    val images = uiState.cameraUiState.imagesCaptured
+        _binding = FragmentFormBinding.inflate(inflater, container, false)
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.observeState().collect { uiState ->
+                    images = uiState.cameraUiState.imagesCaptured
                     val userState = uiState.userUiState
-                    addImageCards(images)
+                    addImageCards()
                     userLocation = LatLng(userState.latitude, userState.longitude)
                 }
             }
         }
 
-        pickMultipleMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(2)) { uris ->
-                // Callback is invoked after the user selects media items or closes the
-                // photo picker.
-
-                if (uris.isNotEmpty()) {
-                    // This currently only makes the image picker select the images that you want to display
-                    // TODO: Make sure this is working when Michael pushes!
-                    for (uri in uris) {
-                        viewModel.takePicture(uri)
-                    }
-                    addImageCards(uris)
-                    Log.d("PhotoPicker", "Number of items selected: ${uris.size}")
+        pickImage =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    viewModel.takePicture(uri)
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
             }
 
-        _binding = FragmentFormBinding.inflate(inflater, container, false)
+
+
         return binding.root
     }
 
@@ -117,6 +117,7 @@ class FormFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.submitButton.setOnClickListener { submitButtonClicked() }
+        binding.deleteImagesButton.setOnClickListener { viewModel.clearPictures() }
         binding.imageButton.setOnClickListener {
             Log.i("Form Activity", "Launch PhotoPicker")
             getImages()
@@ -128,25 +129,37 @@ class FormFragment() : Fragment() {
     private fun submitButtonClicked() {
         // val imageB64  = uriToBase64(images[0], requireContext())
         // if (imageB64 != null) {
+
+        if (images.isEmpty()) {
+            Toast.makeText(requireContext(), "You need one image!", Toast.LENGTH_SHORT).show()
+            return
+        }
             val litterSiteCreation = LitterSiteCreation(
                 userLocation.latitude,
                 userLocation.longitude,
                 if (binding.toggleDanger.isChecked) "CAUTION" else "NONE",
                 binding.descriptionText.text.toString(), /* */
                 1,
-                /* imageB64 */ ""
+                images[0].toString()
             )
-            //viewModel.createLitterSite(litterSiteCreation)
-            findNavController().navigate(R.id.action_formFragment_to_cameraFragment)
+            viewModel.createLitterSite(litterSiteCreation)
+
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            activity?.findViewById<TextView>(R.id.app_bar_title_textview)?.text = "Camera"
+            transaction?.addToBackStack("Camera")
+            transaction?.replace(R.id.nav_host_fragment_content_main, CameraFragment())
+            transaction?.commit()
 
         // }
         Log.i("Form Activity", "Clicked")
     }
 
     private fun getImages() {
-        // Registers a photo picker activity launcher in multi-select mode.
-        // In this example, the app lets the user select up to 5 media files.
-        pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        if (images.isNotEmpty()) {
+            Toast.makeText(requireContext(), "You can only have one image!", Toast.LENGTH_SHORT).show()
+        } else {
+            pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
     }
 
     override fun onDestroyView() {
